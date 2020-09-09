@@ -1,0 +1,95 @@
+---
+title: "How to t test"
+author: "Peter Higgins"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      ratio: 16:10
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scracth can be time consuming
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+library(flipbookr)
+library(tidyverse)
+library(infer)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Manrope"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+   code_font_size = "2rem",
+)
+```
+
+### We will start with the tidy version from the {infer} package: t_test()
+
+#### Notice that you have to state the order of the two levels of your grouping variable
+---
+
+```{r ttest1, include = FALSE}
+mtcars %>%
+  select(mpg, cyl, am) %>% 
+  filter(cyl > 5) %>%
+  t_test(mpg ~ am, 
+         order = c("0", "1"))
+# Interpreting the results
+# The t statistic is first
+# followed by degrees of freedom
+# then the p value
+# the default alternative: two.sided
+# then the confidence bounds
+# output is a tibble so that it is 
+# easy to use these results
+```
+
+`r chunk_reveal("ttest1", break_type = "auto", title = "Tidy version from the {infer} package")`
+
+
+---
+
+### Now we will use the baseR version: t.test()
+
+#### Notice that you have to use   `data = .`
+#### It is not quite as pipe-friendly
+---
+
+```{r ttest2, include = FALSE}
+mtcars %>%
+  select(mpg, cyl, am) %>% 
+  filter(cyl > 5) %>%
+  t.test(mpg ~ am, data = .)
+# Interpreting the results
+# The t statistic is first
+# followed by degrees of freedom
+# then the p value
+# then the alternative hypothesis
+# then the confidence bounds
+# then the mean mpg for each group
+```
+
+`r chunk_reveal("ttest2", break_type = "auto", title = "Base R Version")`
+
+
+---
+
+
+```{css, eval = TRUE, echo = FALSE}
+.remark-code{line-height: 1.5; font-size: 80%}
+```
+
+### Which version of the t test do you like better?
+
+Discuss.
