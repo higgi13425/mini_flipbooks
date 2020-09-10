@@ -19,6 +19,8 @@ knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment =
 library(flipbookr)
 library(tidyverse)
 library(infer)
+library(medicaldata)
+prostate <- medicaldata::blood_storage %>% as.tibble()
 ```
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
@@ -40,10 +42,8 @@ xaringanthemer::style_duo_accent(
 ---
 
 ```{r ttest1, include = FALSE}
-mtcars %>%
-  select(mpg, cyl, am) %>% 
-  filter(cyl > 5) %>%
-  t_test(mpg ~ am, 
+prostate %>%
+  t_test(TVol ~ AA, 
          order = c("0", "1"))
 # Interpreting the results
 # The t statistic is first
@@ -64,13 +64,13 @@ mtcars %>%
 
 #### Notice that you have to use   `data = .`
 #### It is not quite as pipe-friendly
+#### But you do not have to specify the order of the two levels.
 ---
 
 ```{r ttest2, include = FALSE}
-mtcars %>%
-  select(mpg, cyl, am) %>% 
-  filter(cyl > 5) %>%
-  t.test(mpg ~ am, data = .)
+prostate %>%
+  t.test(TVol ~ AA, data = .)
+
 # Interpreting the results
 # The t statistic is first
 # followed by degrees of freedom
