@@ -1,0 +1,70 @@
+---
+title: "How to Use the _across()_ function"
+subtitle: "mutate or summarize across many columns at once"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+data <- medicaldata::blood_storage %>% as_tibble()
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+### How to Use Across to Mutate many columns at once
+
+#### This is awfully convenient
+
+Format: <br>
+
+mutate(across(logic.test = which variables, _function to apply()_))
+
+Example 1: mutate numeric to factor
+
+Some numeric variables having to do with Tumor volume and Stage should actually be factors.
+
+---
+
+```{r across1, include = FALSE, eval = FALSE}
+data %>%
+# select the variables needed
+  select(Age, starts_with('T')) %>% 
+# check out the variable types
+  select(-starts_with('Time')) %>% 
+# now do mutate across
+  mutate(across(starts_with('T'), 
+                factor)) 
+# see how variable types have changed
+# 
+# Format:
+# mutate(across(logic.test,function))
+```
+
+`r chunk_reveal("across1", 
+    break_type = "auto", 
+    title = "Mutate across (selected) numeric type to convert to factor type")`
+

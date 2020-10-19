@@ -1,0 +1,59 @@
+---
+title: "embedded_flipbook"
+author: "Peter Higgins"
+date: "10/19/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(flipbookr)
+library(tidyverse)
+library(janitor)
+library(medicaldata)
+library(xaringan)
+library(xaringanExtra)
+data <- medicaldata::blood_storage
+```
+
+## Testing how to embed a flipbook in it's own Rmd (i.e. a book)
+
+This is only a test.
+
+```{r wrangle, include = FALSE}
+data %>% 
+  clean_names() %>% 
+  select(recurrence, fam_hx, age, aa, t_vol, t_stage, b_gs, organ_confined, units, any_adj_therapy) %>% 
+  filter(units > 1)
+```
+
+## Build it #1
+
+```{r build_fb1, message=FALSE, warning = FALSE, echo=FALSE}
+build_instant_flipbook(chunk_name = "wrangle", use_share_again = T,
+      font_size = 120)
+```
+
+## Now a plot
+
+This is only a plot.
+
+```{r plot, include = FALSE}
+data %>% 
+  clean_names() %>% 
+  ggplot() +
+  aes(x = preop_psa) +
+  aes(y = time_to_recurrence) + 
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_grid(~ fam_hx) + 
+  theme_minimal()
+  
+```
+
+## Build it #2
+
+```{r build_fb2, message=FALSE, warning = FALSE, echo=FALSE}
+build_instant_flipbook(chunk_name = "plot", use_share_again = T,
+      font_size = 120)
+```
