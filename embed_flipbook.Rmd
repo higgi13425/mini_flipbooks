@@ -31,8 +31,8 @@ data %>%
 
 You can:
 
-- Expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small screen).
-- Go to the next slide or previous slide with the left and right arrow keys. 
+- Expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small version).
+- Go to the next slide or previous slide with the left and right arrow icons/keys. 
 - Share on the internet by clicking the Share icon (3 circles connected by 2 lines).
 
 Give it a try.
@@ -67,8 +67,8 @@ data %>%
 
 You can:
 
-- Expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small screen).
-- Go to the next slide or previous slide with the left and right arrow keys. 
+- Expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small version).
+- Go to the next slide or previous slide with the left and right arrow icons/keys. 
 - Share on the internet by clicking the Share icon (3 circles connected by 2 lines).
 
 Give it a try.
