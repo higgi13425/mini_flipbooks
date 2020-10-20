@@ -2118,12 +2118,90 @@ data %&gt;%
   geom_point() +
   geom_smooth(method = "lm") +
   facet_grid(~ fam_hx) +
-  theme_minimal()
+  theme_minimal() +
+* labs(x = "Preoperative Prostate Specific Antigen (PSA) level")
 ```
 ]
  
 .panel2-plot-auto[
 &lt;img src="plot_files/figure-html/plot_auto_10_output-1.png" width="576" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-auto[
+
+```r
+data %&gt;%
+  clean_names() %&gt;%
+  ggplot() +
+  aes(x = preop_psa) +
+  aes(y = time_to_recurrence) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_grid(~ fam_hx) +
+  theme_minimal() +
+  labs(x = "Preoperative Prostate Specific Antigen (PSA) level") +
+* labs(y = "Months to Recurrence of Prostate Cancer")
+```
+]
+ 
+.panel2-plot-auto[
+&lt;img src="plot_files/figure-html/plot_auto_11_output-1.png" width="576" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-auto[
+
+```r
+data %&gt;%
+  clean_names() %&gt;%
+  ggplot() +
+  aes(x = preop_psa) +
+  aes(y = time_to_recurrence) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_grid(~ fam_hx) +
+  theme_minimal() +
+  labs(x = "Preoperative Prostate Specific Antigen (PSA) level") +
+  labs(y = "Months to Recurrence of Prostate Cancer") +
+* labs(title = "Recurrence of Prostate Cancer by Preop PSA")
+```
+]
+ 
+.panel2-plot-auto[
+&lt;img src="plot_files/figure-html/plot_auto_12_output-1.png" width="576" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-auto[
+
+```r
+data %&gt;%
+  clean_names() %&gt;%
+  ggplot() +
+  aes(x = preop_psa) +
+  aes(y = time_to_recurrence) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  facet_grid(~ fam_hx) +
+  theme_minimal() +
+  labs(x = "Preoperative Prostate Specific Antigen (PSA) level") +
+  labs(y = "Months to Recurrence of Prostate Cancer") +
+  labs(title = "Recurrence of Prostate Cancer by Preop PSA")
+```
+]
+ 
+.panel2-plot-auto[
+&lt;img src="plot_files/figure-html/plot_auto_13_output-1.png" width="576" /&gt;
 ]
 
 &lt;style&gt;

@@ -6,5 +6,8 @@ data %>%
   geom_point() +
   geom_smooth(method = "lm") +
   facet_grid(~ fam_hx) + 
-  theme_minimal()
+  theme_minimal() +
+  labs(x = "Preoperative Prostate Specific Antigen (PSA) level") +
+  labs(y = "Months to Recurrence of Prostate Cancer") +
+  labs(title = "Recurrence of Prostate Cancer by Preop PSA")
   
