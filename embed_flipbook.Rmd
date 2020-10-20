@@ -1,5 +1,5 @@
 ---
-title: "embedded_flipbook"
+title: "Embedded Flipbook"
 author: "Peter Higgins"
 date: "10/19/2020"
 output: html_document
@@ -16,7 +16,7 @@ library(xaringanExtra)
 data <- medicaldata::blood_storage
 ```
 
-## Testing how to embed a flipbook in it's own Rmd (i.e. a book)
+### Testing how to embed a flipbook in its own Rmd (i.e. a bookdown book)
 
 This is only a test.
 
@@ -27,14 +27,22 @@ data %>%
   filter(units > 1)
 ```
 
-## Build it #1
+## Data Wranging Example #1
+
+You can:
+
+- expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small screen).
+- go to the next slide or previous slide with the left and right arrow keys. 
+- Share on the internet by clicking the Share icon (3 circles connected by 2 lines).
+
+Give it a try.
 
 ```{r build_fb1, message=FALSE, warning = FALSE, echo=FALSE}
 build_instant_flipbook(chunk_name = "wrangle", use_share_again = T,
       font_size = 120)
 ```
 
-## Now a plot
+### Now a plot
 
 This is only a plot.
 
@@ -54,7 +62,15 @@ data %>%
   
 ```
 
-## Build it #2
+## Plotting Example #2
+
+You can:
+
+- expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small screen).
+- go to the next slide or previous slide with the left and right arrow keys. 
+- Share on the internet by clicking the Share icon (3 circles connected by 2 lines).
+
+Give it a try.
 
 ```{r build_fb2, message=FALSE, warning = FALSE, echo=FALSE}
 build_instant_flipbook(chunk_name = "plot", use_share_again = T,
