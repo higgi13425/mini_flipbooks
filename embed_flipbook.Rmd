@@ -43,7 +43,7 @@ Give it a try.
 
 ```{r build_fb1, message=FALSE, warning = FALSE, echo=FALSE}
 build_instant_flipbook(chunk_name = "wrangle", use_share_again = T,
-      font_size = 120)
+      font_size = 110)
 ```
 
 ### Now a plot
@@ -59,7 +59,8 @@ data %>%
   geom_point() +
   geom_smooth(method = "lm") +
   facet_grid(~ fam_hx, 
-    labeller = labeller(fam_hx = label_both)) + 
+    labeller = 
+    labeller(fam_hx=label_both)) + 
   theme_minimal() +
   labs(x = "Preoperative Prostate Specific Antigen (PSA) level") +
   labs(y = "Months to Recurrence of Prostate Cancer") +
@@ -78,6 +79,7 @@ You can:
 Give it a try.
 
 ```{r build_fb2, message=FALSE, warning = FALSE, echo=FALSE}
-build_instant_flipbook(chunk_name = "plot", use_share_again = T,
-      font_size = 120)
+build_instant_flipbook(chunk_name = "plot", 
+                use_share_again = T,
+                  font_size = 110)
 ```
