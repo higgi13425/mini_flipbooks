@@ -33,10 +33,10 @@ data %>%
 
 ## Data Wranging Example #1
 
-You can:
+In the window below, you can:
 
 - Expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small version).
-- Go to the next slide or previous slide with the left and right arrow icons/keys. 
+- Go to the next slide or previous slide with the left and right arrow icons/keys (or hover your mouse over the window and slowly scroll up and down.) 
 - Share on the internet by clicking the Share icon (3 circles connected by 2 lines).
 
 Give it a try.
@@ -70,10 +70,10 @@ data %>%
 
 ## Plotting Example #2
 
-You can:
+In the window below, you can:
 
 - Expand the example below to View in full screen by clicking the four arrows icon (Esc to return to small version).
-- Go to the next slide or previous slide with the left and right arrow icons/keys. 
+- Go to the next slide or previous slide with the left and right arrow icons/keys (or hover your mouse over the window and slowly scroll up and down.) 
 - Share on the internet by clicking the Share icon (3 circles connected by 2 lines).
 
 Give it a try.
