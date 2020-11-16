@@ -1,0 +1,71 @@
+---
+title: "How to Use the _across()_ function"
+subtitle: "mutate or summarize across many columns at once"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+data <- medicaldata::blood_storage %>% as_tibble()
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#00274C", 
+  secondary_color = "#FFCB05",
+)
+```
+
+### How to Use Across to Act on Many Columns at Once
+
+#### This is awfully convenient
+
+Format: <br>
+
+summarize(across(logic.test = which variables, _function to apply()_))
+
+Example 2: calculate means across several grouped columns
+
+We will compare the mean Age, Tumor Volume, and PreopPSA for recurrent and non-recurrent prostate cancer
+
+---
+
+```{r across2, include = FALSE, eval = FALSE}
+data %>%
+# group_by recurrence
+  group_by(Recurrence) %>% 
+# now do summarize across
+  summarize(across(c(Age, TVol, 
+                     PreopPSA), 
+                mean, na.rm = TRUE)) 
+# Format:
+# mutate(across(logic.test,function))
+# #
+# recurrent prostate CA has 
+# similar age,
+# but larger baseline 
+# tumor volume and preopPSA
+```
+
+`r chunk_reveal("across2", 
+    break_type = "auto", 
+    title = "Take Means Across Several Grouped Variables")`
+
