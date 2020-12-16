@@ -1,0 +1,166 @@
+---
+title: "How to Use _filter()_ on Character Variables"
+subtitle: "Using _str_detect_ to find the rows you want"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+cmv <- medicaldata::cytomegalovirus %>% clean_names() %>% as_tibble()
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Manrope"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+### How to Use Filters to Pick Out String Values
+
+#### Leaning on the Stringr package
+
+Format: <br>
+
+dataset %>% 
+  filter(str_detect(variable, "string"))
+  
+The _str_detect()_ function returns either a TRUR or FALSE for each row in the dataset - a **logical vector**. <br>
+The filter function **acts** on this logical vector to filter out rows that are FALSE for your logical statement.
+It is a common mistake to rely on str_detect alone, but it won't filter your rows. You need **both** filter and str_detect to get this done.
+
+Let's look at the CMV dataset, which looks at bone marrow transplantation for a variety of cancers. 
+
+Example 1: filter cmv data for cases with a diagnosis that includes the string "oma".
+
+---
+
+```{r filter1, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(cmv) 
+
+cmv %>% 
+# selected 3 columns
+# see how diagnosis changes w/filter
+  select(age, sex, diagnosis) %>% 
+  filter(str_detect(diagnosis, "oma"))
+
+# see how many rows now
+# check diagnosis
+# Format:
+# filter(str_detect(variable,"string"))        <br>  
+
+
+```
+
+`r chunk_reveal("filter1", 
+    break_type = "auto", 
+    title = "Filter Rows with str_detect on Character Variables")`
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(cmv) 
+
+cmv %>% 
+# selected 3 columns
+# see how diagnosis changes w/filter
+  select(age, race, diagnosis) %>% 
+  filter(!str_detect(diagnosis, "Hodgkin"))
+
+# see how many rows now
+# check diagnosis
+# Format:
+# filter(str_detect(variable,"string"))        <br>  
+
+
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Example 2: Filter Not-Rows with str_detect on Character Variables")`
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(cmv) 
+
+cmv %>% 
+# selected 3 columns
+# see how diagnosis changes w/filter
+  select(sex, race, diagnosis) %>% 
+  filter(str_detect(diagnosis, "lympho.+ic"))
+
+# see how many rows now
+# check diagnosis
+# Format:
+# filter(str_detect(variable,"string"))        <br>  
+
+
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Example 3: Filter Rows with a Little Bit of Regex<br>.+ means any character from 1 to N times")`
+
+---
+
+```{r filter4, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(cmv) 
+
+cmv %>% 
+# selected 3 columns
+# see how diagnosis changes w/filter
+  select(sex, race, diagnosis) %>% 
+  filter(str_detect(diagnosis, "myelo*"))
+
+# see how many rows now
+# check diagnosis
+# Format:
+# filter(str_detect(variable,"string"))        <br>  
+
+
+```
+
+`r chunk_reveal("filter4", 
+    break_type = "auto", 
+    title = "Example 4: Filter Rows with a Little Bit of Regex<br> * means any character ")`
+
+---
+
+### Where To Learn More about Regex (Regular Expressions)
+
+in R, click: https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html 
+
+In general, click here: https://regexone.com/
+
+and/or click here: https://www.sitepoint.com/learn-regex/
+
+and/or click here: https://github.com/ziishaned/learn-regex

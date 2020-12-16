@@ -1,6 +1,6 @@
 ---
 title: "How to Use the _filter()_ function for numeric values"
-subtitle: "selectinf specific rows"  
+subtitle: "Selecting specific rows"  
 author: 
   - "Peter Higgins"
 date: '`r Sys.Date()`'
@@ -29,10 +29,14 @@ prostate <- medicaldata::blood_storage %>% clean_names() %>% as_tibble()
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
-style_duo_accent(
-  primary_color = "#1381B0",
-  secondary_color = "#FF961C",
-  inverse_header_color = "#FFFFFF"
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Manrope"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
 )
 ```
 
@@ -43,28 +47,34 @@ style_duo_accent(
 Format: <br>
 
 `dataset %>% 
-  filter(var > value) # you can use <=, ==, <, >, >=, etc.`
+  filter(var > value)` # you can use <=, ==, <, >, >=, etc.
 
-As long as what is in the parentheses evaluates to a logical vector - a string of TRUE or FALSE values, one for each row in your dataset.
+As long as what is in the parentheses evaluates to a logical vector - <br>
+a string of TRUE or FALSE values, one for each row in your dataset.
 
-You can Remember that filteR is for selecting Rows because it ends with an R.
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Example 1: filter `prostate` data for recurrence == 1
+Example 1: filter prostate data for cases with cancer recurrence.
 
 
 ---
 
 ```{r filter1, include = FALSE, eval = FALSE}
-nrow(prostate) # how many rows when you start
+# how many rows when you start
+nrow(prostate) 
 
-prostate %>%
-# select the variables needed
-  filter(recurrence == 1)) %>% 
+prostate %>% 
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, aa, fam_hx, recurrence) %>% 
+  filter(recurrence == 1) 
 
-# see how many rows now
+# see how many rows x cols now
 # 
 # Format:
-# filter(var [comparison] value)
+# filter(variable [comparison] value)        <br>  
+
+
 ```
 
 `r chunk_reveal("filter1", 

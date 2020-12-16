@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>How to Use the across() function</title>
+    <title>How to Use the filter() function for numeric values</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
     <meta name="date" content="2020-12-15" />
@@ -12,8 +12,8 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# How to Use the <em>across()</em> function
-## mutate or summarize across many columns at once
+# How to Use the <em>filter()</em> function for numeric values
+## Selecting specific rows
 ### Peter Higgins
 ### 2020-12-15
 
@@ -24,17 +24,22 @@ class: center, middle, inverse, title-slide
 
 
 
-### How to Use Across to Mutate many columns at once
+### How to Use Filter to Pick Out a Subset of Rows
 
-#### This is awfully convenient
+#### We will Start with Numeric Variables
 
 Format: &lt;br&gt;
 
-mutate(across(logic.test = which variables, _function to apply()_))
+`dataset %&gt;% 
+  filter(var &gt; value)` # you can use &lt;=, ==, &lt;, &gt;, &gt;=, etc.
 
-Example 1: mutate numeric to factor
+As long as what is in the parentheses evaluates to a logical vector - &lt;br&gt;
+a string of TRUE or FALSE values, one for each row in your dataset.
 
-Some numeric variables having to do with Tumor volume and Stage should actually be factors.
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+
+Example 1: filter prostate data for cases with cancer recurrence.
+
 
 ---
 
@@ -42,66 +47,100 @@ Some numeric variables having to do with Tumor volume and Stage should actually 
 
 count: false
  
-Mutate across (selected) numeric type to convert to factor type
-.panel1-across1-auto[
+Filter Rows on Numeric Values
+.panel1-filter1-auto[
 
 ```r
-*data
+# how many rows when you start
+*nrow(prostate)
 ```
 ]
  
-.panel2-across1-auto[
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+]
+
+---
+count: false
+ 
+Filter Rows on Numeric Values
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+*prostate
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
 
 ```
 # A tibble: 316 x 20
-   RBC.Age.Group Median.RBC.Age   Age    AA FamHx  PVol  TVol T.Stage   bGS
-           &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
- 1             3             25  72.1     0     0  54       3       1     3
- 2             3             25  73.6     0     0  43.2     3       2     2
- 3             3             25  67.5     0     0 103.      1       1     3
- 4             2             15  65.8     0     0  46       1       1     1
- 5             2             15  63.2     0     0  60       2       1     2
- 6             3             25  65.4     0     0  45.9     2       1     1
- 7             3             25  65.5     1     0  42.6     2       1     1
- 8             1             10  67.1     0     0  40.7     3       1     1
- 9             1             10  63.9     0     0  45       2       1     1
-10             2             15  63       1     0  67.6     2       1     2
-# … with 306 more rows, and 11 more variables: `BN+` &lt;dbl&gt;,
-#   OrganConfined &lt;dbl&gt;, PreopPSA &lt;dbl&gt;, PreopTherapy &lt;dbl&gt;, Units &lt;dbl&gt;,
-#   sGS &lt;dbl&gt;, AnyAdjTherapy &lt;dbl&gt;, AdjRadTherapy &lt;dbl&gt;, Recurrence &lt;dbl&gt;,
-#   Censor &lt;dbl&gt;, TimeToRecurrence &lt;dbl&gt;
+   rbc_age_group median_rbc_age   age    aa fam_hx p_vol t_vol t_stage  b_gs
+           &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1             3             25  72.1     0      0  54       3       1     3
+ 2             3             25  73.6     0      0  43.2     3       2     2
+ 3             3             25  67.5     0      0 103.      1       1     3
+ 4             2             15  65.8     0      0  46       1       1     1
+ 5             2             15  63.2     0      0  60       2       1     2
+ 6             3             25  65.4     0      0  45.9     2       1     1
+ 7             3             25  65.5     1      0  42.6     2       1     1
+ 8             1             10  67.1     0      0  40.7     3       1     1
+ 9             1             10  63.9     0      0  45       2       1     1
+10             2             15  63       1      0  67.6     2       1     2
+# … with 306 more rows, and 11 more variables: bn &lt;dbl&gt;, organ_confined &lt;dbl&gt;,
+#   preop_psa &lt;dbl&gt;, preop_therapy &lt;dbl&gt;, units &lt;dbl&gt;, s_gs &lt;dbl&gt;,
+#   any_adj_therapy &lt;dbl&gt;, adj_rad_therapy &lt;dbl&gt;, recurrence &lt;dbl&gt;,
+#   censor &lt;dbl&gt;, time_to_recurrence &lt;dbl&gt;
 ```
 ]
 
 ---
 count: false
  
-Mutate across (selected) numeric type to convert to factor type
-.panel1-across1-auto[
+Filter Rows on Numeric Values
+.panel1-filter1-auto[
 
 ```r
-data %&gt;%
-# select the variables needed
-* select(Age, starts_with('T'))
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+* select(age, aa, fam_hx, recurrence)
 ```
 ]
  
-.panel2-across1-auto[
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
 
 ```
 # A tibble: 316 x 4
-     Age  TVol T.Stage TimeToRecurrence
-   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;            &lt;dbl&gt;
- 1  72.1     3       1             2.67
- 2  73.6     3       2            47.6 
- 3  67.5     1       1            14.1 
- 4  65.8     1       1            59.5 
- 5  63.2     2       1             1.23
- 6  65.4     2       1            74.7 
- 7  65.5     2       1            13.9 
- 8  67.1     3       1             8.37
- 9  63.9     2       1            48.6 
-10  63       2       1            22.6 
+     age    aa fam_hx recurrence
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     0      0          1
+ 2  73.6     0      0          1
+ 3  67.5     0      0          0
+ 4  65.8     0      0          0
+ 5  63.2     0      0          0
+ 6  65.4     0      0          0
+ 7  65.5     1      0          0
+ 8  67.1     0      0          1
+ 9  63.9     0      0          0
+10  63       1      0          0
 # … with 306 more rows
 ```
 ]
@@ -109,120 +148,141 @@ data %&gt;%
 ---
 count: false
  
-Mutate across (selected) numeric type to convert to factor type
-.panel1-across1-auto[
+Filter Rows on Numeric Values
+.panel1-filter1-auto[
 
 ```r
-data %&gt;%
-# select the variables needed
-  select(Age, starts_with('T')) %&gt;%
-# check out the variable types
-* select(-starts_with('Time'))
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, aa, fam_hx, recurrence) %&gt;%
+* filter(recurrence == 1)
 ```
 ]
  
-.panel2-across1-auto[
+.panel2-filter1-auto[
 
 ```
-# A tibble: 316 x 3
-     Age  TVol T.Stage
-   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1  72.1     3       1
- 2  73.6     3       2
- 3  67.5     1       1
- 4  65.8     1       1
- 5  63.2     2       1
- 6  65.4     2       1
- 7  65.5     2       1
- 8  67.1     3       1
- 9  63.9     2       1
-10  63       2       1
-# … with 306 more rows
+[1] 316
+```
+
+```
+# A tibble: 54 x 4
+     age    aa fam_hx recurrence
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     0      0          1
+ 2  73.6     0      0          1
+ 3  67.1     0      0          1
+ 4  64.4     0      0          1
+ 5  69       1      0          1
+ 6  63.4     1      0          1
+ 7  70.4     1      0          1
+ 8  65.3     1      0          1
+ 9  60.8     0      0          1
+10  72.1     0      1          1
+# … with 44 more rows
 ```
 ]
 
 ---
 count: false
  
-Mutate across (selected) numeric type to convert to factor type
-.panel1-across1-auto[
+Filter Rows on Numeric Values
+.panel1-filter1-auto[
 
 ```r
-data %&gt;%
-# select the variables needed
-  select(Age, starts_with('T')) %&gt;%
-# check out the variable types
-  select(-starts_with('Time')) %&gt;%
-# now do mutate across
-* mutate(across(starts_with('T'),
-*               factor))
-```
-]
- 
-.panel2-across1-auto[
+# how many rows when you start
+nrow(prostate)
 
-```
-# A tibble: 316 x 3
-     Age TVol  T.Stage
-   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;  
- 1  72.1 3     1      
- 2  73.6 3     2      
- 3  67.5 1     1      
- 4  65.8 1     1      
- 5  63.2 2     1      
- 6  65.4 2     1      
- 7  65.5 2     1      
- 8  67.1 3     1      
- 9  63.9 2     1      
-10  63   2     1      
-# … with 306 more rows
-```
-]
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, aa, fam_hx, recurrence) %&gt;%
+  filter(recurrence == 1)
 
----
-count: false
- 
-Mutate across (selected) numeric type to convert to factor type
-.panel1-across1-auto[
-
-```r
-data %&gt;%
-# select the variables needed
-  select(Age, starts_with('T')) %&gt;%
-# check out the variable types
-  select(-starts_with('Time')) %&gt;%
-# now do mutate across
-  mutate(across(starts_with('T'),
-                factor))
-# see how variable types have changed
+# see how many rows x cols now
 #
 # Format:
-*# mutate(across(logic.test,function))  # mutate(across(logic.test,function))
+*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
 ```
 ]
  
-.panel2-across1-auto[
+.panel2-filter1-auto[
 
 ```
-# A tibble: 316 x 3
-     Age TVol  T.Stage
-   &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;  
- 1  72.1 3     1      
- 2  73.6 3     2      
- 3  67.5 1     1      
- 4  65.8 1     1      
- 5  63.2 2     1      
- 6  65.4 2     1      
- 7  65.5 2     1      
- 8  67.1 3     1      
- 9  63.9 2     1      
-10  63   2     1      
-# … with 306 more rows
+[1] 316
+```
+
+```
+# A tibble: 54 x 4
+     age    aa fam_hx recurrence
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     0      0          1
+ 2  73.6     0      0          1
+ 3  67.1     0      0          1
+ 4  64.4     0      0          1
+ 5  69       1      0          1
+ 6  63.4     1      0          1
+ 7  70.4     1      0          1
+ 8  65.3     1      0          1
+ 9  60.8     0      0          1
+10  72.1     0      1          1
+# … with 44 more rows
+```
+]
+
+---
+count: false
+ 
+Filter Rows on Numeric Values
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, aa, fam_hx, recurrence) %&gt;%
+  filter(recurrence == 1)
+
+# see how many rows x cols now
+#
+# Format:
+# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 54 x 4
+     age    aa fam_hx recurrence
+   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     0      0          1
+ 2  73.6     0      0          1
+ 3  67.1     0      0          1
+ 4  64.4     0      0          1
+ 5  69       1      0          1
+ 6  63.4     1      0          1
+ 7  70.4     1      0          1
+ 8  65.3     1      0          1
+ 9  60.8     0      0          1
+10  72.1     0      1          1
+# … with 44 more rows
 ```
 ]
 
 &lt;style&gt;
-.panel1-across1-auto {
+.panel1-filter1-auto {
   color: black;
   width: 38.6060606060606%;
   hight: 32%;
@@ -230,7 +290,7 @@ data %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel2-across1-auto {
+.panel2-filter1-auto {
   color: black;
   width: 59.3939393939394%;
   hight: 32%;
@@ -238,7 +298,7 @@ data %&gt;%
   padding-left: 1%;
   font-size: 80%
 }
-.panel3-across1-auto {
+.panel3-filter1-auto {
   color: black;
   width: NA%;
   hight: 33%;
@@ -247,6 +307,7 @@ data %&gt;%
   font-size: 80%
 }
 &lt;/style&gt;
+
 
 
 

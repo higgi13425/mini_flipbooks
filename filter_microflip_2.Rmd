@@ -1,0 +1,164 @@
+---
+title: "How to Use Multiple _filter()_ functions with Boolean logic"
+subtitle: "Selecting specific rows with multiple criteria"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+prostate <- medicaldata::blood_storage %>% clean_names() %>% as_tibble()
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Manrope"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+### How to Use Multiple Filters to Pick Out a Subset of Rows
+
+#### Combining Logical Statements
+
+Format: <br>
+
+`dataset %>% 
+  filter(var1 > value & var2 > value)` 
+
+You can combine statements with the following:
+- & (AND) (age >60 & fam_hx < 1)
+- | (OR)  (age >65 | fam_hx == 1)
+- ! (NOT) (age >= 65 & fam_hx ! = 1)
+- XOR (exclusive OR - only if exactly one of the two is true
+filter(xor(age >= 65, fam_hx == 1)
+
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+
+Example 1: filter prostate data for cases with age >65 and tumor volume >1.
+
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(prostate) 
+
+prostate %>% 
+# selected 3 columns
+# see how age and t_vol change w/filter
+  select(age, t_vol, recurrence) %>% 
+  filter(age > 65 & t_vol>1)
+
+# see how many rows now
+# check age and t_vol
+# Format:
+# filter(variable [comparison] value)        <br>  
+
+
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Filter Rows with Multiple Criteria")`
+
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(prostate) 
+
+prostate %>% 
+# selected 3 columns
+# see how age and aa change w/filter
+  select(age, aa, t_vol) %>% 
+  filter(age > 69 | t_vol > 1) %>% 
+  arrange(desc(age))
+
+# see how many rows now
+# watch age and aa status
+# Format:
+# filter(variable [comparison] value)        <br>  
+
+
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Filter Rows with OR Criteria")`
+
+---
+
+```{r filter4, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(prostate) 
+
+prostate %>% 
+# selected 3 columns
+# see how age and aa change w/filter
+  select(age, aa, t_vol) %>% 
+  filter(xor(age > 69, t_vol > 1)) %>% 
+  arrange(desc(age))
+
+# see how many rows now
+# watch age and aa status
+# Format:
+# filter(variable [comparison] value)        <br>  
+
+
+```
+
+`r chunk_reveal("filter4", 
+    break_type = "auto", 
+    title = "Filter Rows with XOR Criteria")`
+
+
+---
+
+```{r filter5, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(prostate) 
+
+prostate %>% 
+# selected 3 columns
+# see how age and aa change w/filter
+  select(age, aa, recurrence) %>% 
+  filter(age > 64 & aa != 1) %>% 
+  arrange(desc(age))
+
+# see how many rows now
+# watch age and aa status
+# Format:
+# filter(variable [comparison] value)        <br>  
+
+
+```
+
+`r chunk_reveal("filter5", 
+    break_type = "auto", 
+    title = "Filter Rows with AND, NOT Criteria")`
+
