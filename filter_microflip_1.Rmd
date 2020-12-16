@@ -1,0 +1,74 @@
+---
+title: "How to Use the _filter()_ function for numeric values"
+subtitle: "selectinf specific rows"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+prostate <- medicaldata::blood_storage %>% clean_names() %>% as_tibble()
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1381B0",
+  secondary_color = "#FF961C",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+### How to Use Filter to Pick Out a Subset of Rows
+
+#### We will Start with Numeric Variables
+
+Format: <br>
+
+`dataset %>% 
+  filter(var > value) # you can use <=, ==, <, >, >=, etc.`
+
+As long as what is in the parentheses evaluates to a logical vector - a string of TRUE or FALSE values, one for each row in your dataset.
+
+You can Remember that filteR is for selecting Rows because it ends with an R.
+
+Example 1: filter `prostate` data for recurrence == 1
+
+
+---
+
+```{r filter1, include = FALSE, eval = FALSE}
+nrow(prostate) # how many rows when you start
+
+prostate %>%
+# select the variables needed
+  filter(recurrence == 1)) %>% 
+
+# see how many rows now
+# 
+# Format:
+# filter(var [comparison] value)
+```
+
+`r chunk_reveal("filter1", 
+    break_type = "auto", 
+    title = "Filter Rows on Numeric Values")`
+
+
