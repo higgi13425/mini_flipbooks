@@ -1,0 +1,172 @@
+---
+title: "How to Use  _filter()_ functions with Dates"
+subtitle: "Selecting specific rows based on Dates and Date Ranges"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(lubridate)
+library(janitor)
+covid_dates <- medicaldata::covid_testing %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_date = ymd("2020-03-01") + pan_day)
+bmt_dates <- medicaldata::cytomegalovirus %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_dx_date = ymd("2014-01-01") + days(round(runif(1,1,364))),
+         fake_bmt_date = fake_dx_date + days(round(time_to_transplant*30)),
+         fake_agvhd_date = fake_bmt_date + days(round(time_to_agvhd*30)))
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  text_font_google   = google_font("Manrope"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+### How to Use the _filter()_ function for Rows by Date
+
+#### 
+
+Format: <br>
+
+`dataset %>% 
+  filter(between(variable, start, end))` 
+
+Start and end dates usually use the {lubridate} package, and the format     
+`ymd("2015-12-31")`
+
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+
+Example 1: filter covid_dates data for cases in March.
+
+
+---
+
+```{r filter1, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %>% 
+  filter(between(fake_date, 
+      ymd("2020-03-01"), ymd("2020-03-31")))
+
+# see how many rows now
+# check dates - between is inclusive
+# of end dates - tests on 3/1
+# and on 3/31 are included.
+# Format:
+# filter(between(variable, date, date))       <br>  
+
+
+```
+
+`r chunk_reveal("filter1", 
+    break_type = "auto", 
+    title = "Example 1: Filter Rows Between Dates")`
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(bmt_dates) 
+
+bmt_dates %>% 
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %>% 
+  filter(between(fake_bmt_date, 
+      ymd("2008-01-01"), ymd("2018-12-31"))) %>% 
+  filter(between(age, 40, 70)) %>% 
+  arrange(fake_bmt_date) # sort
+
+# see how many rows now
+# sequential filters combine with AND
+# check dates 
+# Format:
+# filter(between(variable, start, end))       <br>  
+
+
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo")`
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(bmt_dates) 
+
+bmt_dates %>% 
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_agvhd_date, sex, age) %>% 
+  filter(fake_agvhd_date > 
+           today() - months(24)) %>% 
+  arrange(fake_agvhd_date) # sort
+
+# see how many rows now
+# note we have some "future" fake dates
+# Format:
+# filter(between(variable, start, end))       <br>  
+
+
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Example 3: Find Acute GVHD Cases in last 24 Months")`
+
+---
+
+```{r filter4, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(bmt_dates) 
+
+bmt_dates %>% 
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %>% 
+# wday gives weekday 1-7, labeled
+# note one NA date
+  mutate(weekday = wday(fake_bmt_date, 
+              label=TRUE)) %>%
+# %in% must be in a vector of values
+  filter(wday(fake_bmt_date) %in% c(1,7)) %>% 
+  arrange(fake_bmt_date) # sort
+
+# see how many rows now
+# lots of handy functions in lubridate
+
+```
+
+`r chunk_reveal("filter4", 
+    break_type = "auto", 
+    title = "Example 4: Find BMTs on (Fake) Weekends")`

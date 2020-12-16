@@ -83,7 +83,7 @@ prostate %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Filter Rows with Multiple Criteria")`
+    title = "Example 2: Filter Rows with Multiple Criteria")`
 
 
 ---
@@ -109,7 +109,7 @@ prostate %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Filter Rows with OR Criteria")`
+    title = "Example 3: Filter Rows with OR Criteria")`
 
 ---
 
@@ -134,7 +134,7 @@ prostate %>%
 
 `r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Filter Rows with XOR Criteria")`
+    title = "Example 4: Filter Rows with XOR Criteria")`
 
 
 ---

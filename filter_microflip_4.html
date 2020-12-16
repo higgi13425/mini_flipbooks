@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>How to Use filter() functions with Dates</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Peter Higgins" />
+    <meta name="date" content="2020-12-16" />
+    <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# How to Use <em>filter()</em> functions with Dates
+## Selecting specific rows based on Dates and Date Ranges
+### Peter Higgins
+### 2020-12-16
+
+---
+
+
+
+
+
+
+### How to Use the _filter()_ function for Rows by Date
+
+#### 
+
+Format: &lt;br&gt;
+
+`dataset %&gt;% 
+  filter(between(variable, start, end))` 
+
+Start and end dates usually use the {lubridate} package, and the format     
+`ymd("2015-12-31")`
+
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+
+Example 1: filter covid_dates data for cases in March.
+
+
+---
+
+
+
+count: false
+ 
+Example 1: Filter Rows Between Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows Between Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows Between Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+* select(fake_date, result, gender)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 3
+   fake_date  result   gender
+   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+ 1 2020-03-05 negative female
+ 2 2020-03-08 negative female
+ 3 2020-03-08 negative male  
+ 4 2020-03-09 negative female
+ 5 2020-03-09 negative male  
+ 6 2020-03-09 negative female
+ 7 2020-03-10 negative male  
+ 8 2020-03-10 negative female
+ 9 2020-03-10 negative male  
+10 2020-03-10 negative male  
+# … with 15,514 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows Between Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %&gt;%
+* filter(between(fake_date,
+*     ymd("2020-03-01"), ymd("2020-03-31")))
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 2,421 x 3
+   fake_date  result   gender
+   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+ 1 2020-03-05 negative female
+ 2 2020-03-08 negative female
+ 3 2020-03-08 negative male  
+ 4 2020-03-09 negative female
+ 5 2020-03-09 negative male  
+ 6 2020-03-09 negative female
+ 7 2020-03-10 negative male  
+ 8 2020-03-10 negative female
+ 9 2020-03-10 negative male  
+10 2020-03-10 negative male  
+# … with 2,411 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows Between Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %&gt;%
+  filter(between(fake_date,
+      ymd("2020-03-01"), ymd("2020-03-31")))
+
+# see how many rows now
+# check dates - between is inclusive
+# of end dates - tests on 3/1
+# and on 3/31 are included.
+# Format:
+*# filter(between(variable, date, date))       &lt;br&gt;  # filter(between(variable, date, date))       &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 2,421 x 3
+   fake_date  result   gender
+   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+ 1 2020-03-05 negative female
+ 2 2020-03-08 negative female
+ 3 2020-03-08 negative male  
+ 4 2020-03-09 negative female
+ 5 2020-03-09 negative male  
+ 6 2020-03-09 negative female
+ 7 2020-03-10 negative male  
+ 8 2020-03-10 negative female
+ 9 2020-03-10 negative male  
+10 2020-03-10 negative male  
+# … with 2,411 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows Between Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %&gt;%
+  filter(between(fake_date,
+      ymd("2020-03-01"), ymd("2020-03-31")))
+
+# see how many rows now
+# check dates - between is inclusive
+# of end dates - tests on 3/1
+# and on 3/31 are included.
+# Format:
+# filter(between(variable, date, date))       &lt;br&gt;  # filter(between(variable, date, date))       &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 2,421 x 3
+   fake_date  result   gender
+   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+ 1 2020-03-05 negative female
+ 2 2020-03-08 negative female
+ 3 2020-03-08 negative male  
+ 4 2020-03-09 negative female
+ 5 2020-03-09 negative male  
+ 6 2020-03-09 negative female
+ 7 2020-03-10 negative male  
+ 8 2020-03-10 negative female
+ 9 2020-03-10 negative male  
+10 2020-03-10 negative male  
+# … with 2,411 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter1-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter1-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+*nrow(bmt_dates)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+*bmt_dates
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+* select(fake_bmt_date, sex, age)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2015-01-10        1    61
+ 2 2021-02-04        1    62
+ 3 2017-07-10        0    63
+ 4 2017-04-25        0    33
+ 5 2015-07-16        0    54
+ 6 2014-10-20        1    55
+ 7 2015-05-23        1    67
+ 8 NA                1    51
+ 9 2018-03-03        0    44
+10 2022-03-20        1    59
+# … with 54 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+* filter(between(fake_bmt_date,
+*     ymd("2008-01-01"), ymd("2018-12-31")))
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 53 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2015-01-10        1    61
+ 2 2017-07-10        0    63
+ 3 2017-04-25        0    33
+ 4 2015-07-16        0    54
+ 5 2014-10-20        1    55
+ 6 2015-05-23        1    67
+ 7 2018-03-03        0    44
+ 8 2017-10-21        1    45
+ 9 2016-01-25        1    57
+10 2014-12-22        0    52
+# … with 43 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+  filter(between(fake_bmt_date,
+      ymd("2008-01-01"), ymd("2018-12-31"))) %&gt;%
+* filter(between(age, 40, 70))
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 44 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2015-01-10        1    61
+ 2 2017-07-10        0    63
+ 3 2015-07-16        0    54
+ 4 2014-10-20        1    55
+ 5 2015-05-23        1    67
+ 6 2018-03-03        0    44
+ 7 2017-10-21        1    45
+ 8 2016-01-25        1    57
+ 9 2014-12-22        0    52
+10 2015-09-23        0    62
+# … with 34 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+  filter(between(fake_bmt_date,
+      ymd("2008-01-01"), ymd("2018-12-31"))) %&gt;%
+  filter(between(age, 40, 70)) %&gt;%
+* arrange(fake_bmt_date)  # sort
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 44 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2014-10-20        1    55
+ 2 2014-10-23        1    61
+ 3 2014-11-12        1    57
+ 4 2014-11-26        1    48
+ 5 2014-12-06        0    61
+ 6 2014-12-08        1    49
+ 7 2014-12-21        1    57
+ 8 2014-12-22        0    52
+ 9 2014-12-22        1    62
+10 2015-01-10        1    61
+# … with 34 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+  filter(between(fake_bmt_date,
+      ymd("2008-01-01"), ymd("2018-12-31"))) %&gt;%
+  filter(between(age, 40, 70)) %&gt;%
+  arrange(fake_bmt_date)  # sort
+
+# see how many rows now
+# sequential filters combine with AND
+# check dates
+# Format:
+*# filter(between(variable, start, end))       &lt;br&gt;  # filter(between(variable, start, end))       &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 44 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2014-10-20        1    55
+ 2 2014-10-23        1    61
+ 3 2014-11-12        1    57
+ 4 2014-11-26        1    48
+ 5 2014-12-06        0    61
+ 6 2014-12-08        1    49
+ 7 2014-12-21        1    57
+ 8 2014-12-22        0    52
+ 9 2014-12-22        1    62
+10 2015-01-10        1    61
+# … with 34 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+  filter(between(fake_bmt_date,
+      ymd("2008-01-01"), ymd("2018-12-31"))) %&gt;%
+  filter(between(age, 40, 70)) %&gt;%
+  arrange(fake_bmt_date)  # sort
+
+# see how many rows now
+# sequential filters combine with AND
+# check dates
+# Format:
+# filter(between(variable, start, end))       &lt;br&gt;  # filter(between(variable, start, end))       &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 44 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2014-10-20        1    55
+ 2 2014-10-23        1    61
+ 3 2014-11-12        1    57
+ 4 2014-11-26        1    48
+ 5 2014-12-06        0    61
+ 6 2014-12-08        1    49
+ 7 2014-12-21        1    57
+ 8 2014-12-22        0    52
+ 9 2014-12-22        1    62
+10 2015-01-10        1    61
+# … with 34 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter2-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter2-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+*nrow(bmt_dates)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+]
+
+---
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+*bmt_dates
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+* select(fake_agvhd_date, sex, age)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 3
+   fake_agvhd_date   sex   age
+   &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
+ 1 2015-04-26          1    61
+ 2 2026-06-12          1    62
+ 3 2017-10-30          0    63
+ 4 2019-08-29          0    33
+ 5 2015-10-08          0    54
+ 6 2015-02-13          1    55
+ 7 2015-08-21          1    67
+ 8 NA                  1    51
+ 9 2018-03-24          0    44
+10 2024-01-11          1    59
+# … with 54 more rows
+```
+]
+
+---
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_agvhd_date, sex, age) %&gt;%
+* filter(fake_agvhd_date &gt;
+*          today() - months(24))
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 16 x 3
+   fake_agvhd_date   sex   age
+   &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
+ 1 2026-06-12          1    62
+ 2 2019-08-29          0    33
+ 3 2024-01-11          1    59
+ 4 2034-04-23          0    61
+ 5 2020-11-29          1    62
+ 6 2024-02-22          0    51
+ 7 2022-05-22          0    62
+ 8 2021-06-25          0    52
+ 9 2027-05-14          0    48
+10 2020-01-28          1    46
+11 2022-11-11          1    51
+12 2021-12-20          1    56
+13 2019-01-01          1    62
+14 2020-06-29          1    58
+15 2028-10-31          0    41
+16 2029-02-25          1    50
+```
+]
+
+---
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_agvhd_date, sex, age) %&gt;%
+  filter(fake_agvhd_date &gt;
+           today() - months(24)) %&gt;%
+* arrange(fake_agvhd_date)  # sort
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 16 x 3
+   fake_agvhd_date   sex   age
+   &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
+ 1 2019-01-01          1    62
+ 2 2019-08-29          0    33
+ 3 2020-01-28          1    46
+ 4 2020-06-29          1    58
+ 5 2020-11-29          1    62
+ 6 2021-06-25          0    52
+ 7 2021-12-20          1    56
+ 8 2022-05-22          0    62
+ 9 2022-11-11          1    51
+10 2024-01-11          1    59
+11 2024-02-22          0    51
+12 2026-06-12          1    62
+13 2027-05-14          0    48
+14 2028-10-31          0    41
+15 2029-02-25          1    50
+16 2034-04-23          0    61
+```
+]
+
+---
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_agvhd_date, sex, age) %&gt;%
+  filter(fake_agvhd_date &gt;
+           today() - months(24)) %&gt;%
+  arrange(fake_agvhd_date)  # sort
+
+# see how many rows now
+# note we have some "future" fake dates
+# Format:
+*# filter(between(variable, start, end))       &lt;br&gt;  # filter(between(variable, start, end))       &lt;br&gt;
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 16 x 3
+   fake_agvhd_date   sex   age
+   &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
+ 1 2019-01-01          1    62
+ 2 2019-08-29          0    33
+ 3 2020-01-28          1    46
+ 4 2020-06-29          1    58
+ 5 2020-11-29          1    62
+ 6 2021-06-25          0    52
+ 7 2021-12-20          1    56
+ 8 2022-05-22          0    62
+ 9 2022-11-11          1    51
+10 2024-01-11          1    59
+11 2024-02-22          0    51
+12 2026-06-12          1    62
+13 2027-05-14          0    48
+14 2028-10-31          0    41
+15 2029-02-25          1    50
+16 2034-04-23          0    61
+```
+]
+
+---
+count: false
+ 
+Example 3: Find Acute GVHD Cases in last 24 Months
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_agvhd_date, sex, age) %&gt;%
+  filter(fake_agvhd_date &gt;
+           today() - months(24)) %&gt;%
+  arrange(fake_agvhd_date)  # sort
+
+# see how many rows now
+# note we have some "future" fake dates
+# Format:
+# filter(between(variable, start, end))       &lt;br&gt;  # filter(between(variable, start, end))       &lt;br&gt;
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 16 x 3
+   fake_agvhd_date   sex   age
+   &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
+ 1 2019-01-01          1    62
+ 2 2019-08-29          0    33
+ 3 2020-01-28          1    46
+ 4 2020-06-29          1    58
+ 5 2020-11-29          1    62
+ 6 2021-06-25          0    52
+ 7 2021-12-20          1    56
+ 8 2022-05-22          0    62
+ 9 2022-11-11          1    51
+10 2024-01-11          1    59
+11 2024-02-22          0    51
+12 2026-06-12          1    62
+13 2027-05-14          0    48
+14 2028-10-31          0    41
+15 2029-02-25          1    50
+16 2034-04-23          0    61
+```
+]
+
+&lt;style&gt;
+.panel1-filter3-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter3-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+*nrow(bmt_dates)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+]
+
+---
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+*bmt_dates
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+* select(fake_bmt_date, sex, age)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 3
+   fake_bmt_date   sex   age
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
+ 1 2015-01-10        1    61
+ 2 2021-02-04        1    62
+ 3 2017-07-10        0    63
+ 4 2017-04-25        0    33
+ 5 2015-07-16        0    54
+ 6 2014-10-20        1    55
+ 7 2015-05-23        1    67
+ 8 NA                1    51
+ 9 2018-03-03        0    44
+10 2022-03-20        1    59
+# … with 54 more rows
+```
+]
+
+---
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+# wday gives weekday 1-7, labeled
+# note one NA date
+* mutate(weekday = wday(fake_bmt_date,
+*             label=TRUE))
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 4
+   fake_bmt_date   sex   age weekday
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
+ 1 2015-01-10        1    61 Sat    
+ 2 2021-02-04        1    62 Thu    
+ 3 2017-07-10        0    63 Mon    
+ 4 2017-04-25        0    33 Tue    
+ 5 2015-07-16        0    54 Thu    
+ 6 2014-10-20        1    55 Mon    
+ 7 2015-05-23        1    67 Sat    
+ 8 NA                1    51 &lt;NA&gt;   
+ 9 2018-03-03        0    44 Sat    
+10 2022-03-20        1    59 Sun    
+# … with 54 more rows
+```
+]
+
+---
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+# wday gives weekday 1-7, labeled
+# note one NA date
+  mutate(weekday = wday(fake_bmt_date,
+              label=TRUE)) %&gt;%
+# %in% must be in a vector of values
+* filter(wday(fake_bmt_date) %in% c(1,7))
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 23 x 4
+   fake_bmt_date   sex   age weekday
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
+ 1 2015-01-10        1    61 Sat    
+ 2 2015-05-23        1    67 Sat    
+ 3 2018-03-03        0    44 Sat    
+ 4 2022-03-20        1    59 Sun    
+ 5 2017-10-21        1    45 Sat    
+ 6 2015-04-26        0    45 Sun    
+ 7 2020-11-07        1    62 Sat    
+ 8 2015-06-14        0    62 Sun    
+ 9 2015-04-25        0    60 Sat    
+10 2015-01-11        0    29 Sun    
+# … with 13 more rows
+```
+]
+
+---
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+# wday gives weekday 1-7, labeled
+# note one NA date
+  mutate(weekday = wday(fake_bmt_date,
+              label=TRUE)) %&gt;%
+# %in% must be in a vector of values
+  filter(wday(fake_bmt_date) %in% c(1,7)) %&gt;%
+* arrange(fake_bmt_date)  # sort
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 23 x 4
+   fake_bmt_date   sex   age weekday
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
+ 1 2014-12-06        0    61 Sat    
+ 2 2014-12-21        1    57 Sun    
+ 3 2015-01-10        1    61 Sat    
+ 4 2015-01-11        0    29 Sun    
+ 5 2015-01-25        0    57 Sun    
+ 6 2015-04-19        0    46 Sun    
+ 7 2015-04-25        0    60 Sat    
+ 8 2015-04-26        0    45 Sun    
+ 9 2015-05-03        1    61 Sun    
+10 2015-05-23        1    67 Sat    
+# … with 13 more rows
+```
+]
+
+---
+count: false
+ 
+Example 4: Find BMTs on (Fake) Weekends
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_bmt_date, sex, age) %&gt;%
+# wday gives weekday 1-7, labeled
+# note one NA date
+  mutate(weekday = wday(fake_bmt_date,
+              label=TRUE)) %&gt;%
+# %in% must be in a vector of values
+  filter(wday(fake_bmt_date) %in% c(1,7)) %&gt;%
+  arrange(fake_bmt_date)  # sort
+
+# see how many rows now
+# lots of handy functions in lubridate
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 23 x 4
+   fake_bmt_date   sex   age weekday
+   &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
+ 1 2014-12-06        0    61 Sat    
+ 2 2014-12-21        1    57 Sun    
+ 3 2015-01-10        1    61 Sat    
+ 4 2015-01-11        0    29 Sun    
+ 5 2015-01-25        0    57 Sun    
+ 6 2015-04-19        0    46 Sun    
+ 7 2015-04-25        0    60 Sat    
+ 8 2015-04-26        0    45 Sun    
+ 9 2015-05-03        1    61 Sun    
+10 2015-05-23        1    67 Sat    
+# … with 13 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter4-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter4-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -42,7 +42,7 @@ xaringanthemer::style_duo_accent(
 
 ### How to Use Filters to Pick Out String Values
 
-#### Leaning on the Stringr package
+#### Leaning on the {stringr} package
 
 Format: <br>
 
@@ -103,7 +103,7 @@ cmv %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Filter Not-Rows with str_detect on Character Variables")`
+    title = "Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables")`
 
 ---
 

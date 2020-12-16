@@ -29,8 +29,9 @@ data <- medicaldata::blood_storage %>% as_tibble()
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
 style_duo_accent(
-  primary_color = "#00274C", 
+  primary_color = "#00274C",
   secondary_color = "#FFCB05",
+  inverse_header_color = "#FFFFFF"
 )
 ```
 

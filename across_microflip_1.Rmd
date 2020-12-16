@@ -29,11 +29,12 @@ data <- medicaldata::blood_storage %>% as_tibble()
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
 style_duo_accent(
-  primary_color = "#1381B0",
-  secondary_color = "#FF961C",
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
   inverse_header_color = "#FFFFFF"
 )
 ```
+
 
 ### How to Use Across to Mutate many columns at once
 
@@ -67,4 +68,3 @@ data %>%
 `r chunk_reveal("across1", 
     break_type = "auto", 
     title = "Mutate across (selected) numeric type to convert to factor type")`
-
