@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>How to Use sample() functions to Take Random Subsets of Rows</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Peter Higgins" />
+    <meta name="date" content="2020-12-17" />
+    <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# How to Use <em>sample()</em> functions to Take Random Subsets of Rows
+## Selecting Rows with _slice_sample()
+### Peter Higgins
+### 2020-12-17
+
+---
+
+
+
+
+
+
+### How to Use the _slice()_ functions to Take Slices of Rows
+
+#### 
+
+If you have a very large dataset, and want to develop code on a smaller (but random) sample,
+_slice_sample()_ can help.
+
+This is also helpful for sampling for training and testing sets when modeling.
+
+_slice_sample()_ can take n or proportion (prop) arguments
+
+Example 1: Take a random 30% sample of rows from covid_dates.
+
+
+---
+
+
+
+count: false
+ 
+Example 1: Take a Random 30% Sample of Rows from covid_dates.
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 1: Take a Random 30% Sample of Rows from covid_dates.
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1: Take a Random 30% Sample of Rows from covid_dates.
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+* slice_sample(prop = 0.3)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 4,657 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       6073 sharna          baelish        female      82 covid   inpatient …
+ 2       8713 bryce           kettleblack    male        77 covid   laboratory 
+ 3       8899 pate            harlaw         male        84 covid   medical ce…
+ 4        644 luco            ryswell        male        86 covid   clinical l…
+ 5       9462 barsena         tyrell         female      75 covid   clinical l…
+ 6      11409 watt            baelish        male        16 covid   care ntwk  
+ 7       7790 morna           royce          female      50 covid   clinical l…
+ 8      10155 sarella         clegane        female      26 covid   clinical l…
+ 9      11361 emrick          kettleblack    male        32 covid   inpatient …
+10       6183 maris           royce          female     100 covid   emergency …
+# … with 4,647 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1: Take a Random 30% Sample of Rows from covid_dates.
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  slice_sample(prop = 0.3)
+
+# see how many rows now
+
+# Format:
+*#   slice_sample(prop = 0.nn)                    &lt;br&gt;  #   slice_sample(prop = 0.nn)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 4,657 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       7877 ketter          tully          male        40 covid   clinical l…
+ 2      11178 myrcella        manderly       female      80 covid   emergency …
+ 3        204 glendon         stark          male        85 covid   clinical l…
+ 4       6044 polliver        lannister      male        45 covid   emergency …
+ 5       9657 val             royce          female      40 covid   emergency …
+ 6       8042 ragnor          baratheon      male        86 covid   clinical l…
+ 7       2367 big             sand           male        49 covid   clinical l…
+ 8      10258 harma           kettleblack    female      33 covid   clinical l…
+ 9       2177 hali            martell        female     106 covid   clinical l…
+10       8873 melly           snow           female      58 covid   hosp of th…
+# … with 4,647 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter1-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter1-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+# make training set
+*covid_dates
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+# make training set
+covid_dates %&gt;%
+* slice_sample(prop = 0.7)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 10,866 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1        398 bryen           martell        male        71 covid   inpatient …
+ 2       7611 jynessa         umber          female      37 covid   inpatient …
+ 3          4 asha            tarly          female      98 covid   clinical l…
+ 4       9518 hoster          umber          male        23 covid   clinical l…
+ 5       4295 tallad          mormont        male        14 covid   emergency …
+ 6       1910 sour            bolton         male        93 covid   picu       
+ 7       6294 triston         clegane        male        47 covid   clinical l…
+ 8       3513 quent           martell        male        18 covid   emergency …
+ 9       5900 becca           bolton         female      89 covid   clinical l…
+10       1293 luwin           rivers         male        79 covid   emergency …
+# … with 10,856 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+# make training set
+covid_dates %&gt;%
+  slice_sample(prop = 0.7) -&gt;
+*training_covid_dates
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+# make training set
+covid_dates %&gt;%
+  slice_sample(prop = 0.7) -&gt;
+training_covid_dates
+
+# now make testing set
+*setdiff(covid_dates,
+*       training_covid_dates)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+# make training set
+covid_dates %&gt;%
+  slice_sample(prop = 0.7) -&gt;
+training_covid_dates
+
+# now make testing set
+setdiff(covid_dates,
+        training_covid_dates)
+# see how many rows in each
+
+# Format:
+*#   slice_sample(prop = 0.nn)  %&gt;%          &lt;br&gt;  #   slice_sample(prop = 0.nn)  %&gt;%          &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+# make training set
+covid_dates %&gt;%
+  slice_sample(prop = 0.7) -&gt;
+training_covid_dates
+
+# now make testing set
+setdiff(covid_dates,
+        training_covid_dates)
+# see how many rows in each
+
+# Format:
+#   slice_sample(prop = 0.nn)  %&gt;%          &lt;br&gt;  #   slice_sample(prop = 0.nn)  %&gt;%          &lt;br&gt;
+*#   setdiff(full_data, .)                  &lt;br&gt;  #   setdiff(full_data, .)                  &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter2-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter2-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 3: Take a Random Sample of 50 Rows from covid_dates.
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 3: Take a Random Sample of 50 Rows from covid_dates.
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 3: Take a Random Sample of 50 Rows from covid_dates.
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+* slice_sample(n = 50)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 50 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       3050 danwell         clegane        male        29 covid   emergency …
+ 2       7811 ghost           baratheon      female      12 covid   line clini…
+ 3        115 kella           targaryen      female      49 covid   clinical l…
+ 4        909 gorold          ryswell        male        33 covid   inpatient …
+ 5       4928 aggar           royce          male        66 covid   clinical l…
+ 6       4525 eddard          karstark       male        86 covid   care ntwk  
+ 7        494 morton          stark          male        83 covid   clinical l…
+ 8       2784 myrcella        rivers         female      49 covid   emergency …
+ 9       8120 dalla           greyjoy        female      88 covid   clinical l…
+10       8432 mebble          sand           male        84 covid   emergency …
+# … with 40 more rows, and 11 more variables: result &lt;chr&gt;, demo_group &lt;chr&gt;,
+#   age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;, orderset &lt;dbl&gt;,
+#   payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 3: Take a Random Sample of 50 Rows from covid_dates.
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  slice_sample(n = 50)
+
+# see how many rows now
+
+# Format:
+*#   slice_sample(n = NN)                    &lt;br&gt;  #   slice_sample(n = NN)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 50 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1        169 becca           targaryen      female      37 covid   inpatient …
+ 2       1921 maerie          kettleblack    female      27 covid   clinical l…
+ 3       7110 jhaqo           baratheon      male        84 covid   clinical l…
+ 4        914 owen            tarly          male        25 covid   emergency …
+ 5       6128 jhezane         targaryen      female      65 covid   behavioral…
+ 6       2857 matrice         bolton         female      35 covid   emergency …
+ 7       7041 mark            seaworth       male        85 covid   gol        
+ 8       4689 ben             kettleblack    male        36 covid   picu       
+ 9       3219 walda           baelish        female      54 covid   laboratory 
+10       7420 myrcella        umber          female      95 covid   clinical l…
+# … with 40 more rows, and 11 more variables: result &lt;chr&gt;, demo_group &lt;chr&gt;,
+#   age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;, orderset &lt;dbl&gt;,
+#   payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter3-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter3-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

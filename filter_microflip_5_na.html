@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>How to Use filter() functions to Remove Rows with Missing Values</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Peter Higgins" />
+    <meta name="date" content="2020-12-17" />
+    <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# How to Use <em>filter()</em> functions to Remove Rows with Missing Values
+## Selecting specific rows with or without NAs
+### Peter Higgins
+### 2020-12-17
+
+---
+
+
+
+
+
+
+### How to Use the _filter()_ function for NA or *not* NA values
+
+#### 
+
+Format: &lt;br&gt;
+
+`dataset %&gt;% 
+  filter(is.na(variable)))` 
+
+Negation is done be preceding with ! ,
+so !is.na(variable) produces a logical vector with
+TRUE for all non-missing value rows.
+
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+
+Example 1: filter covid_dates data for missing dates.
+
+
+---
+
+
+
+count: false
+ 
+Example 1: Filter Rows for Missing Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows for Missing Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows for Missing Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+* select(fake_date, result, gender)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 3
+   fake_date  result   gender
+   &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+ 1 2020-03-05 negative female
+ 2 2020-03-08 negative female
+ 3 2020-03-08 negative male  
+ 4 2020-03-09 negative female
+ 5 2020-03-09 negative male  
+ 6 2020-03-09 negative female
+ 7 NA         negative male  
+ 8 2020-03-10 negative female
+ 9 2020-03-10 negative male  
+10 2020-03-10 negative male  
+# … with 15,514 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows for Missing Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %&gt;%
+* filter(is.na(fake_date))
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 7 x 3
+  fake_date  result   gender
+  &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+1 NA         negative male  
+2 NA         negative male  
+3 NA         negative female
+4 NA         negative female
+5 NA         negative male  
+6 NA         negative male  
+7 NA         negative female
+```
+]
+
+---
+count: false
+ 
+Example 1: Filter Rows for Missing Dates
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %&gt;%
+  filter(is.na(fake_date))
+
+# see how many rows now
+# check dates - should be NA
+
+# Format:
+*#   filter(is.na(variable))                 &lt;br&gt;  #   filter(is.na(variable))                 &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 7 x 3
+  fake_date  result   gender
+  &lt;date&gt;     &lt;chr&gt;    &lt;chr&gt; 
+1 NA         negative male  
+2 NA         negative male  
+3 NA         negative female
+4 NA         negative female
+5 NA         negative male  
+6 NA         negative male  
+7 NA         negative female
+```
+]
+
+&lt;style&gt;
+.panel1-filter1-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter1-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+
+
+
+count: false
+ 
+Example 2: Filter Rows for Non-Missing Dates
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+*nrow(bmt_dates)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+]
+
+---
+count: false
+ 
+Example 2: Filter Rows for Non-Missing Dates
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+*bmt_dates
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2    NA    NA    NA    NA &lt;NA&gt;                  NA            NA   
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5    NA    NA    NA    NA &lt;NA&gt;                  NA            NA   
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Filter Rows for Non-Missing Dates
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+* select(fake_dx_date, race, donor_sex)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 3
+   fake_dx_date  race donor_sex
+   &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2014-05-24       0         0
+ 2 NA              NA        NA
+ 3 2014-05-24       1         0
+ 4 2014-05-24       1         1
+ 5 NA              NA        NA
+ 6 2014-05-24       1         1
+ 7 2014-05-24       1         1
+ 8 NA               1         0
+ 9 2014-05-24       0         1
+10 2014-05-24       1         0
+# … with 54 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Filter Rows for Non-Missing Dates
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_dx_date, race, donor_sex) %&gt;%
+* filter(!is.na(fake_dx_date))
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 59 x 3
+   fake_dx_date  race donor_sex
+   &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2014-05-24       0         0
+ 2 2014-05-24       1         0
+ 3 2014-05-24       1         1
+ 4 2014-05-24       1         1
+ 5 2014-05-24       1         1
+ 6 2014-05-24       0         1
+ 7 2014-05-24       1         0
+ 8 2014-05-24       1         1
+ 9 2014-05-24       1         0
+10 2014-05-24       1         0
+# … with 49 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Filter Rows for Non-Missing Dates
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_dx_date, race, donor_sex) %&gt;%
+  filter(!is.na(fake_dx_date))
+
+# see how many rows now
+# check dates - should be NOT NA
+
+# Format:
+*#   filter(!is.na(variable))                 &lt;br&gt;  #   filter(!is.na(variable))                 &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 59 x 3
+   fake_dx_date  race donor_sex
+   &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2014-05-24       0         0
+ 2 2014-05-24       1         0
+ 3 2014-05-24       1         1
+ 4 2014-05-24       1         1
+ 5 2014-05-24       1         1
+ 6 2014-05-24       0         1
+ 7 2014-05-24       1         0
+ 8 2014-05-24       1         1
+ 9 2014-05-24       1         0
+10 2014-05-24       1         0
+# … with 49 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter2-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter2-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 3: Filter Rows for Non-Missing Dates
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+*nrow(bmt_dates)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+]
+
+---
+count: false
+ 
+Example 3: Filter Rows for Non-Missing Dates
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+*bmt_dates
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2    NA    NA    NA    NA &lt;NA&gt;                  NA            NA   
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5    NA    NA    NA    NA &lt;NA&gt;                  NA            NA   
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 3: Filter Rows for Non-Missing Dates
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# remove the 2 empty rows with janitor
+* select(fake_dx_date, race, donor_sex)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 3
+   fake_dx_date  race donor_sex
+   &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2014-05-24       0         0
+ 2 NA              NA        NA
+ 3 2014-05-24       1         0
+ 4 2014-05-24       1         1
+ 5 NA              NA        NA
+ 6 2014-05-24       1         1
+ 7 2014-05-24       1         1
+ 8 NA               1         0
+ 9 2014-05-24       0         1
+10 2014-05-24       1         0
+# … with 54 more rows
+```
+]
+
+---
+count: false
+ 
+Example 3: Filter Rows for Non-Missing Dates
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# remove the 2 empty rows with janitor
+  select(fake_dx_date, race, donor_sex) %&gt;%
+* remove_empty("rows")
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 62 x 3
+   fake_dx_date  race donor_sex
+   &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2014-05-24       0         0
+ 2 2014-05-24       1         0
+ 3 2014-05-24       1         1
+ 4 2014-05-24       1         1
+ 5 2014-05-24       1         1
+ 6 NA               1         0
+ 7 2014-05-24       0         1
+ 8 2014-05-24       1         0
+ 9 2014-05-24       1         1
+10 2014-05-24       1         0
+# … with 52 more rows
+```
+]
+
+---
+count: false
+ 
+Example 3: Filter Rows for Non-Missing Dates
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+# selected 3 columns
+# remove the 2 empty rows with janitor
+  select(fake_dx_date, race, donor_sex) %&gt;%
+  remove_empty("rows")
+
+# see how many rows now
+# check dates - should be NOT NA
+
+# Format:
+*#   remove_empty("rows") (or "cols")                 &lt;br&gt;  #   remove_empty("rows") (or "cols")                 &lt;br&gt;
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 62 x 3
+   fake_dx_date  race donor_sex
+   &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
+ 1 2014-05-24       0         0
+ 2 2014-05-24       1         0
+ 3 2014-05-24       1         1
+ 4 2014-05-24       1         1
+ 5 2014-05-24       1         1
+ 6 NA               1         0
+ 7 2014-05-24       0         1
+ 8 2014-05-24       1         0
+ 9 2014-05-24       1         1
+10 2014-05-24       1         0
+# … with 52 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter3-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter3-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 4: Filter Rows for Complete Cases - with no NAs
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+*nrow(bmt_dates)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+]
+
+---
+count: false
+ 
+Example 4: Filter Rows for Complete Cases - with no NAs
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+*bmt_dates
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 64 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2    NA    NA    NA    NA &lt;NA&gt;                  NA            NA   
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5    NA    NA    NA    NA &lt;NA&gt;                  NA            NA   
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 4: Filter Rows for Complete Cases - with no NAs
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+#   remove incomplete cases with drop_na
+* drop_na()
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 44 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     3    63     0     1 non-Hodg…              0            35.6 
+ 3     4    33     0     1 Hodgkin …              0            33.0 
+ 4     6    55     1     1 myelofib…              1             2.43
+ 5     7    67     1     1 acute my…              1             9.59
+ 6    10    59     1     1 chronic …              0            92.7 
+ 7    11    45     1     1 multiple…              0            39   
+ 8    15    35     1     1 myelodys…              1            16.3 
+ 9    18    45     0     1 myelodys…              1             8.71
+10    19    62     1     0 non-Hodg…              0            76.1 
+# … with 34 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 4: Filter Rows for Complete Cases - with no NAs
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(bmt_dates)
+
+bmt_dates %&gt;%
+#   remove incomplete cases with drop_na
+  drop_na()
+
+# see how many rows now
+# now all vars should be NOT NA
+
+# Format:
+*#   drop_na()                                        &lt;br&gt;  #   drop_na()                                        &lt;br&gt;
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 64
+```
+
+```
+# A tibble: 44 x 29
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     3    63     0     1 non-Hodg…              0            35.6 
+ 3     4    33     0     1 Hodgkin …              0            33.0 
+ 4     6    55     1     1 myelofib…              1             2.43
+ 5     7    67     1     1 acute my…              1             9.59
+ 6    10    59     1     1 chronic …              0            92.7 
+ 7    11    45     1     1 multiple…              0            39   
+ 8    15    35     1     1 myelodys…              1            16.3 
+ 9    18    45     0     1 myelodys…              1             8.71
+10    19    62     1     0 non-Hodg…              0            76.1 
+# … with 34 more rows, and 22 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, fake_dx_date &lt;date&gt;,
+#   fake_bmt_date &lt;date&gt;, fake_agvhd_date &lt;date&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter4-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter4-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

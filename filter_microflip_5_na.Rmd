@@ -1,0 +1,160 @@
+---
+title: "How to Use  _filter()_ functions to Remove Rows with Missing Values"
+subtitle: "Selecting specific rows with or without NAs"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(lubridate)
+library(janitor)
+covid_dates <- medicaldata::covid_testing %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_date = ymd("2020-03-01") + pan_day)
+bmt_dates <- medicaldata::cytomegalovirus %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_dx_date = ymd("2014-01-01") + days(round(runif(1,1,364))),
+         fake_bmt_date = fake_dx_date + days(round(time_to_transplant*30)),
+         fake_agvhd_date = fake_bmt_date + days(round(time_to_agvhd*30)))
+
+# add NAs
+covid_dates$fake_date[c(7,11,19,33,37,42,66)] <- NA
+bmt_dates$fake_dx_date[c(2,8,16,32)] <- NA
+bmt_dates[c(2,5), ] <- NA
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+### How to Use the _filter()_ function for NA or *not* NA values
+
+#### 
+
+Format: <br>
+
+`dataset %>% 
+  filter(is.na(variable)))` 
+
+Negation is done be preceding with ! ,
+so !is.na(variable) produces a logical vector with
+TRUE for all non-missing value rows.
+
+You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+
+Example 1: filter covid_dates data for missing dates.
+
+
+---
+
+```{r filter1, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_date, result, gender) %>% 
+  filter(is.na(fake_date))
+
+# see how many rows now
+# check dates - should be NA
+
+# Format:
+#   filter(is.na(variable))                 <br>
+```
+
+`r chunk_reveal("filter1", 
+    break_type = "auto", 
+    title = "Example 1: Filter Rows for Missing Dates")`
+
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(bmt_dates) 
+
+bmt_dates %>% 
+# selected 3 columns
+# see how date changes w/filter
+  select(fake_dx_date, race, donor_sex) %>% 
+  filter(!is.na(fake_dx_date))
+
+# see how many rows now
+# check dates - should be NOT NA
+
+# Format:
+#   filter(!is.na(variable))                 <br>
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Example 2: Filter Rows for Non-Missing Dates")`
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(bmt_dates) 
+
+bmt_dates %>% 
+# selected 3 columns
+# remove the 2 empty rows with janitor
+  select(fake_dx_date, race, donor_sex) %>% 
+  remove_empty("rows")
+
+# see how many rows now
+# check dates - should be NOT NA
+
+# Format:
+#   remove_empty("rows") (or "cols")                 <br>
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Example 3: Filter Rows for Non-Missing Dates")`
+
+---
+
+```{r filter4, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(bmt_dates) 
+
+bmt_dates %>% 
+#   remove incomplete cases with drop_na
+  drop_na()
+
+# see how many rows now
+# now all vars should be NOT NA
+
+# Format:
+#   drop_na()                                        <br>                
+```
+
+`r chunk_reveal("filter4", 
+    break_type = "auto", 
+    title = "Example 4: Filter Rows for Complete Cases - with no NAs")`

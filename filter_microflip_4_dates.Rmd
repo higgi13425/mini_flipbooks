@@ -39,7 +39,6 @@ xaringanthemer::style_duo_accent(
   primary_color = "#00274C",
   secondary_color = "#FFCB05",
   header_font_google = google_font("Lato"),
-  text_font_google   = google_font("Manrope"),
   code_font_google   = google_font("Roboto Mono"),
   base_font_size = "20px",
   code_font_size = "0.8rem",

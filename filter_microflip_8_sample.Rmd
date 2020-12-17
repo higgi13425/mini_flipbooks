@@ -1,0 +1,121 @@
+---
+title: "How to Use _sample()_ functions to Take Random Subsets of Rows"
+subtitle: "Selecting Rows with _slice_sample()"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(lubridate)
+library(janitor)
+covid_dates <- medicaldata::covid_testing %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_date = ymd("2020-03-01") + pan_day)
+
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+### How to Use the _slice()_ functions to Take Slices of Rows
+
+#### 
+
+If you have a very large dataset, and want to develop code on a smaller (but random) sample,
+_slice_sample()_ can help.
+
+This is also helpful for sampling for training and testing sets when modeling.
+
+_slice_sample()_ can take n or proportion (prop) arguments
+
+Example 1: Take a random 30% sample of rows from covid_dates.
+
+
+---
+
+```{r filter1, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+  slice_sample(prop = 0.3)
+
+# see how many rows now
+
+# Format:
+#   slice_sample(prop = 0.nn)                    <br>
+```
+
+`r chunk_reveal("filter1", 
+    break_type = "auto", 
+    title = "Example 1: Take a Random 30% Sample of Rows from covid_dates.")`
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+# make training set
+covid_dates %>% 
+  slice_sample(prop = 0.7) ->
+training_covid_dates
+
+# now make testing set
+setdiff(covid_dates, 
+        training_covid_dates) 
+# see how many rows in each
+
+# Format:
+#   slice_sample(prop = 0.nn)  %>%          <br>
+#   setdiff(full_data, .)                  <br>
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.")`
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+  slice_sample(n = 50)
+
+# see how many rows now
+
+# Format:
+#   slice_sample(n = NN)                    <br>
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Example 3: Take a Random Sample of 50 Rows from covid_dates.")`
+

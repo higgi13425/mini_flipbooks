@@ -4,7 +4,7 @@
     <title>How to Use Multiple filter() functions with Boolean logic</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-16" />
+    <meta name="date" content="2020-12-17" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use Multiple <em>filter()</em> functions with Boolean logic
 ## Selecting specific rows with multiple criteria
 ### Peter Higgins
-### 2020-12-16
+### 2020-12-17
 
 ---
 
@@ -210,7 +210,7 @@ prostate %&gt;%
 # see how many rows now
 # check age and t_vol
 # Format:
-*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+*# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
 ```
 ]
  
@@ -257,7 +257,7 @@ prostate %&gt;%
 # see how many rows now
 # check age and t_vol
 # Format:
-# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
 ```
 ]
  
@@ -524,7 +524,7 @@ prostate %&gt;%
 # see how many rows now
 # watch age and aa status
 # Format:
-*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+*# filter(logic test 1 | logic test 2)        &lt;br&gt;  # filter(logic test 1 | logic test 2)        &lt;br&gt;
 ```
 ]
  
@@ -572,7 +572,7 @@ prostate %&gt;%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+# filter(logic test 1 | logic test 2)        &lt;br&gt;  # filter(logic test 1 | logic test 2)        &lt;br&gt;
 ```
 ]
  
@@ -838,7 +838,7 @@ prostate %&gt;%
 # see how many rows now
 # watch age and aa status
 # Format:
-*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+*# filter(xor(logic test 1, logic test 2))        &lt;br&gt;  # filter(xor(logic test 1, logic test 2))        &lt;br&gt;
 ```
 ]
  
@@ -886,7 +886,7 @@ prostate %&gt;%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+# filter(xor(logic test 1, logic test 2))        &lt;br&gt;  # filter(xor(logic test 1, logic test 2))        &lt;br&gt;
 ```
 ]
  
@@ -1153,7 +1153,7 @@ prostate %&gt;%
 # see how many rows now
 # watch age and aa status
 # Format:
-*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+*# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
 ```
 ]
  
@@ -1201,7 +1201,7 @@ prostate %&gt;%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
 ```
 ]
  

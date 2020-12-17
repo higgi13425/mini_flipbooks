@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>How to Use slice() functions to Take Slices of Rows</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Peter Higgins" />
+    <meta name="date" content="2020-12-17" />
+    <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# How to Use <em>slice()</em> functions to Take Slices of Rows
+## Selecting Groups and Extremes of Rows
+### Peter Higgins
+### 2020-12-17
+
+---
+
+
+
+
+
+
+### How to Use the _slice()_ functions to Take Slices of Rows
+
+#### 
+
+If you want the first 1:N rows, or 50:100 rows, or last 100 rows,
+however the dataframe is currently sorted,
+you can use the _slice()_ function.
+
+The _slice_max()_ and _slice_min()_ can take rows at top or 
+bottom of particular values, using N or proportion.
+
+Example 1: Slice off rows 100:200 from covid_dates.
+
+
+---
+
+
+
+count: false
+ 
+Example 1: Slice Rows 100-200
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 1: Slice Rows 100-200
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1: Slice Rows 100-200
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# check if all rows distinct
+* slice(100:200)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 101 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1        722 joseran         greyjoy        male        12 covid   clinical l…
+ 2        902 owen            seaworth       male        12 covid   emergency …
+ 3       1840 jocelyn         tarly          female      12 covid   clinical l…
+ 4       2025 urswyck         baelish        male        12 covid   ob gyn     
+ 5       2026 bellonara       snow           female      12 covid   laboratory 
+ 6       2116 penny           kettleblack    female      12 covid   radiation …
+ 7       2341 penny           kettleblack    female      12 covid   cc care nt…
+ 8       2573 glendon         lannister      male        12 covid   emergency …
+ 9       2859 boros           lannister      male        12 covid   emergency …
+10       3781 randa           tyrell         female      12 covid   clinical l…
+# … with 91 more rows, and 11 more variables: result &lt;chr&gt;, demo_group &lt;chr&gt;,
+#   age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;, orderset &lt;dbl&gt;,
+#   payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1: Slice Rows 100-200
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+# check if all rows distinct
+  slice(100:200)
+
+# see how many rows now
+
+# Format:
+*#   slice(rownum1 : rownum2)                    &lt;br&gt;  #   slice(rownum1 : rownum2)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 101 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1        722 joseran         greyjoy        male        12 covid   clinical l…
+ 2        902 owen            seaworth       male        12 covid   emergency …
+ 3       1840 jocelyn         tarly          female      12 covid   clinical l…
+ 4       2025 urswyck         baelish        male        12 covid   ob gyn     
+ 5       2026 bellonara       snow           female      12 covid   laboratory 
+ 6       2116 penny           kettleblack    female      12 covid   radiation …
+ 7       2341 penny           kettleblack    female      12 covid   cc care nt…
+ 8       2573 glendon         lannister      male        12 covid   emergency …
+ 9       2859 boros           lannister      male        12 covid   emergency …
+10       3781 randa           tyrell         female      12 covid   clinical l…
+# … with 91 more rows, and 11 more variables: result &lt;chr&gt;, demo_group &lt;chr&gt;,
+#   age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;, orderset &lt;dbl&gt;,
+#   payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter1-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter1-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 2: Slice Rows with Top 20 age values
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 2: Slice Rows with Top 20 age values
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 2: Slice Rows with Top 20 age values
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+* select(age, gender, pan_day)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   0   female       4
+ 2   0   female       7
+ 3   0.8 male         7
+ 4   0.8 female       8
+ 5   0.8 male         8
+ 6   0.8 female       8
+ 7   0.8 male         9
+ 8   0   female       9
+ 9   0   male         9
+10   0.9 male         9
+# … with 15,514 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Slice Rows with Top 20 age values
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  select(age, gender, pan_day) %&gt;%
+# more than 20 because of ties, auto-sorts
+* slice_max(age, n=20)
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 22 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   138 female     105
+ 2   119 female      48
+ 3   119 male        87
+ 4   119 female     100
+ 5   119 female     105
+ 6    99 female      94
+ 7    98 female      81
+ 8    98 male        87
+ 9    98 male        88
+10    98 female      94
+# … with 12 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2: Slice Rows with Top 20 age values
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  select(age, gender, pan_day) %&gt;%
+# more than 20 because of ties, auto-sorts
+  slice_max(age, n=20)
+
+# see how many rows now
+
+# Format:
+*#   slice_max(variable, n = x)                    &lt;br&gt;  #   slice_max(variable, n = x)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 22 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   138 female     105
+ 2   119 female      48
+ 3   119 male        87
+ 4   119 female     100
+ 5   119 female     105
+ 6    99 female      94
+ 7    98 female      81
+ 8    98 male        87
+ 9    98 male        88
+10    98 female      94
+# … with 12 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter2-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter2-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter2-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+* select(age, gender, pan_day)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   0   female       4
+ 2   0   female       7
+ 3   0.8 male         7
+ 4   0.8 female       8
+ 5   0.8 male         8
+ 6   0.8 female       8
+ 7   0.8 male         9
+ 8   0   female       9
+ 9   0   male         9
+10   0.9 male         9
+# … with 15,514 more rows
+```
+]
+
+---
+count: false
+ 
+Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  select(age, gender, pan_day) %&gt;%
+* slice_min(pan_day, prop = 0.01)
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 178 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   0   female       4
+ 2   0   female       7
+ 3   0.8 male         7
+ 4   0.8 female       8
+ 5   0.8 male         8
+ 6   0.8 female       8
+ 7   0.8 male         9
+ 8   0   female       9
+ 9   0   male         9
+10   0.9 male         9
+# … with 168 more rows
+```
+]
+
+---
+count: false
+ 
+Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+.panel1-filter3-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  select(age, gender, pan_day) %&gt;%
+  slice_min(pan_day, prop = 0.01)
+
+# see how many rows now
+
+# Format:
+*#   slice_min(variable, prop = 0.nn)                    &lt;br&gt;  #   slice_min(variable, prop = 0.nn)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter3-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 178 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   0   female       4
+ 2   0   female       7
+ 3   0.8 male         7
+ 4   0.8 female       8
+ 5   0.8 male         8
+ 6   0.8 female       8
+ 7   0.8 male         9
+ 8   0   female       9
+ 9   0   male         9
+10   0.9 male         9
+# … with 168 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter3-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter3-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter3-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 4: Slice Top or Bottom N or %
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+*nrow(covid_dates)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 15524
+```
+]
+
+---
+count: false
+ 
+Example 4: Slice Top or Bottom N or %
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+*covid_dates
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 18
+   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
+        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
+ 1       1412 jhezane         westerling     female       4 covid   inpatient …
+ 2        533 penny           targaryen      female       7 covid   clinical l…
+ 3       9134 grunt           rivers         male         7 covid   clinical l…
+ 4       8518 melisandre      swyft          female       8 covid   clinical l…
+ 5       8967 rolley          karstark       male         8 covid   emergency …
+ 6      11048 megga           karstark       female       8 covid   oncology d…
+ 7        663 ithoke          targaryen      male         9 covid   clinical l…
+ 8       2158 ravella         frey           female       9 covid   emergency …
+ 9       3794 styr            tyrell         male         9 covid   clinical l…
+10       4706 wynafryd        seaworth       male         9 covid   clinical l…
+# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
+#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
+#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
+#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
+```
+]
+
+---
+count: false
+ 
+Example 4: Slice Top or Bottom N or %
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+* select(age, gender, pan_day)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 15,524 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1   0   female       4
+ 2   0   female       7
+ 3   0.8 male         7
+ 4   0.8 female       8
+ 5   0.8 male         8
+ 6   0.8 female       8
+ 7   0.8 male         9
+ 8   0   female       9
+ 9   0   male         9
+10   0.9 male         9
+# … with 15,514 more rows
+```
+]
+
+---
+count: false
+ 
+Example 4: Slice Top or Bottom N or %
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  select(age, gender, pan_day) %&gt;%
+* slice_tail(prop = 0.01)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 155 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1  40   female     106
+ 2  17   female     106
+ 3  17   female     106
+ 4  17   male       106
+ 5   0.8 male       106
+ 6   0.7 male       106
+ 7  17   female     106
+ 8   7   male       106
+ 9  17   male       106
+10  71   male       106
+# … with 145 more rows
+```
+]
+
+---
+count: false
+ 
+Example 4: Slice Top or Bottom N or %
+.panel1-filter4-auto[
+
+```r
+# how many rows when you start
+nrow(covid_dates)
+
+covid_dates %&gt;%
+  select(age, gender, pan_day) %&gt;%
+  slice_tail(prop = 0.01)
+
+# see how many rows now
+
+# Format:
+*#   slice_min(variable, prop = 0.nn)                    &lt;br&gt;  #   slice_min(variable, prop = 0.nn)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 15524
+```
+
+```
+# A tibble: 155 x 3
+     age gender pan_day
+   &lt;dbl&gt; &lt;chr&gt;    &lt;dbl&gt;
+ 1  40   female     106
+ 2  17   female     106
+ 3  17   female     106
+ 4  17   male       106
+ 5   0.8 male       106
+ 6   0.7 male       106
+ 7  17   female     106
+ 8   7   male       106
+ 9  17   male       106
+10  71   male       106
+# … with 145 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter4-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter4-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -33,7 +33,6 @@ xaringanthemer::style_duo_accent(
   primary_color = "#00274C",
   secondary_color = "#FFCB05",
   header_font_google = google_font("Lato"),
-  text_font_google   = google_font("Manrope"),
   code_font_google   = google_font("Roboto Mono"),
   base_font_size = "20px",
   code_font_size = "0.8rem",
@@ -47,9 +46,14 @@ xaringanthemer::style_duo_accent(
 Format: <br>
 
 dataset %>% 
+  filter(variable == "string"))
+  
+OR
+
+dataset %>% 
   filter(str_detect(variable, "string"))
   
-The _str_detect()_ function returns either a TRUR or FALSE for each row in the dataset - a **logical vector**. <br>
+The _str_detect()_ function returns either a TRUE or FALSE for each row in the dataset - a **logical vector**. <br>
 The filter function **acts** on this logical vector to filter out rows that are FALSE for your logical statement.
 It is a common mistake to rely on str_detect alone, but it won't filter your rows. You need **both** filter and str_detect to get this done.
 
@@ -153,6 +157,30 @@ cmv %>%
     break_type = "auto", 
     title = "Example 4: Filter Rows with a Little Bit of Regex<br> * means any character ")`
 
+---
+
+```{r filter5, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(cmv) 
+
+cmv %>% 
+# selected 3 columns
+# see how diagnosis changes w/filter
+  select(sex, race, diagnosis) %>% 
+  filter(diagnosis == "myelofibrosis")
+
+# see how many rows now
+# check diagnosis
+# Format:
+# filter(variable == "string")        <br>  
+
+
+```
+
+`r chunk_reveal("filter5", 
+    break_type = "auto", 
+    title = "Example 5: Filter Rows with == Variable. More Exact, Less Flexible")`
+    
 ---
 
 ### Where To Learn More about Regex (Regular Expressions)

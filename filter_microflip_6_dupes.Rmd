@@ -1,0 +1,131 @@
+---
+title: "How to Use _distinct()_ and _get_dupes()_ to find distinct rows"
+subtitle: "Selecting Distinct vs. Duplicated Rows"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(lubridate)
+library(janitor)
+covid_dates <- medicaldata::covid_testing %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_date = ymd("2020-03-01") + pan_day)
+bmt_dates <- medicaldata::cytomegalovirus %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_dx_date = ymd("2014-01-01") + days(round(runif(1,1,364))),
+         fake_bmt_date = fake_dx_date + days(round(time_to_transplant*30)),
+         fake_agvhd_date = fake_bmt_date + days(round(time_to_agvhd*30)))
+
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+### How to Use the functions to find duplicate or distinct rows
+
+#### 
+
+Imagine that you expect each row to have a unique subject_id, first_name, and last_name.
+
+But you (wisely) decide to check this with the _distinct()_ function. If this nrow is < the original nrow, you have some duplicates.
+
+The {janitor} function _get_dupes()_ can help find these
+
+Example 1: examine the covid_dates data for duplicate entries.
+
+
+---
+
+```{r filter1, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+# check if all rows distinct
+  distinct() %>% 
+# check if subject_id is a unique identifier = key
+  distinct(subject_id)
+
+# see how many rows now
+# subject_id is not a key
+
+# Format:
+#   distinct(variable)                    <br>
+```
+
+`r chunk_reveal("filter1", 
+    break_type = "auto", 
+    title = "Example 1: See if Distinct subject_id")`
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+# check if names are distinct
+  select(fake_first_name, fake_last_name) %>% 
+# check if first & last name is a unique identifier = key
+  distinct(fake_first_name, fake_last_name)
+
+# see how many rows now
+# fullname is not a key
+
+# Format:
+#   distinct(variable1, variable 2)                    <br>
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Example 2: See if Distinct by Full Name")`
+
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+# check if names are distinct
+  select(subject_id, fake_first_name, 
+         fake_last_name) %>% 
+# check if first & last name is a unique identifier = key
+  get_dupes(fake_first_name, 
+            fake_last_name)
+
+# now you can see the duplicates
+
+# Format:
+#   get_dupes(variable1, variable 2)                    <br>
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Example 3: Which Rows are Duplicates")`

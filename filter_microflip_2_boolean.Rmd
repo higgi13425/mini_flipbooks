@@ -33,7 +33,6 @@ xaringanthemer::style_duo_accent(
   primary_color = "#00274C",
   secondary_color = "#FFCB05",
   header_font_google = google_font("Lato"),
-  text_font_google   = google_font("Manrope"),
   code_font_google   = google_font("Roboto Mono"),
   base_font_size = "20px",
   code_font_size = "0.8rem",
@@ -76,7 +75,7 @@ prostate %>%
 # see how many rows now
 # check age and t_vol
 # Format:
-# filter(variable [comparison] value)        <br>  
+# filter(logic test 1 & logic test 2)        <br>  
 
 
 ```
@@ -102,7 +101,7 @@ prostate %>%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(variable [comparison] value)        <br>  
+# filter(logic test 1 | logic test 2)        <br>  
 
 
 ```
@@ -127,7 +126,7 @@ prostate %>%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(variable [comparison] value)        <br>  
+# filter(xor(logic test 1, logic test 2))        <br>  
 
 
 ```
@@ -153,7 +152,7 @@ prostate %>%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(variable [comparison] value)        <br>  
+# filter(logic test 1 & logic test 2)        <br>  
 
 
 ```
