@@ -437,7 +437,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %&gt;%
-* filter(!str_detect(diagnosis, "Hodgkin"))
+* filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
 ```
 ]
  
@@ -479,7 +479,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %&gt;%
-  filter(!str_detect(diagnosis, "Hodgkin"))
+  filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
 
 # see how many rows now
 # check diagnosis
@@ -526,7 +526,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %&gt;%
-  filter(!str_detect(diagnosis, "Hodgkin"))
+  filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
 
 # see how many rows now
 # check diagnosis
@@ -708,7 +708,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-* filter(str_detect(diagnosis, "lympho.+ic"))
+* filter(str_detect(diagnosis, pattern = "lympho.+ic"))
 ```
 ]
  
@@ -745,7 +745,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-  filter(str_detect(diagnosis, "lympho.+ic"))
+  filter(str_detect(diagnosis, pattern = "lympho.+ic"))
 
 # see how many rows now
 # check diagnosis
@@ -787,7 +787,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-  filter(str_detect(diagnosis, "lympho.+ic"))
+  filter(str_detect(diagnosis, pattern = "lympho.+ic"))
 
 # see how many rows now
 # check diagnosis
