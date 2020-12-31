@@ -4,8 +4,13 @@
     <title>How to Use the filter() function for numeric values</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
+    <script src="libs/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="libs/shareon-1.4.1/shareon.min.css" rel="stylesheet" />
+    <script src="libs/shareon-1.4.1/shareon.min.js"></script>
+    <link href="libs/xaringanExtra-shareagain-0.2.4/shareagain.css" rel="stylesheet" />
+    <script src="libs/xaringanExtra-shareagain-0.2.4/shareagain.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -15,9 +20,11 @@ class: center, middle, inverse, title-slide
 # How to Use the <em>filter()</em> function for numeric values
 ## Selecting specific rows
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
+
+
 
 
 
@@ -1087,6 +1094,545 @@ prostate %&gt;%
   font-size: 80%
 }
 .panel3-filter4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+---
+
+
+
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values between 10 and 13
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+*nrow(prostate)
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values between 10 and 13
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+*prostate
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 316 x 20
+   rbc_age_group median_rbc_age   age    aa fam_hx p_vol t_vol t_stage  b_gs
+           &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1             3             25  72.1     0      0  54       3       1     3
+ 2             3             25  73.6     0      0  43.2     3       2     2
+ 3             3             25  67.5     0      0 103.      1       1     3
+ 4             2             15  65.8     0      0  46       1       1     1
+ 5             2             15  63.2     0      0  60       2       1     2
+ 6             3             25  65.4     0      0  45.9     2       1     1
+ 7             3             25  65.5     1      0  42.6     2       1     1
+ 8             1             10  67.1     0      0  40.7     3       1     1
+ 9             1             10  63.9     0      0  45       2       1     1
+10             2             15  63       1      0  67.6     2       1     2
+# … with 306 more rows, and 11 more variables: bn &lt;dbl&gt;, organ_confined &lt;dbl&gt;,
+#   preop_psa &lt;dbl&gt;, preop_therapy &lt;dbl&gt;, units &lt;dbl&gt;, s_gs &lt;dbl&gt;,
+#   any_adj_therapy &lt;dbl&gt;, adj_rad_therapy &lt;dbl&gt;, recurrence &lt;dbl&gt;,
+#   censor &lt;dbl&gt;, time_to_recurrence &lt;dbl&gt;
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values between 10 and 13
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+* select(age, recurrence, preop_psa)
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 316 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  72.1          1     14.1 
+ 2  73.6          1     10.5 
+ 3  67.5          0      6.98
+ 4  65.8          0      4.4 
+ 5  63.2          0     21.4 
+ 6  65.4          0      5.1 
+ 7  65.5          0      6.03
+ 8  67.1          1      8.7 
+ 9  63.9          0      3.83
+10  63            0      7.98
+# … with 306 more rows
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values between 10 and 13
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, recurrence, preop_psa) %&gt;%
+* filter(between(preop_psa, 10, 13))
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 24 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  73.6          1      10.5
+ 2  59.7          0      10.4
+ 3  72.1          1      10.1
+ 4  55.8          0      10  
+ 5  57.1          0      10  
+ 6  70.6          0      11.9
+ 7  55.6          0      11.9
+ 8  71.8          1      11.9
+ 9  50.6          0      11.1
+10  63.9          1      10.1
+# … with 14 more rows
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values between 10 and 13
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, recurrence, preop_psa) %&gt;%
+  filter(between(preop_psa, 10, 13))
+
+# see how many rows now
+#
+# Format:
+*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 24 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  73.6          1      10.5
+ 2  59.7          0      10.4
+ 3  72.1          1      10.1
+ 4  55.8          0      10  
+ 5  57.1          0      10  
+ 6  70.6          0      11.9
+ 7  55.6          0      11.9
+ 8  71.8          1      11.9
+ 9  50.6          0      11.1
+10  63.9          1      10.1
+# … with 14 more rows
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values between 10 and 13
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, recurrence, preop_psa) %&gt;%
+  filter(between(preop_psa, 10, 13))
+
+# see how many rows now
+#
+# Format:
+# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 24 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  73.6          1      10.5
+ 2  59.7          0      10.4
+ 3  72.1          1      10.1
+ 4  55.8          0      10  
+ 5  57.1          0      10  
+ 6  70.6          0      11.9
+ 7  55.6          0      11.9
+ 8  71.8          1      11.9
+ 9  50.6          0      11.1
+10  63.9          1      10.1
+# … with 14 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter5-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter5-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter5-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+
+
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+*nrow(prostate)
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+*prostate
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 316 x 20
+   rbc_age_group median_rbc_age   age    aa fam_hx p_vol t_vol t_stage  b_gs
+           &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1             3             25  72.1     0      0  54       3       1     3
+ 2             3             25  73.6     0      0  43.2     3       2     2
+ 3             3             25  67.5     0      0 103.      1       1     3
+ 4             2             15  65.8     0      0  46       1       1     1
+ 5             2             15  63.2     0      0  60       2       1     2
+ 6             3             25  65.4     0      0  45.9     2       1     1
+ 7             3             25  65.5     1      0  42.6     2       1     1
+ 8             1             10  67.1     0      0  40.7     3       1     1
+ 9             1             10  63.9     0      0  45       2       1     1
+10             2             15  63       1      0  67.6     2       1     2
+# … with 306 more rows, and 11 more variables: bn &lt;dbl&gt;, organ_confined &lt;dbl&gt;,
+#   preop_psa &lt;dbl&gt;, preop_therapy &lt;dbl&gt;, units &lt;dbl&gt;, s_gs &lt;dbl&gt;,
+#   any_adj_therapy &lt;dbl&gt;, adj_rad_therapy &lt;dbl&gt;, recurrence &lt;dbl&gt;,
+#   censor &lt;dbl&gt;, time_to_recurrence &lt;dbl&gt;
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+* select(age, recurrence, preop_psa)
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 316 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  72.1          1     14.1 
+ 2  73.6          1     10.5 
+ 3  67.5          0      6.98
+ 4  65.8          0      4.4 
+ 5  63.2          0     21.4 
+ 6  65.4          0      5.1 
+ 7  65.5          0      6.03
+ 8  67.1          1      8.7 
+ 9  63.9          0      3.83
+10  63            0      7.98
+# … with 306 more rows
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, recurrence, preop_psa) %&gt;%
+* filter(between(preop_psa, 10, 13))
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 24 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  73.6          1      10.5
+ 2  59.7          0      10.4
+ 3  72.1          1      10.1
+ 4  55.8          0      10  
+ 5  57.1          0      10  
+ 6  70.6          0      11.9
+ 7  55.6          0      11.9
+ 8  71.8          1      11.9
+ 9  50.6          0      11.1
+10  63.9          1      10.1
+# … with 14 more rows
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, recurrence, preop_psa) %&gt;%
+  filter(between(preop_psa, 10, 13))
+
+# see how many rows now
+#
+# Format:
+*# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 24 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  73.6          1      10.5
+ 2  59.7          0      10.4
+ 3  72.1          1      10.1
+ 4  55.8          0      10  
+ 5  57.1          0      10  
+ 6  70.6          0      11.9
+ 7  55.6          0      11.9
+ 8  71.8          1      11.9
+ 9  50.6          0      11.1
+10  63.9          1      10.1
+# … with 14 more rows
+```
+]
+
+---
+count: false
+ 
+Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17
+.panel1-filter5-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# check next line: some recur, some do not
+# selected 4 columns
+  select(age, recurrence, preop_psa) %&gt;%
+  filter(between(preop_psa, 10, 13))
+
+# see how many rows now
+#
+# Format:
+# filter(variable [comparison] value)        &lt;br&gt;  # filter(variable [comparison] value)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 24 x 3
+     age recurrence preop_psa
+   &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+ 1  73.6          1      10.5
+ 2  59.7          0      10.4
+ 3  72.1          1      10.1
+ 4  55.8          0      10  
+ 5  57.1          0      10  
+ 6  70.6          0      11.9
+ 7  55.6          0      11.9
+ 8  71.8          1      11.9
+ 9  50.6          0      11.1
+10  63.9          1      10.1
+# … with 14 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter5-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter5-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter5-auto {
   color: black;
   width: NA%;
   hight: 33%;

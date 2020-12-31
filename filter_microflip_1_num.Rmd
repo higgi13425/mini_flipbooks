@@ -39,6 +39,11 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
 ### How to Use Filter to Pick Out a Subset of Rows
 
 #### We will Start with Numeric Variables
@@ -184,7 +189,7 @@ prostate %>%
 
 ---
 
-```{r filter5, include = FALSE, eval = FALSE}
+```{r filter6, include = FALSE, eval = FALSE}
 # how many rows when you start
 nrow(prostate) 
 
