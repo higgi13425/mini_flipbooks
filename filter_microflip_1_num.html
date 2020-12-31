@@ -40,18 +40,17 @@ Format: &lt;br&gt;
 `dataset %&gt;% 
   filter(var &gt; value)` # you can use &lt;=, ==, &lt;, &gt;, &gt;=, != etc.
 
-As long as what is in the parentheses evaluates to a logical vector - &lt;br&gt;
-a string of TRUE or FALSE values, one for each row in your dataset.
+What is in the parentheses **must** evaluate to a logical vector, &lt;br&gt;
+e.g, a string of TRUE or FALSE values, one for each row in your dataset.
 
 You can Remember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Remember that **testing** for equality in a logic test requires 2 = =,
+Remember that **testing for equality** in a logic test requires 2 = =,
 not just one =. This is a **very** common syntax error in R code.
 
 You can also use *near* to get numbers in a range
 
-Example 1: filter prostate data for cases with cancer recurrence.
-
+Let's look at some examples!
 ---
 
 
