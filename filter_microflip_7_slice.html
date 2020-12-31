@@ -4,7 +4,7 @@
     <title>How to Use slice() functions to Take Slices of Rows</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use <em>slice()</em> functions to Take Slices of Rows
 ## Selecting Groups and Extremes of Rows
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
 
@@ -30,13 +30,12 @@ class: center, middle, inverse, title-slide
 
 If you want the first 1:N rows, or 50:100 rows, or last 100 rows,
 however the dataframe is currently sorted,
-you can use the _slice()_ function.
+you can use variants of the _slice()_ function.
 
 The _slice_max()_ and _slice_min()_ can take rows at top or 
 bottom of particular values, using N or proportion.
 
-Example 1: Slice off rows 100:200 from covid_dates.
-
+Let's try some **slicing** examples.
 
 ---
 
@@ -44,7 +43,7 @@ Example 1: Slice off rows 100:200 from covid_dates.
 
 count: false
  
-Example 1: Slice Rows 100-200
+Example 1/4: Slice Rows 100-200
 .panel1-filter1-auto[
 
 ```r
@@ -63,7 +62,7 @@ Example 1: Slice Rows 100-200
 ---
 count: false
  
-Example 1: Slice Rows 100-200
+Example 1/4: Slice Rows 100-200
 .panel1-filter1-auto[
 
 ```r
@@ -104,7 +103,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 1: Slice Rows 100-200
+Example 1/4: Slice Rows 100-200
 .panel1-filter1-auto[
 
 ```r
@@ -147,7 +146,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: Slice Rows 100-200
+Example 1/4: Slice Rows 100-200
 .panel1-filter1-auto[
 
 ```r
@@ -227,7 +226,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 2: Slice Rows with Top 20 age values
+Example 2/4: Slice Rows with Top 20 age values
 .panel1-filter2-auto[
 
 ```r
@@ -246,7 +245,7 @@ Example 2: Slice Rows with Top 20 age values
 ---
 count: false
  
-Example 2: Slice Rows with Top 20 age values
+Example 2/4: Slice Rows with Top 20 age values
 .panel1-filter2-auto[
 
 ```r
@@ -287,7 +286,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 2: Slice Rows with Top 20 age values
+Example 2/4: Slice Rows with Top 20 age values
 .panel1-filter2-auto[
 
 ```r
@@ -326,7 +325,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 2: Slice Rows with Top 20 age values
+Example 2/4: Slice Rows with Top 20 age values
 .panel1-filter2-auto[
 
 ```r
@@ -367,7 +366,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 2: Slice Rows with Top 20 age values
+Example 2/4: Slice Rows with Top 20 age values
 .panel1-filter2-auto[
 
 ```r
@@ -445,7 +444,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+Example 3/4: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
 .panel1-filter3-auto[
 
 ```r
@@ -464,7 +463,7 @@ Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
 ---
 count: false
  
-Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+Example 3/4: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
 .panel1-filter3-auto[
 
 ```r
@@ -505,7 +504,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+Example 3/4: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
 .panel1-filter3-auto[
 
 ```r
@@ -544,7 +543,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+Example 3/4: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
 .panel1-filter3-auto[
 
 ```r
@@ -584,7 +583,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
+Example 3/4: Slice Rows with Bottom 1% of -Earliest- Pandemic Day
 .panel1-filter3-auto[
 
 ```r
@@ -661,7 +660,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 4: Slice Top or Bottom N or %
+Example 4/4: Slice Top or Bottom N or %
 .panel1-filter4-auto[
 
 ```r
@@ -680,7 +679,7 @@ Example 4: Slice Top or Bottom N or %
 ---
 count: false
  
-Example 4: Slice Top or Bottom N or %
+Example 4/4: Slice Top or Bottom N or %
 .panel1-filter4-auto[
 
 ```r
@@ -721,7 +720,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 4: Slice Top or Bottom N or %
+Example 4/4: Slice Top or Bottom N or %
 .panel1-filter4-auto[
 
 ```r
@@ -760,7 +759,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 4: Slice Top or Bottom N or %
+Example 4/4: Slice Top or Bottom N or %
 .panel1-filter4-auto[
 
 ```r
@@ -800,7 +799,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 4: Slice Top or Bottom N or %
+Example 4/4: Slice Top or Bottom N or %
 .panel1-filter4-auto[
 
 ```r
@@ -872,6 +871,12 @@ covid_dates %&gt;%
 
 
 
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

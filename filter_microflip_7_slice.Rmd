@@ -1,5 +1,5 @@
 ---
-title: "How to Use _slice()_ functions to Take Slices of Rows"
+title: "How to Use _slice()_ functions to Take Row Slices of Dataframes"
 subtitle: "Selecting Groups and Extremes of Rows"  
 author: 
   - "Peter Higgins"
@@ -42,19 +42,18 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
-### How to Use the _slice()_ functions to Take Slices of Rows
+### How to Use the _slice()_ functions to Take Row Slices of Dataframes
 
 #### 
 
 If you want the first 1:N rows, or 50:100 rows, or last 100 rows,
 however the dataframe is currently sorted,
-you can use the _slice()_ function.
+you can use variants of the _slice()_ function.
 
 The _slice_max()_ and _slice_min()_ can take rows at top or 
 bottom of particular values, using N or proportion.
 
-Example 1: Slice off rows 100:200 from covid_dates.
-
+Let's try some **slicing** examples.
 
 ---
 
@@ -74,7 +73,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 1: Slice Rows 100-200")`
+    title = "Example 1/4: Slice Rows 100-200")`
 
 ---
 
@@ -95,7 +94,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Slice Rows with Top 20 age values")`
+    title = "Example 2/4: Slice Rows with Top 20 age values")`
 
 ---
 
@@ -115,7 +114,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3: Slice Rows with Bottom 1% of -Earliest- Pandemic Day")`
+    title = "Example 3/4: Slice Rows with Bottom 1% of -Earliest- Pandemic Day")`
 
 ---
 
@@ -135,6 +134,12 @@ covid_dates %>%
 
 `r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Example 4: Slice Top or Bottom N or %")`
+    title = "Example 4/4: Slice Top or Bottom N or %")`
 
 
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!

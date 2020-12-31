@@ -53,7 +53,7 @@ This is also helpful for sampling for training and testing sets when modeling.
 
 _slice_sample()_ can take n or proportion (prop) arguments
 
-Example 1: Take a random 30% sample of rows from covid_dates.
+Let's see some **sampling** examples!
 
 
 ---
@@ -73,7 +73,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 1: Take a Random 30% Sample of Rows from covid_dates.")`
+    title = "Example 1/3: Take a Random 30% Sample of Rows from covid_dates.")`
 
 ---
 
@@ -87,18 +87,20 @@ covid_dates %>%
 training_covid_dates
 
 # now make testing set
-setdiff(covid_dates, 
-        training_covid_dates) 
+covid_dates %>% 
+  anti_join(training_covid_dates)->
+testing_covid_dates
 # see how many rows in each
-
+training_covid_dates
+testing_covid_dates
 # Format:
-#   slice_sample(prop = 0.nn)  %>%          <br>
-#   setdiff(full_data, .)                  <br>
+#   slice_sample(prop = 0.nn)  
+#   set1 %>% anti_join(set2)
 ```
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Take a Random 70% Sample for Training and a Complementary 30% for Testing.")`
+    title = "Example 2/3: Take a Random 70% Sample for Training and a Complementary 30% for Testing.")`
 
 ---
 
@@ -117,5 +119,11 @@ covid_dates %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3: Take a Random Sample of 50 Rows from covid_dates.")`
+    title = "Example 3/3: Take a Random Sample of 50 Rows from covid_dates.")`
 
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!

@@ -4,7 +4,7 @@
     <title>How to Use distinct() and get_dupes() to find distinct rows</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use <em>distinct()</em> and <em>get_dupes()</em> to find distinct rows
 ## Selecting Distinct vs. Duplicated Rows
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
 
@@ -26,15 +26,15 @@ class: center, middle, inverse, title-slide
 
 ### How to Use the functions to find duplicate or distinct rows
 
-#### 
+Imagine that you expect each row to have a unique subject_id, first_name, and last_name, which would make this combination of 3 variables a ** unique_key**.
 
-Imagine that you expect each row to have a unique subject_id, first_name, and last_name.
+It is important to have a unique key variable to uniquely identify each obseratin/row. You may need a combination of several variables to make up a unique_key.
 
-But you (wisely) decide to check this with the _distinct()_ function. If this nrow is &lt; the original nrow, you have some duplicates.
+So you (wisely) decide to check this with the _distinct()_ function. If the resulting nrow is &lt; the original nrow, you have some duplicates.
 
 The {janitor} function _get_dupes()_ can help find these
 
-Example 1: examine the covid_dates data for duplicate entries.
+Let's find some duplicates!
 
 
 ---
@@ -43,7 +43,7 @@ Example 1: examine the covid_dates data for duplicate entries.
 
 count: false
  
-Example 1: See if Distinct subject_id
+Example 1/3: See if Distinct subject_id
 .panel1-filter1-auto[
 
 ```r
@@ -62,7 +62,7 @@ Example 1: See if Distinct subject_id
 ---
 count: false
  
-Example 1: See if Distinct subject_id
+Example 1/3: See if Distinct subject_id
 .panel1-filter1-auto[
 
 ```r
@@ -103,7 +103,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 1: See if Distinct subject_id
+Example 1/3: See if Distinct subject_id
 .panel1-filter1-auto[
 
 ```r
@@ -111,7 +111,7 @@ Example 1: See if Distinct subject_id
 nrow(covid_dates)
 
 covid_dates %&gt;%
-# check if all rows distinct
+# check if all rows/observations are distinct
 * distinct()
 ```
 ]
@@ -146,7 +146,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: See if Distinct subject_id
+Example 1/3: See if Distinct subject_id
 .panel1-filter1-auto[
 
 ```r
@@ -154,7 +154,7 @@ Example 1: See if Distinct subject_id
 nrow(covid_dates)
 
 covid_dates %&gt;%
-# check if all rows distinct
+# check if all rows/observations are distinct
   distinct() %&gt;%
 # check if subject_id is a unique identifier = key
 * distinct(subject_id)
@@ -188,7 +188,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: See if Distinct subject_id
+Example 1/3: See if Distinct subject_id
 .panel1-filter1-auto[
 
 ```r
@@ -196,13 +196,13 @@ Example 1: See if Distinct subject_id
 nrow(covid_dates)
 
 covid_dates %&gt;%
-# check if all rows distinct
+# check if all rows/observations are distinct
   distinct() %&gt;%
 # check if subject_id is a unique identifier = key
   distinct(subject_id)
 
 # see how many rows now
-# subject_id is not a key
+# subject_id is not a unique_key
 
 # Format:
 *#   distinct(variable)                    &lt;br&gt;  #   distinct(variable)                    &lt;br&gt;
@@ -268,7 +268,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 2: See if Distinct by Full Name
+Example 2/3: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
@@ -287,7 +287,7 @@ Example 2: See if Distinct by Full Name
 ---
 count: false
  
-Example 2: See if Distinct by Full Name
+Example 2/3: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
@@ -328,7 +328,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 2: See if Distinct by Full Name
+Example 2/3: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
@@ -368,7 +368,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 2: See if Distinct by Full Name
+Example 2/3: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
@@ -410,7 +410,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 2: See if Distinct by Full Name
+Example 2/3: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
@@ -424,7 +424,7 @@ covid_dates %&gt;%
   distinct(fake_first_name, fake_last_name)
 
 # see how many rows now
-# fullname is not a key
+# fullname is not a unique_key
 
 # Format:
 *#   distinct(variable1, variable 2)                    &lt;br&gt;  #   distinct(variable1, variable 2)                    &lt;br&gt;
@@ -491,7 +491,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 3: Which Rows are Duplicates
+Example 3/3: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -510,7 +510,7 @@ Example 3: Which Rows are Duplicates
 ---
 count: false
  
-Example 3: Which Rows are Duplicates
+Example 3/3: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -551,7 +551,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 3: Which Rows are Duplicates
+Example 3/3: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -592,7 +592,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 3: Which Rows are Duplicates
+Example 3/3: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -636,7 +636,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 3: Which Rows are Duplicates
+Example 3/3: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -710,6 +710,14 @@ covid_dates %&gt;%
 &lt;/style&gt;
 
 
+
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
