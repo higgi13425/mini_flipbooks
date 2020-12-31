@@ -4,7 +4,7 @@
     <title>How to Use Multiple filter() functions with Boolean logic</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use Multiple <em>filter()</em> functions with Boolean logic
 ## Selecting specific rows with multiple criteria
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
 
@@ -40,9 +40,278 @@ You can combine statements with the following:
 - XOR (exclusive OR - only if exactly one of the two is true
 filter(xor(age &gt;= 65, fam_hx == 1)
 
-You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+**R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Example 1: filter prostate data for cases with age &gt;65 and tumor volume &gt;1.
+
+Let's look at some examples!
+---
+
+
+
+count: false
+ 
+Example 1/4: Filter Rows with Multiple Criteria:  Age &gt;65 and Tumor Volume &gt; 1
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+*nrow(prostate)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+]
+
+---
+count: false
+ 
+Example 1/4: Filter Rows with Multiple Criteria:  Age &gt;65 and Tumor Volume &gt; 1
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+*prostate
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 316 x 20
+   rbc_age_group median_rbc_age   age    aa fam_hx p_vol t_vol t_stage  b_gs
+           &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1             3             25  72.1     0      0  54       3       1     3
+ 2             3             25  73.6     0      0  43.2     3       2     2
+ 3             3             25  67.5     0      0 103.      1       1     3
+ 4             2             15  65.8     0      0  46       1       1     1
+ 5             2             15  63.2     0      0  60       2       1     2
+ 6             3             25  65.4     0      0  45.9     2       1     1
+ 7             3             25  65.5     1      0  42.6     2       1     1
+ 8             1             10  67.1     0      0  40.7     3       1     1
+ 9             1             10  63.9     0      0  45       2       1     1
+10             2             15  63       1      0  67.6     2       1     2
+# … with 306 more rows, and 11 more variables: bn &lt;dbl&gt;, organ_confined &lt;dbl&gt;,
+#   preop_psa &lt;dbl&gt;, preop_therapy &lt;dbl&gt;, units &lt;dbl&gt;, s_gs &lt;dbl&gt;,
+#   any_adj_therapy &lt;dbl&gt;, adj_rad_therapy &lt;dbl&gt;, recurrence &lt;dbl&gt;,
+#   censor &lt;dbl&gt;, time_to_recurrence &lt;dbl&gt;
+```
+]
+
+---
+count: false
+ 
+Example 1/4: Filter Rows with Multiple Criteria:  Age &gt;65 and Tumor Volume &gt; 1
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# selected 3 columns
+# see how age and t_vol change w/filter
+* select(age, t_vol, recurrence)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 316 x 3
+     age t_vol recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     3          1
+ 2  73.6     3          1
+ 3  67.5     1          0
+ 4  65.8     1          0
+ 5  63.2     2          0
+ 6  65.4     2          0
+ 7  65.5     2          0
+ 8  67.1     3          1
+ 9  63.9     2          0
+10  63       2          0
+# … with 306 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1/4: Filter Rows with Multiple Criteria:  Age &gt;65 and Tumor Volume &gt; 1
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# selected 3 columns
+# see how age and t_vol change w/filter
+  select(age, t_vol, recurrence) %&gt;%
+* filter(age &gt; 65 &amp; t_vol&gt;1)
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 72 x 3
+     age t_vol recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     3          1
+ 2  73.6     3          1
+ 3  65.4     2          0
+ 4  65.5     2          0
+ 5  67.1     3          1
+ 6  73.3     2          0
+ 7  67.6     2          0
+ 8  65.2     2          0
+ 9  67.1     3          0
+10  69.8     2          0
+# … with 62 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1/4: Filter Rows with Multiple Criteria:  Age &gt;65 and Tumor Volume &gt; 1
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# selected 3 columns
+# see how age and t_vol change w/filter
+  select(age, t_vol, recurrence) %&gt;%
+  filter(age &gt; 65 &amp; t_vol&gt;1)
+
+# see how many rows now
+# check age and t_vol
+# Format:
+*# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 72 x 3
+     age t_vol recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     3          1
+ 2  73.6     3          1
+ 3  65.4     2          0
+ 4  65.5     2          0
+ 5  67.1     3          1
+ 6  73.3     2          0
+ 7  67.6     2          0
+ 8  65.2     2          0
+ 9  67.1     3          0
+10  69.8     2          0
+# … with 62 more rows
+```
+]
+
+---
+count: false
+ 
+Example 1/4: Filter Rows with Multiple Criteria:  Age &gt;65 and Tumor Volume &gt; 1
+.panel1-filter1-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# selected 3 columns
+# see how age and t_vol change w/filter
+  select(age, t_vol, recurrence) %&gt;%
+  filter(age &gt; 65 &amp; t_vol&gt;1)
+
+# see how many rows now
+# check age and t_vol
+# Format:
+# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter1-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 72 x 3
+     age t_vol recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     3          1
+ 2  73.6     3          1
+ 3  65.4     2          0
+ 4  65.5     2          0
+ 5  67.1     3          1
+ 6  73.3     2          0
+ 7  67.6     2          0
+ 8  65.2     2          0
+ 9  67.1     3          0
+10  69.8     2          0
+# … with 62 more rows
+```
+]
+
+&lt;style&gt;
+.panel1-filter1-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter1-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter1-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
 
 
 ---
@@ -51,7 +320,7 @@ Example 1: filter prostate data for cases with age &gt;65 and tumor volume &gt;1
 
 count: false
  
-Example 2: Filter Rows with Multiple Criteria
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
 .panel1-filter2-auto[
 
 ```r
@@ -70,7 +339,7 @@ Example 2: Filter Rows with Multiple Criteria
 ---
 count: false
  
-Example 2: Filter Rows with Multiple Criteria
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
 .panel1-filter2-auto[
 
 ```r
@@ -111,7 +380,7 @@ nrow(prostate)
 ---
 count: false
  
-Example 2: Filter Rows with Multiple Criteria
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
 .panel1-filter2-auto[
 
 ```r
@@ -120,8 +389,8 @@ nrow(prostate)
 
 prostate %&gt;%
 # selected 3 columns
-# see how age and t_vol change w/filter
-* select(age, t_vol, recurrence)
+# see how age and aa change w/filter
+* select(age, aa, t_vol)
 ```
 ]
  
@@ -133,18 +402,18 @@ prostate %&gt;%
 
 ```
 # A tibble: 316 x 3
-     age t_vol recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  72.1     3          1
- 2  73.6     3          1
- 3  67.5     1          0
- 4  65.8     1          0
- 5  63.2     2          0
- 6  65.4     2          0
- 7  65.5     2          0
- 8  67.1     3          1
- 9  63.9     2          0
-10  63       2          0
+     age    aa t_vol
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  72.1     0     3
+ 2  73.6     0     3
+ 3  67.5     0     1
+ 4  65.8     0     1
+ 5  63.2     0     2
+ 6  65.4     0     2
+ 7  65.5     1     2
+ 8  67.1     0     3
+ 9  63.9     0     2
+10  63       1     2
 # … with 306 more rows
 ```
 ]
@@ -152,7 +421,7 @@ prostate %&gt;%
 ---
 count: false
  
-Example 2: Filter Rows with Multiple Criteria
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
 .panel1-filter2-auto[
 
 ```r
@@ -161,9 +430,9 @@ nrow(prostate)
 
 prostate %&gt;%
 # selected 3 columns
-# see how age and t_vol change w/filter
-  select(age, t_vol, recurrence) %&gt;%
-* filter(age &gt; 65 &amp; t_vol&gt;1)
+# see how age and aa change w/filter
+  select(age, aa, t_vol) %&gt;%
+* filter(age &gt; 69 | t_vol &gt; 1)
 ```
 ]
  
@@ -174,27 +443,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 72 x 3
-     age t_vol recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  72.1     3          1
- 2  73.6     3          1
- 3  65.4     2          0
- 4  65.5     2          0
- 5  67.1     3          1
- 6  73.3     2          0
- 7  67.6     2          0
- 8  65.2     2          0
- 9  67.1     3          0
-10  69.8     2          0
-# … with 62 more rows
+# A tibble: 256 x 3
+     age    aa t_vol
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  72.1     0     3
+ 2  73.6     0     3
+ 3  63.2     0     2
+ 4  65.4     0     2
+ 5  65.5     1     2
+ 6  67.1     0     3
+ 7  63.9     0     2
+ 8  63       1     2
+ 9  58.5     0     3
+10  56.2     0     2
+# … with 246 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 2: Filter Rows with Multiple Criteria
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
 .panel1-filter2-auto[
 
 ```r
@@ -203,14 +472,10 @@ nrow(prostate)
 
 prostate %&gt;%
 # selected 3 columns
-# see how age and t_vol change w/filter
-  select(age, t_vol, recurrence) %&gt;%
-  filter(age &gt; 65 &amp; t_vol&gt;1)
-
-# see how many rows now
-# check age and t_vol
-# Format:
-*# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
+# see how age and aa change w/filter
+  select(age, aa, t_vol) %&gt;%
+  filter(age &gt; 69 | t_vol &gt; 1) %&gt;%
+* arrange(desc(age))
 ```
 ]
  
@@ -221,27 +486,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 72 x 3
-     age t_vol recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  72.1     3          1
- 2  73.6     3          1
- 3  65.4     2          0
- 4  65.5     2          0
- 5  67.1     3          1
- 6  73.3     2          0
- 7  67.6     2          0
- 8  65.2     2          0
- 9  67.1     3          0
-10  69.8     2          0
-# … with 62 more rows
+# A tibble: 256 x 3
+     age    aa t_vol
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  79       0     2
+ 2  78.3     0     1
+ 3  76.9     0     1
+ 4  76.3     0    NA
+ 5  74.9     0     3
+ 6  74.8     0     2
+ 7  74.6     0     1
+ 8  74.4     0     3
+ 9  74.2     0     2
+10  73.9     1     2
+# … with 246 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 2: Filter Rows with Multiple Criteria
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
 .panel1-filter2-auto[
 
 ```r
@@ -250,14 +515,15 @@ nrow(prostate)
 
 prostate %&gt;%
 # selected 3 columns
-# see how age and t_vol change w/filter
-  select(age, t_vol, recurrence) %&gt;%
-  filter(age &gt; 65 &amp; t_vol&gt;1)
+# see how age and aa change w/filter
+  select(age, aa, t_vol) %&gt;%
+  filter(age &gt; 69 | t_vol &gt; 1) %&gt;%
+  arrange(desc(age))
 
 # see how many rows now
-# check age and t_vol
+# watch age and aa status
 # Format:
-# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
+*# filter(logic test 1 | logic test 2)        &lt;br&gt;  # filter(logic test 1 | logic test 2)        &lt;br&gt;
 ```
 ]
  
@@ -268,20 +534,68 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 72 x 3
-     age t_vol recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  72.1     3          1
- 2  73.6     3          1
- 3  65.4     2          0
- 4  65.5     2          0
- 5  67.1     3          1
- 6  73.3     2          0
- 7  67.6     2          0
- 8  65.2     2          0
- 9  67.1     3          0
-10  69.8     2          0
-# … with 62 more rows
+# A tibble: 256 x 3
+     age    aa t_vol
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  79       0     2
+ 2  78.3     0     1
+ 3  76.9     0     1
+ 4  76.3     0    NA
+ 5  74.9     0     3
+ 6  74.8     0     2
+ 7  74.6     0     1
+ 8  74.4     0     3
+ 9  74.2     0     2
+10  73.9     1     2
+# … with 246 more rows
+```
+]
+
+---
+count: false
+ 
+Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR
+.panel1-filter2-auto[
+
+```r
+# how many rows when you start
+nrow(prostate)
+
+prostate %&gt;%
+# selected 3 columns
+# see how age and aa change w/filter
+  select(age, aa, t_vol) %&gt;%
+  filter(age &gt; 69 | t_vol &gt; 1) %&gt;%
+  arrange(desc(age))
+
+# see how many rows now
+# watch age and aa status
+# Format:
+# filter(logic test 1 | logic test 2)        &lt;br&gt;  # filter(logic test 1 | logic test 2)        &lt;br&gt;
+```
+]
+ 
+.panel2-filter2-auto[
+
+```
+[1] 316
+```
+
+```
+# A tibble: 256 x 3
+     age    aa t_vol
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1  79       0     2
+ 2  78.3     0     1
+ 3  76.9     0     1
+ 4  76.3     0    NA
+ 5  74.9     0     3
+ 6  74.8     0     2
+ 7  74.6     0     1
+ 8  74.4     0     3
+ 9  74.2     0     2
+10  73.9     1     2
+# … with 246 more rows
 ```
 ]
 
@@ -314,14 +628,13 @@ prostate %&gt;%
 
 
 
-
 ---
 
 
 
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -340,7 +653,7 @@ Example 3: Filter Rows with OR Criteria
 ---
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -381,7 +694,7 @@ nrow(prostate)
 ---
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -422,7 +735,7 @@ prostate %&gt;%
 ---
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -433,7 +746,7 @@ prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
   select(age, aa, t_vol) %&gt;%
-* filter(age &gt; 69 | t_vol &gt; 1)
+* filter(xor(age &gt; 69, t_vol &gt; 1))
 ```
 ]
  
@@ -444,27 +757,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 256 x 3
+# A tibble: 224 x 3
      age    aa t_vol
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  72.1     0     3
- 2  73.6     0     3
- 3  63.2     0     2
- 4  65.4     0     2
- 5  65.5     1     2
- 6  67.1     0     3
- 7  63.9     0     2
- 8  63       1     2
- 9  58.5     0     3
-10  56.2     0     2
-# … with 246 more rows
+ 1  63.2     0     2
+ 2  65.4     0     2
+ 3  65.5     1     2
+ 4  67.1     0     3
+ 5  63.9     0     2
+ 6  63       1     2
+ 7  58.5     0     3
+ 8  56.2     0     2
+ 9  59.7     1     2
+10  67.6     0     2
+# … with 214 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -475,7 +788,7 @@ prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
   select(age, aa, t_vol) %&gt;%
-  filter(age &gt; 69 | t_vol &gt; 1) %&gt;%
+  filter(xor(age &gt; 69, t_vol &gt; 1)) %&gt;%
 * arrange(desc(age))
 ```
 ]
@@ -487,27 +800,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 256 x 3
+# A tibble: 224 x 3
      age    aa t_vol
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  79       0     2
- 2  78.3     0     1
- 3  76.9     0     1
- 4  76.3     0    NA
- 5  74.9     0     3
- 6  74.8     0     2
- 7  74.6     0     1
- 8  74.4     0     3
- 9  74.2     0     2
-10  73.9     1     2
-# … with 246 more rows
+ 1  78.3     0     1
+ 2  76.9     0     1
+ 3  74.6     0     1
+ 4  71.9     0     1
+ 5  71.4     0     1
+ 6  71.2     0     1
+ 7  71       0     1
+ 8  70.6     1     1
+ 9  69.7     0     1
+10  69       1     2
+# … with 214 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -518,13 +831,13 @@ prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
   select(age, aa, t_vol) %&gt;%
-  filter(age &gt; 69 | t_vol &gt; 1) %&gt;%
+  filter(xor(age &gt; 69, t_vol &gt; 1)) %&gt;%
   arrange(desc(age))
 
 # see how many rows now
 # watch age and aa status
 # Format:
-*# filter(logic test 1 | logic test 2)        &lt;br&gt;  # filter(logic test 1 | logic test 2)        &lt;br&gt;
+*# filter(xor(logic test 1, logic test 2))        &lt;br&gt;  # filter(xor(logic test 1, logic test 2))        &lt;br&gt;
 ```
 ]
  
@@ -535,27 +848,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 256 x 3
+# A tibble: 224 x 3
      age    aa t_vol
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  79       0     2
- 2  78.3     0     1
- 3  76.9     0     1
- 4  76.3     0    NA
- 5  74.9     0     3
- 6  74.8     0     2
- 7  74.6     0     1
- 8  74.4     0     3
- 9  74.2     0     2
-10  73.9     1     2
-# … with 246 more rows
+ 1  78.3     0     1
+ 2  76.9     0     1
+ 3  74.6     0     1
+ 4  71.9     0     1
+ 5  71.4     0     1
+ 6  71.2     0     1
+ 7  71       0     1
+ 8  70.6     1     1
+ 9  69.7     0     1
+10  69       1     2
+# … with 214 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 3: Filter Rows with OR Criteria
+Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!&lt;br&gt; xor = Exclusive OR - only one OR the other statement is TRUE, not both.
 .panel1-filter3-auto[
 
 ```r
@@ -566,13 +879,13 @@ prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
   select(age, aa, t_vol) %&gt;%
-  filter(age &gt; 69 | t_vol &gt; 1) %&gt;%
+  filter(xor(age &gt; 69, t_vol &gt; 1)) %&gt;%
   arrange(desc(age))
 
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(logic test 1 | logic test 2)        &lt;br&gt;  # filter(logic test 1 | logic test 2)        &lt;br&gt;
+# filter(xor(logic test 1, logic test 2))        &lt;br&gt;  # filter(xor(logic test 1, logic test 2))        &lt;br&gt;
 ```
 ]
  
@@ -583,20 +896,20 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 256 x 3
+# A tibble: 224 x 3
      age    aa t_vol
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  79       0     2
- 2  78.3     0     1
- 3  76.9     0     1
- 4  76.3     0    NA
- 5  74.9     0     3
- 6  74.8     0     2
- 7  74.6     0     1
- 8  74.4     0     3
- 9  74.2     0     2
-10  73.9     1     2
-# … with 246 more rows
+ 1  78.3     0     1
+ 2  76.9     0     1
+ 3  74.6     0     1
+ 4  71.9     0     1
+ 5  71.4     0     1
+ 6  71.2     0     1
+ 7  71       0     1
+ 8  70.6     1     1
+ 9  69.7     0     1
+10  69       1     2
+# … with 214 more rows
 ```
 ]
 
@@ -629,13 +942,14 @@ prostate %&gt;%
 
 
 
+
 ---
 
 
 
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -654,7 +968,7 @@ Example 4: Filter Rows with XOR Criteria
 ---
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -695,7 +1009,7 @@ nrow(prostate)
 ---
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -705,7 +1019,7 @@ nrow(prostate)
 prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
-* select(age, aa, t_vol)
+* select(age, aa, recurrence)
 ```
 ]
  
@@ -717,18 +1031,18 @@ prostate %&gt;%
 
 ```
 # A tibble: 316 x 3
-     age    aa t_vol
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  72.1     0     3
- 2  73.6     0     3
- 3  67.5     0     1
- 4  65.8     0     1
- 5  63.2     0     2
- 6  65.4     0     2
- 7  65.5     1     2
- 8  67.1     0     3
- 9  63.9     0     2
-10  63       1     2
+     age    aa recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     0          1
+ 2  73.6     0          1
+ 3  67.5     0          0
+ 4  65.8     0          0
+ 5  63.2     0          0
+ 6  65.4     0          0
+ 7  65.5     1          0
+ 8  67.1     0          1
+ 9  63.9     0          0
+10  63       1          0
 # … with 306 more rows
 ```
 ]
@@ -736,7 +1050,7 @@ prostate %&gt;%
 ---
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -746,8 +1060,8 @@ nrow(prostate)
 prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
-  select(age, aa, t_vol) %&gt;%
-* filter(xor(age &gt; 69, t_vol &gt; 1))
+  select(age, aa, recurrence) %&gt;%
+* filter(age &gt; 64 &amp; aa != 1)
 ```
 ]
  
@@ -758,27 +1072,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 224 x 3
-     age    aa t_vol
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  63.2     0     2
- 2  65.4     0     2
- 3  65.5     1     2
- 4  67.1     0     3
- 5  63.9     0     2
- 6  63       1     2
- 7  58.5     0     3
- 8  56.2     0     2
- 9  59.7     1     2
-10  67.6     0     2
-# … with 214 more rows
+# A tibble: 103 x 3
+     age    aa recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  72.1     0          1
+ 2  73.6     0          1
+ 3  67.5     0          0
+ 4  65.8     0          0
+ 5  65.4     0          0
+ 6  67.1     0          1
+ 7  73.3     0          0
+ 8  67.6     0          0
+ 9  65.2     0          0
+10  67.1     0          0
+# … with 93 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -788,8 +1102,8 @@ nrow(prostate)
 prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
-  select(age, aa, t_vol) %&gt;%
-  filter(xor(age &gt; 69, t_vol &gt; 1)) %&gt;%
+  select(age, aa, recurrence) %&gt;%
+  filter(age &gt; 64 &amp; aa != 1) %&gt;%
 * arrange(desc(age))
 ```
 ]
@@ -801,27 +1115,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 224 x 3
-     age    aa t_vol
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  78.3     0     1
- 2  76.9     0     1
- 3  74.6     0     1
- 4  71.9     0     1
- 5  71.4     0     1
- 6  71.2     0     1
- 7  71       0     1
- 8  70.6     1     1
- 9  69.7     0     1
-10  69       1     2
-# … with 214 more rows
+# A tibble: 103 x 3
+     age    aa recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  79       0          1
+ 2  78.3     0          1
+ 3  76.9     0          0
+ 4  76.3     0          1
+ 5  74.9     0          0
+ 6  74.8     0          0
+ 7  74.6     0          0
+ 8  74.4     0          0
+ 9  74.2     0          0
+10  73.6     0          1
+# … with 93 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -831,14 +1145,14 @@ nrow(prostate)
 prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
-  select(age, aa, t_vol) %&gt;%
-  filter(xor(age &gt; 69, t_vol &gt; 1)) %&gt;%
+  select(age, aa, recurrence) %&gt;%
+  filter(age &gt; 64 &amp; aa != 1) %&gt;%
   arrange(desc(age))
 
 # see how many rows now
 # watch age and aa status
 # Format:
-*# filter(xor(logic test 1, logic test 2))        &lt;br&gt;  # filter(xor(logic test 1, logic test 2))        &lt;br&gt;
+*# filter(logic test 1 &amp; logic test 2)         &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)         &lt;br&gt;
 ```
 ]
  
@@ -849,27 +1163,27 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 224 x 3
-     age    aa t_vol
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  78.3     0     1
- 2  76.9     0     1
- 3  74.6     0     1
- 4  71.9     0     1
- 5  71.4     0     1
- 6  71.2     0     1
- 7  71       0     1
- 8  70.6     1     1
- 9  69.7     0     1
-10  69       1     2
-# … with 214 more rows
+# A tibble: 103 x 3
+     age    aa recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  79       0          1
+ 2  78.3     0          1
+ 3  76.9     0          0
+ 4  76.3     0          1
+ 5  74.9     0          0
+ 6  74.8     0          0
+ 7  74.6     0          0
+ 8  74.4     0          0
+ 9  74.2     0          0
+10  73.6     0          1
+# … with 93 more rows
 ```
 ]
 
 ---
 count: false
  
-Example 4: Filter Rows with XOR Criteria
+Example 4/4: Filter Rows with Age &gt;64, NOT African-American
 .panel1-filter4-auto[
 
 ```r
@@ -879,14 +1193,14 @@ nrow(prostate)
 prostate %&gt;%
 # selected 3 columns
 # see how age and aa change w/filter
-  select(age, aa, t_vol) %&gt;%
-  filter(xor(age &gt; 69, t_vol &gt; 1)) %&gt;%
+  select(age, aa, recurrence) %&gt;%
+  filter(age &gt; 64 &amp; aa != 1) %&gt;%
   arrange(desc(age))
 
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(xor(logic test 1, logic test 2))        &lt;br&gt;  # filter(xor(logic test 1, logic test 2))        &lt;br&gt;
+# filter(logic test 1 &amp; logic test 2)         &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)         &lt;br&gt;
 ```
 ]
  
@@ -897,20 +1211,20 @@ prostate %&gt;%
 ```
 
 ```
-# A tibble: 224 x 3
-     age    aa t_vol
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1  78.3     0     1
- 2  76.9     0     1
- 3  74.6     0     1
- 4  71.9     0     1
- 5  71.4     0     1
- 6  71.2     0     1
- 7  71       0     1
- 8  70.6     1     1
- 9  69.7     0     1
-10  69       1     2
-# … with 214 more rows
+# A tibble: 103 x 3
+     age    aa recurrence
+   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+ 1  79       0          1
+ 2  78.3     0          1
+ 3  76.9     0          0
+ 4  76.3     0          1
+ 5  74.9     0          0
+ 6  74.8     0          0
+ 7  74.6     0          0
+ 8  74.4     0          0
+ 9  74.2     0          0
+10  73.6     0          1
+# … with 93 more rows
 ```
 ]
 
@@ -943,321 +1257,12 @@ prostate %&gt;%
 
 
 
-
 ---
+class: inverse, center
 
+# End of This Flipbook
 
-
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-*nrow(prostate)
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-]
-
----
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-nrow(prostate)
-
-*prostate
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-
-```
-# A tibble: 316 x 20
-   rbc_age_group median_rbc_age   age    aa fam_hx p_vol t_vol t_stage  b_gs
-           &lt;dbl&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
- 1             3             25  72.1     0      0  54       3       1     3
- 2             3             25  73.6     0      0  43.2     3       2     2
- 3             3             25  67.5     0      0 103.      1       1     3
- 4             2             15  65.8     0      0  46       1       1     1
- 5             2             15  63.2     0      0  60       2       1     2
- 6             3             25  65.4     0      0  45.9     2       1     1
- 7             3             25  65.5     1      0  42.6     2       1     1
- 8             1             10  67.1     0      0  40.7     3       1     1
- 9             1             10  63.9     0      0  45       2       1     1
-10             2             15  63       1      0  67.6     2       1     2
-# … with 306 more rows, and 11 more variables: bn &lt;dbl&gt;, organ_confined &lt;dbl&gt;,
-#   preop_psa &lt;dbl&gt;, preop_therapy &lt;dbl&gt;, units &lt;dbl&gt;, s_gs &lt;dbl&gt;,
-#   any_adj_therapy &lt;dbl&gt;, adj_rad_therapy &lt;dbl&gt;, recurrence &lt;dbl&gt;,
-#   censor &lt;dbl&gt;, time_to_recurrence &lt;dbl&gt;
-```
-]
-
----
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-nrow(prostate)
-
-prostate %&gt;%
-# selected 3 columns
-# see how age and aa change w/filter
-* select(age, aa, recurrence)
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-
-```
-# A tibble: 316 x 3
-     age    aa recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  72.1     0          1
- 2  73.6     0          1
- 3  67.5     0          0
- 4  65.8     0          0
- 5  63.2     0          0
- 6  65.4     0          0
- 7  65.5     1          0
- 8  67.1     0          1
- 9  63.9     0          0
-10  63       1          0
-# … with 306 more rows
-```
-]
-
----
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-nrow(prostate)
-
-prostate %&gt;%
-# selected 3 columns
-# see how age and aa change w/filter
-  select(age, aa, recurrence) %&gt;%
-* filter(age &gt; 64 &amp; aa != 1)
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-
-```
-# A tibble: 103 x 3
-     age    aa recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  72.1     0          1
- 2  73.6     0          1
- 3  67.5     0          0
- 4  65.8     0          0
- 5  65.4     0          0
- 6  67.1     0          1
- 7  73.3     0          0
- 8  67.6     0          0
- 9  65.2     0          0
-10  67.1     0          0
-# … with 93 more rows
-```
-]
-
----
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-nrow(prostate)
-
-prostate %&gt;%
-# selected 3 columns
-# see how age and aa change w/filter
-  select(age, aa, recurrence) %&gt;%
-  filter(age &gt; 64 &amp; aa != 1) %&gt;%
-* arrange(desc(age))
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-
-```
-# A tibble: 103 x 3
-     age    aa recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  79       0          1
- 2  78.3     0          1
- 3  76.9     0          0
- 4  76.3     0          1
- 5  74.9     0          0
- 6  74.8     0          0
- 7  74.6     0          0
- 8  74.4     0          0
- 9  74.2     0          0
-10  73.6     0          1
-# … with 93 more rows
-```
-]
-
----
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-nrow(prostate)
-
-prostate %&gt;%
-# selected 3 columns
-# see how age and aa change w/filter
-  select(age, aa, recurrence) %&gt;%
-  filter(age &gt; 64 &amp; aa != 1) %&gt;%
-  arrange(desc(age))
-
-# see how many rows now
-# watch age and aa status
-# Format:
-*# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-
-```
-# A tibble: 103 x 3
-     age    aa recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  79       0          1
- 2  78.3     0          1
- 3  76.9     0          0
- 4  76.3     0          1
- 5  74.9     0          0
- 6  74.8     0          0
- 7  74.6     0          0
- 8  74.4     0          0
- 9  74.2     0          0
-10  73.6     0          1
-# … with 93 more rows
-```
-]
-
----
-count: false
- 
-Filter Rows with AND, NOT Criteria
-.panel1-filter5-auto[
-
-```r
-# how many rows when you start
-nrow(prostate)
-
-prostate %&gt;%
-# selected 3 columns
-# see how age and aa change w/filter
-  select(age, aa, recurrence) %&gt;%
-  filter(age &gt; 64 &amp; aa != 1) %&gt;%
-  arrange(desc(age))
-
-# see how many rows now
-# watch age and aa status
-# Format:
-# filter(logic test 1 &amp; logic test 2)        &lt;br&gt;  # filter(logic test 1 &amp; logic test 2)        &lt;br&gt;
-```
-]
- 
-.panel2-filter5-auto[
-
-```
-[1] 316
-```
-
-```
-# A tibble: 103 x 3
-     age    aa recurrence
-   &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
- 1  79       0          1
- 2  78.3     0          1
- 3  76.9     0          0
- 4  76.3     0          1
- 5  74.9     0          0
- 6  74.8     0          0
- 7  74.6     0          0
- 8  74.4     0          0
- 9  74.2     0          0
-10  73.6     0          1
-# … with 93 more rows
-```
-]
-
-&lt;style&gt;
-.panel1-filter5-auto {
-  color: black;
-  width: 38.6060606060606%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel2-filter5-auto {
-  color: black;
-  width: 59.3939393939394%;
-  hight: 32%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-.panel3-filter5-auto {
-  color: black;
-  width: NA%;
-  hight: 33%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-&lt;/style&gt;
-
-
-
+## On to The Coding Exercises!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

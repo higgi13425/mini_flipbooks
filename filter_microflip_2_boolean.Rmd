@@ -55,14 +55,13 @@ You can combine statements with the following:
 - XOR (exclusive OR - only if exactly one of the two is true
 filter(xor(age >= 65, fam_hx == 1)
 
-You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
-
-Example 1: filter prostate data for cases with age >65 and tumor volume >1.
+**R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
 
+Let's look at some examples!
 ---
 
-```{r filter2, include = FALSE, eval = FALSE}
+```{r filter1, include = FALSE, eval = FALSE}
 # how many rows when you start
 nrow(prostate) 
 
@@ -80,14 +79,14 @@ prostate %>%
 
 ```
 
-`r chunk_reveal("filter2", 
+`r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 2: Filter Rows with Multiple Criteria")`
+    title = "Example 1/4: Filter Rows with Multiple Criteria:  Age >65 and Tumor Volume > 1")`
 
 
 ---
 
-```{r filter3, include = FALSE, eval = FALSE}
+```{r filter2, include = FALSE, eval = FALSE}
 # how many rows when you start
 nrow(prostate) 
 
@@ -106,13 +105,13 @@ prostate %>%
 
 ```
 
-`r chunk_reveal("filter3", 
+`r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 3: Filter Rows with OR Criteria")`
+    title = "Example 2/4: Filter Rows with OR Criteria - **watch** the symbol for OR")`
 
 ---
 
-```{r filter4, include = FALSE, eval = FALSE}
+```{r filter3, include = FALSE, eval = FALSE}
 # how many rows when you start
 nrow(prostate) 
 
@@ -131,14 +130,14 @@ prostate %>%
 
 ```
 
-`r chunk_reveal("filter4", 
+`r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 4: Filter Rows with XOR Criteria")`
+    title = "Example 3/4: Filter Rows with XOR Criteria - **Watch** the Syntax!<br> xor = Exclusive OR - only one OR the other statement is TRUE, not both.")`
 
 
 ---
 
-```{r filter5, include = FALSE, eval = FALSE}
+```{r filter4, include = FALSE, eval = FALSE}
 # how many rows when you start
 nrow(prostate) 
 
@@ -152,12 +151,18 @@ prostate %>%
 # see how many rows now
 # watch age and aa status
 # Format:
-# filter(logic test 1 & logic test 2)        <br>  
+# filter(logic test 1 & logic test 2)         <br>
 
 
 ```
 
-`r chunk_reveal("filter5", 
+`r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Filter Rows with AND, NOT Criteria")`
+    title = "Example 4/4: Filter Rows with Age >64, NOT African-American")`
 
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!

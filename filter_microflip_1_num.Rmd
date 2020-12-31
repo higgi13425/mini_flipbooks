@@ -1,5 +1,5 @@
 ---
-title: "How to Use the _filter()_ function for numeric values"
+title: "How to Use the _filter()_ function for Numeric values"
 subtitle: "Selecting specific rows"  
 author: 
   - "Peter Higgins"
