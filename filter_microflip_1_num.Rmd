@@ -87,7 +87,7 @@ prostate %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 1: filter prostate data for cases with cancer recurrence == 1")`
+    title = "Example 1/6: filter prostate data for cases with cancer recurrence == 1")`
 
 
 ---
@@ -112,7 +112,7 @@ prostate %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Filter Preoperative PSA for Values > 20")`
+    title = "Example 2/6: Filter Preoperative PSA for Values > 20")`
 
 ---
 
@@ -136,7 +136,7 @@ prostate %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3: Filter Preoperative PSA for Values very close to 10")`
+    title = "Example 3/6: Filter Preoperative PSA for Values very close to 10")`
 
 ---
 
@@ -160,7 +160,7 @@ prostate %>%
 
 `r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Example 4: Filter Preoperative PSA for Values within 1.5 units of 17")`
+    title = "Example 4/6: Filter Preoperative PSA for Values within 1.5 units of 17")`
 
 
 ---
@@ -180,12 +180,11 @@ prostate %>%
 # Format:
 # filter(variable [comparison] value)        <br>  
 
-
 ```
 
 `r chunk_reveal("filter5", 
     break_type = "auto", 
-    title = "Example 5: Filter Preoperative PSA for Values between 10 and 13")`
+    title = "Example 5/6: Filter Preoperative PSA for Values between 10 and 13")`
 
 ---
 
@@ -202,11 +201,18 @@ prostate %>%
 # see how many rows now
 # 
 # Format:
-# filter(variable [comparison] value)        <br>  
+# filter(variable [comparison] value)
 
 
 ```
 
 `r chunk_reveal("filter5", 
     break_type = "auto", 
-    title = "Example 5: Filter Preoperative PSA for Values of 10 or 13 or 17")`
+    title = "Example 6/6: Filter Preoperative PSA for Values of 10 or 13 or 17")`
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
