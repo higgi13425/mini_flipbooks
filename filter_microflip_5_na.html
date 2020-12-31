@@ -4,7 +4,7 @@
     <title>How to Use filter() functions to Remove Rows with Missing Values</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use <em>filter()</em> functions to Remove Rows with Missing Values
 ## Selecting specific rows with or without NAs
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
 
@@ -33,13 +33,13 @@ Format: &lt;br&gt;
 `dataset %&gt;% 
   filter(is.na(variable)))` 
 
-Negation is done be preceding with ! ,
-so !is.na(variable) produces a logical vector with
-TRUE for all non-missing value rows.
+Negation is done by preceding with ! , &lt;br&gt;
+so !is.na(variable) produces a logical vector which is  &lt;br&gt;
+TRUE for all _non-missing_ value rows.
 
-You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+**R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Example 1: filter covid_dates data for missing dates.
+Let's walk through some **filter** Examples!
 
 
 ---
@@ -48,7 +48,7 @@ Example 1: filter covid_dates data for missing dates.
 
 count: false
  
-Example 1: Filter Rows for Missing Dates
+Example 1/4: Filter Rows for Missing Dates - find which Ones are Missing
 .panel1-filter1-auto[
 
 ```r
@@ -67,7 +67,7 @@ Example 1: Filter Rows for Missing Dates
 ---
 count: false
  
-Example 1: Filter Rows for Missing Dates
+Example 1/4: Filter Rows for Missing Dates - find which Ones are Missing
 .panel1-filter1-auto[
 
 ```r
@@ -108,7 +108,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 1: Filter Rows for Missing Dates
+Example 1/4: Filter Rows for Missing Dates - find which Ones are Missing
 .panel1-filter1-auto[
 
 ```r
@@ -149,7 +149,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: Filter Rows for Missing Dates
+Example 1/4: Filter Rows for Missing Dates - find which Ones are Missing
 .panel1-filter1-auto[
 
 ```r
@@ -187,7 +187,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: Filter Rows for Missing Dates
+Example 1/4: Filter Rows for Missing Dates - find which Ones are Missing
 .panel1-filter1-auto[
 
 ```r
@@ -264,7 +264,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 2: Filter Rows for Non-Missing Dates
+Example 2/4: Filter Rows for Non-Missing Dates with !is.na()
 .panel1-filter2-auto[
 
 ```r
@@ -283,7 +283,7 @@ Example 2: Filter Rows for Non-Missing Dates
 ---
 count: false
  
-Example 2: Filter Rows for Non-Missing Dates
+Example 2/4: Filter Rows for Non-Missing Dates with !is.na()
 .panel1-filter2-auto[
 
 ```r
@@ -327,7 +327,7 @@ nrow(bmt_dates)
 ---
 count: false
  
-Example 2: Filter Rows for Non-Missing Dates
+Example 2/4: Filter Rows for Non-Missing Dates with !is.na()
 .panel1-filter2-auto[
 
 ```r
@@ -351,16 +351,16 @@ bmt_dates %&gt;%
 # A tibble: 64 x 3
    fake_dx_date  race donor_sex
    &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 2014-05-24       0         0
+ 1 2014-05-28       0         0
  2 NA              NA        NA
- 3 2014-05-24       1         0
- 4 2014-05-24       1         1
+ 3 2014-05-28       1         0
+ 4 2014-05-28       1         1
  5 NA              NA        NA
- 6 2014-05-24       1         1
- 7 2014-05-24       1         1
+ 6 2014-05-28       1         1
+ 7 2014-05-28       1         1
  8 NA               1         0
- 9 2014-05-24       0         1
-10 2014-05-24       1         0
+ 9 2014-05-28       0         1
+10 2014-05-28       1         0
 # … with 54 more rows
 ```
 ]
@@ -368,7 +368,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Filter Rows for Non-Missing Dates
+Example 2/4: Filter Rows for Non-Missing Dates with !is.na()
 .panel1-filter2-auto[
 
 ```r
@@ -393,16 +393,16 @@ bmt_dates %&gt;%
 # A tibble: 59 x 3
    fake_dx_date  race donor_sex
    &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 2014-05-24       0         0
- 2 2014-05-24       1         0
- 3 2014-05-24       1         1
- 4 2014-05-24       1         1
- 5 2014-05-24       1         1
- 6 2014-05-24       0         1
- 7 2014-05-24       1         0
- 8 2014-05-24       1         1
- 9 2014-05-24       1         0
-10 2014-05-24       1         0
+ 1 2014-05-28       0         0
+ 2 2014-05-28       1         0
+ 3 2014-05-28       1         1
+ 4 2014-05-28       1         1
+ 5 2014-05-28       1         1
+ 6 2014-05-28       0         1
+ 7 2014-05-28       1         0
+ 8 2014-05-28       1         1
+ 9 2014-05-28       1         0
+10 2014-05-28       1         0
 # … with 49 more rows
 ```
 ]
@@ -410,7 +410,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Filter Rows for Non-Missing Dates
+Example 2/4: Filter Rows for Non-Missing Dates with !is.na()
 .panel1-filter2-auto[
 
 ```r
@@ -441,16 +441,16 @@ bmt_dates %&gt;%
 # A tibble: 59 x 3
    fake_dx_date  race donor_sex
    &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 2014-05-24       0         0
- 2 2014-05-24       1         0
- 3 2014-05-24       1         1
- 4 2014-05-24       1         1
- 5 2014-05-24       1         1
- 6 2014-05-24       0         1
- 7 2014-05-24       1         0
- 8 2014-05-24       1         1
- 9 2014-05-24       1         0
-10 2014-05-24       1         0
+ 1 2014-05-28       0         0
+ 2 2014-05-28       1         0
+ 3 2014-05-28       1         1
+ 4 2014-05-28       1         1
+ 5 2014-05-28       1         1
+ 6 2014-05-28       0         1
+ 7 2014-05-28       1         0
+ 8 2014-05-28       1         1
+ 9 2014-05-28       1         0
+10 2014-05-28       1         0
 # … with 49 more rows
 ```
 ]
@@ -490,7 +490,7 @@ bmt_dates %&gt;%
 
 count: false
  
-Example 3: Filter Rows for Non-Missing Dates
+Example 3/4: Filter Rows for Non-Missing Dates - when you have (completely) Empty Rows &lt;br&gt;the {janitor} package can help
 .panel1-filter3-auto[
 
 ```r
@@ -509,7 +509,7 @@ Example 3: Filter Rows for Non-Missing Dates
 ---
 count: false
  
-Example 3: Filter Rows for Non-Missing Dates
+Example 3/4: Filter Rows for Non-Missing Dates - when you have (completely) Empty Rows &lt;br&gt;the {janitor} package can help
 .panel1-filter3-auto[
 
 ```r
@@ -553,7 +553,7 @@ nrow(bmt_dates)
 ---
 count: false
  
-Example 3: Filter Rows for Non-Missing Dates
+Example 3/4: Filter Rows for Non-Missing Dates - when you have (completely) Empty Rows &lt;br&gt;the {janitor} package can help
 .panel1-filter3-auto[
 
 ```r
@@ -577,16 +577,16 @@ bmt_dates %&gt;%
 # A tibble: 64 x 3
    fake_dx_date  race donor_sex
    &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 2014-05-24       0         0
+ 1 2014-05-28       0         0
  2 NA              NA        NA
- 3 2014-05-24       1         0
- 4 2014-05-24       1         1
+ 3 2014-05-28       1         0
+ 4 2014-05-28       1         1
  5 NA              NA        NA
- 6 2014-05-24       1         1
- 7 2014-05-24       1         1
+ 6 2014-05-28       1         1
+ 7 2014-05-28       1         1
  8 NA               1         0
- 9 2014-05-24       0         1
-10 2014-05-24       1         0
+ 9 2014-05-28       0         1
+10 2014-05-28       1         0
 # … with 54 more rows
 ```
 ]
@@ -594,7 +594,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 3: Filter Rows for Non-Missing Dates
+Example 3/4: Filter Rows for Non-Missing Dates - when you have (completely) Empty Rows &lt;br&gt;the {janitor} package can help
 .panel1-filter3-auto[
 
 ```r
@@ -619,16 +619,16 @@ bmt_dates %&gt;%
 # A tibble: 62 x 3
    fake_dx_date  race donor_sex
    &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 2014-05-24       0         0
- 2 2014-05-24       1         0
- 3 2014-05-24       1         1
- 4 2014-05-24       1         1
- 5 2014-05-24       1         1
+ 1 2014-05-28       0         0
+ 2 2014-05-28       1         0
+ 3 2014-05-28       1         1
+ 4 2014-05-28       1         1
+ 5 2014-05-28       1         1
  6 NA               1         0
- 7 2014-05-24       0         1
- 8 2014-05-24       1         0
- 9 2014-05-24       1         1
-10 2014-05-24       1         0
+ 7 2014-05-28       0         1
+ 8 2014-05-28       1         0
+ 9 2014-05-28       1         1
+10 2014-05-28       1         0
 # … with 52 more rows
 ```
 ]
@@ -636,7 +636,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 3: Filter Rows for Non-Missing Dates
+Example 3/4: Filter Rows for Non-Missing Dates - when you have (completely) Empty Rows &lt;br&gt;the {janitor} package can help
 .panel1-filter3-auto[
 
 ```r
@@ -667,16 +667,16 @@ bmt_dates %&gt;%
 # A tibble: 62 x 3
    fake_dx_date  race donor_sex
    &lt;date&gt;       &lt;dbl&gt;     &lt;dbl&gt;
- 1 2014-05-24       0         0
- 2 2014-05-24       1         0
- 3 2014-05-24       1         1
- 4 2014-05-24       1         1
- 5 2014-05-24       1         1
+ 1 2014-05-28       0         0
+ 2 2014-05-28       1         0
+ 3 2014-05-28       1         1
+ 4 2014-05-28       1         1
+ 5 2014-05-28       1         1
  6 NA               1         0
- 7 2014-05-24       0         1
- 8 2014-05-24       1         0
- 9 2014-05-24       1         1
-10 2014-05-24       1         0
+ 7 2014-05-28       0         1
+ 8 2014-05-28       1         0
+ 9 2014-05-28       1         1
+10 2014-05-28       1         0
 # … with 52 more rows
 ```
 ]
@@ -716,7 +716,7 @@ bmt_dates %&gt;%
 
 count: false
  
-Example 4: Filter Rows for Complete Cases - with no NAs
+Example 4/4: Filter Rows for Complete Cases - with zero NAs in that row/observation
 .panel1-filter4-auto[
 
 ```r
@@ -735,7 +735,7 @@ Example 4: Filter Rows for Complete Cases - with no NAs
 ---
 count: false
  
-Example 4: Filter Rows for Complete Cases - with no NAs
+Example 4/4: Filter Rows for Complete Cases - with zero NAs in that row/observation
 .panel1-filter4-auto[
 
 ```r
@@ -779,7 +779,7 @@ nrow(bmt_dates)
 ---
 count: false
  
-Example 4: Filter Rows for Complete Cases - with no NAs
+Example 4/4: Filter Rows for Complete Cases - with zero NAs in that row/observation
 .panel1-filter4-auto[
 
 ```r
@@ -825,7 +825,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 4: Filter Rows for Complete Cases - with no NAs
+Example 4/4: Filter Rows for Complete Cases - with zero NAs in that row/observation
 .panel1-filter4-auto[
 
 ```r
@@ -836,7 +836,7 @@ bmt_dates %&gt;%
 #   remove incomplete cases with drop_na
   drop_na()
 
-# see how many rows now
+# see how many rows now - fewer!
 # now all vars should be NOT NA
 
 # Format:
@@ -902,6 +902,13 @@ bmt_dates %&gt;%
 &lt;/style&gt;
 
 
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

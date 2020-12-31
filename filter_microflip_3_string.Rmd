@@ -57,9 +57,9 @@ The _str_detect()_ function returns either a TRUE or FALSE for each row in the d
 The filter function **acts** on this logical vector to filter out rows that are FALSE for your logical statement.
 It is a common mistake to rely on str_detect alone, but it won't filter your rows. You need **both** filter and str_detect to get this done.
 
-Let's look at the CMV dataset, which looks at bone marrow transplantation for a variety of cancers. 
+We will use the CMV dataset, which looks at bone marrow transplantation for a variety of cancers. 
 
-Example 1: filter cmv data for cases with a diagnosis that includes the string "oma".
+Let's look at some filter examples!
 
 ---
 
@@ -83,7 +83,7 @@ cmv %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Filter Rows with str_detect on Character Variables")`
+    title = "Example 1/5:  Filter Rows with str_detect on Character Variables")`
 
 ---
 
@@ -95,7 +95,8 @@ cmv %>%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %>% 
-  filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
+  filter(!str_detect(diagnosis, 
+        pattern =  "Hodgkin"))
 
 # see how many rows now
 # check diagnosis
@@ -107,7 +108,7 @@ cmv %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables")`
+    title = "Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables")`
 
 ---
 
@@ -119,7 +120,8 @@ cmv %>%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %>% 
-  filter(str_detect(diagnosis, pattern = "lympho.+ic"))
+  filter(str_detect(diagnosis,
+        pattern = "lympho.+ic"))
 
 # see how many rows now
 # check diagnosis
@@ -131,7 +133,7 @@ cmv %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3: Filter Rows with a Little Bit of Regex<br>.+ means any character from 1 to N times")`
+    title = "Example 3/5: Filter Rows with a Little Bit of Regex<br>.+ means any character from 1 to N times")`
 
 ---
 
@@ -143,7 +145,7 @@ cmv %>%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %>% 
-  filter(str_detect(diagnosis, "myelo*"))
+  filter(str_detect(diagnosis, "myelo.*"))
 
 # see how many rows now
 # check diagnosis
@@ -155,7 +157,7 @@ cmv %>%
 
 `r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Example 4: Filter Rows with a Little Bit of Regex<br> * means any character ")`
+    title = "Example 4/5: Filter Rows with a Little Bit of Regex<br> .* means any character from 0 to N times")`
 
 ---
 
@@ -179,16 +181,23 @@ cmv %>%
 
 `r chunk_reveal("filter5", 
     break_type = "auto", 
-    title = "Example 5: Filter Rows with == Variable. More Exact, Less Flexible")`
+    title = "Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible")`
     
 ---
 
 ### Where To Learn More about Regex (Regular Expressions)
 
-in R, click: https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html 
+in R, click on the word in italics to go to _[R-manual](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)_
 
-In general, click here: https://regexone.com/
+For general regex, click on the word in italics to go to _[regexone](https://regexone.com/)_
 
-and/or click here: https://www.sitepoint.com/learn-regex/
+and/or click on the word in italics to go to _[sitepoint](https://www.sitepoint.com/learn-regex/)_
 
-and/or click here: https://github.com/ziishaned/learn-regex
+and/or click on the word in italics to go to _[learn-regex](https://github.com/ziishaned/learn-regex)_
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!

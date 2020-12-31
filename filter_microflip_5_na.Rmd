@@ -59,13 +59,13 @@ Format: <br>
 `dataset %>% 
   filter(is.na(variable)))` 
 
-Negation is done be preceding with ! ,
-so !is.na(variable) produces a logical vector with
-TRUE for all non-missing value rows.
+Negation is done by preceding with ! , <br>
+so !is.na(variable) produces a logical vector which is  <br>
+TRUE for all _non-missing_ value rows.
 
-You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+**R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Example 1: filter covid_dates data for missing dates.
+Let's walk through some **filter** Examples!
 
 
 ---
@@ -89,7 +89,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 1: Filter Rows for Missing Dates")`
+    title = "Example 1/4: Filter Rows for Missing Dates - find which Ones are Missing")`
 
 
 ---
@@ -113,7 +113,7 @@ bmt_dates %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Filter Rows for Non-Missing Dates")`
+    title = "Example 2/4: Filter Rows for Non-Missing Dates with !is.na()")`
 
 ---
 
@@ -136,7 +136,7 @@ bmt_dates %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3: Filter Rows for Non-Missing Dates")`
+    title = "Example 3/4: Filter Rows for Non-Missing Dates - when you have (completely) Empty Rows <br>the {janitor} package can help")`
 
 ---
 
@@ -148,7 +148,7 @@ bmt_dates %>%
 #   remove incomplete cases with drop_na
   drop_na()
 
-# see how many rows now
+# see how many rows now - fewer!
 # now all vars should be NOT NA
 
 # Format:
@@ -157,4 +157,11 @@ bmt_dates %>%
 
 `r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Example 4: Filter Rows for Complete Cases - with no NAs")`
+    title = "Example 4/4: Filter Rows for Complete Cases - with zero NAs in that row/observation")`
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!

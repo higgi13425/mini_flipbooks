@@ -4,7 +4,7 @@
     <title>How to Use filter() functions with Dates</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use <em>filter()</em> functions with Dates
 ## Selecting specific rows based on Dates and Date Ranges
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
 
@@ -33,12 +33,14 @@ Format: &lt;br&gt;
 `dataset %&gt;% 
   filter(between(variable, start, end))` 
 
+Note that _between_ is **nested** within filter.
+
 Start and end dates usually use the {lubridate} package, and the format     
 `ymd("2015-12-31")`
 
-You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+**R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Example 1: filter covid_dates data for cases in March.
+Let's step through some _**filter**_ Examples!
 
 
 ---
@@ -47,7 +49,7 @@ Example 1: filter covid_dates data for cases in March.
 
 count: false
  
-Example 1: Filter Rows Between Dates
+Example 1/4: Filter Rows Between Dates
 .panel1-filter1-auto[
 
 ```r
@@ -66,7 +68,7 @@ Example 1: Filter Rows Between Dates
 ---
 count: false
  
-Example 1: Filter Rows Between Dates
+Example 1/4: Filter Rows Between Dates
 .panel1-filter1-auto[
 
 ```r
@@ -107,7 +109,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 1: Filter Rows Between Dates
+Example 1/4: Filter Rows Between Dates
 .panel1-filter1-auto[
 
 ```r
@@ -148,7 +150,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: Filter Rows Between Dates
+Example 1/4: Filter Rows Between Dates
 .panel1-filter1-auto[
 
 ```r
@@ -191,7 +193,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: Filter Rows Between Dates
+Example 1/4: Filter Rows Between Dates
 .panel1-filter1-auto[
 
 ```r
@@ -241,7 +243,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1: Filter Rows Between Dates
+Example 1/4: Filter Rows Between Dates
 .panel1-filter1-auto[
 
 ```r
@@ -323,7 +325,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -342,7 +344,7 @@ Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -386,7 +388,7 @@ nrow(bmt_dates)
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -410,16 +412,16 @@ bmt_dates %&gt;%
 # A tibble: 64 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-06-25        1    61
- 2 2020-07-20        1    62
- 3 2016-12-23        0    63
- 4 2016-10-08        0    33
- 5 2014-12-29        0    54
- 6 2014-04-04        1    55
- 7 2014-11-05        1    67
+ 1 2015-03-29        1    61
+ 2 2021-04-23        1    62
+ 3 2017-09-26        0    63
+ 4 2017-07-12        0    33
+ 5 2015-10-02        0    54
+ 6 2015-01-06        1    55
+ 7 2015-08-09        1    67
  8 NA                1    51
- 9 2017-08-16        0    44
-10 2021-09-02        1    59
+ 9 2018-05-20        0    44
+10 2022-06-06        1    59
 # … with 54 more rows
 ```
 ]
@@ -427,7 +429,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -453,16 +455,16 @@ bmt_dates %&gt;%
 # A tibble: 53 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-06-25        1    61
- 2 2016-12-23        0    63
- 3 2016-10-08        0    33
- 4 2014-12-29        0    54
- 5 2014-04-04        1    55
- 6 2014-11-05        1    67
- 7 2017-08-16        0    44
- 8 2017-04-05        1    45
- 9 2015-07-10        1    57
-10 2014-06-06        0    52
+ 1 2015-03-29        1    61
+ 2 2017-09-26        0    63
+ 3 2017-07-12        0    33
+ 4 2015-10-02        0    54
+ 5 2015-01-06        1    55
+ 6 2015-08-09        1    67
+ 7 2018-05-20        0    44
+ 8 2018-01-07        1    45
+ 9 2016-04-12        1    57
+10 2015-03-10        0    52
 # … with 43 more rows
 ```
 ]
@@ -470,7 +472,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -497,16 +499,16 @@ bmt_dates %&gt;%
 # A tibble: 44 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-06-25        1    61
- 2 2016-12-23        0    63
- 3 2014-12-29        0    54
- 4 2014-04-04        1    55
- 5 2014-11-05        1    67
- 6 2017-08-16        0    44
- 7 2017-04-05        1    45
- 8 2015-07-10        1    57
- 9 2014-06-06        0    52
-10 2015-03-08        0    62
+ 1 2015-03-29        1    61
+ 2 2017-09-26        0    63
+ 3 2015-10-02        0    54
+ 4 2015-01-06        1    55
+ 5 2015-08-09        1    67
+ 6 2018-05-20        0    44
+ 7 2018-01-07        1    45
+ 8 2016-04-12        1    57
+ 9 2015-03-10        0    52
+10 2015-12-10        0    62
 # … with 34 more rows
 ```
 ]
@@ -514,7 +516,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -542,16 +544,16 @@ bmt_dates %&gt;%
 # A tibble: 44 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-04-04        1    55
- 2 2014-04-07        1    61
- 3 2014-04-27        1    57
- 4 2014-05-11        1    48
- 5 2014-05-21        0    61
- 6 2014-05-23        1    49
- 7 2014-06-05        1    57
- 8 2014-06-06        0    52
- 9 2014-06-06        1    62
-10 2014-06-25        1    61
+ 1 2015-01-06        1    55
+ 2 2015-01-09        1    61
+ 3 2015-01-29        1    57
+ 4 2015-02-12        1    48
+ 5 2015-02-22        0    61
+ 6 2015-02-24        1    49
+ 7 2015-03-09        1    57
+ 8 2015-03-10        0    52
+ 9 2015-03-10        1    62
+10 2015-03-29        1    61
 # … with 34 more rows
 ```
 ]
@@ -559,7 +561,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -593,16 +595,16 @@ bmt_dates %&gt;%
 # A tibble: 44 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-04-04        1    55
- 2 2014-04-07        1    61
- 3 2014-04-27        1    57
- 4 2014-05-11        1    48
- 5 2014-05-21        0    61
- 6 2014-05-23        1    49
- 7 2014-06-05        1    57
- 8 2014-06-06        0    52
- 9 2014-06-06        1    62
-10 2014-06-25        1    61
+ 1 2015-01-06        1    55
+ 2 2015-01-09        1    61
+ 3 2015-01-29        1    57
+ 4 2015-02-12        1    48
+ 5 2015-02-22        0    61
+ 6 2015-02-24        1    49
+ 7 2015-03-09        1    57
+ 8 2015-03-10        0    52
+ 9 2015-03-10        1    62
+10 2015-03-29        1    61
 # … with 34 more rows
 ```
 ]
@@ -610,7 +612,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
+Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo
 .panel1-filter2-auto[
 
 ```r
@@ -644,16 +646,16 @@ bmt_dates %&gt;%
 # A tibble: 44 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-04-04        1    55
- 2 2014-04-07        1    61
- 3 2014-04-27        1    57
- 4 2014-05-11        1    48
- 5 2014-05-21        0    61
- 6 2014-05-23        1    49
- 7 2014-06-05        1    57
- 8 2014-06-06        0    52
- 9 2014-06-06        1    62
-10 2014-06-25        1    61
+ 1 2015-01-06        1    55
+ 2 2015-01-09        1    61
+ 3 2015-01-29        1    57
+ 4 2015-02-12        1    48
+ 5 2015-02-22        0    61
+ 6 2015-02-24        1    49
+ 7 2015-03-09        1    57
+ 8 2015-03-10        0    52
+ 9 2015-03-10        1    62
+10 2015-03-29        1    61
 # … with 34 more rows
 ```
 ]
@@ -693,7 +695,7 @@ bmt_dates %&gt;%
 
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -712,7 +714,7 @@ Example 3: Find Acute GVHD Cases in last 24 Months
 ---
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -756,7 +758,7 @@ nrow(bmt_dates)
 ---
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -780,16 +782,16 @@ bmt_dates %&gt;%
 # A tibble: 64 x 3
    fake_agvhd_date   sex   age
    &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-10-09          1    61
- 2 2025-11-25          1    62
- 3 2017-04-14          0    63
- 4 2019-02-11          0    33
- 5 2015-03-23          0    54
- 6 2014-07-29          1    55
- 7 2015-02-03          1    67
+ 1 2015-07-13          1    61
+ 2 2026-08-29          1    62
+ 3 2018-01-16          0    63
+ 4 2019-11-15          0    33
+ 5 2015-12-25          0    54
+ 6 2015-05-02          1    55
+ 7 2015-11-07          1    67
  8 NA                  1    51
- 9 2017-09-06          0    44
-10 2023-06-26          1    59
+ 9 2018-06-10          0    44
+10 2024-03-29          1    59
 # … with 54 more rows
 ```
 ]
@@ -797,7 +799,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -820,31 +822,32 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 15 x 3
+# A tibble: 16 x 3
    fake_agvhd_date   sex   age
    &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
- 1 2025-11-25          1    62
- 2 2019-02-11          0    33
- 3 2023-06-26          1    59
- 4 2033-10-06          0    61
- 5 2020-05-14          1    62
- 6 2023-08-07          0    51
- 7 2021-11-04          0    62
- 8 2020-12-08          0    52
- 9 2026-10-27          0    48
-10 2019-07-13          1    46
-11 2022-04-26          1    51
-12 2021-06-04          1    56
-13 2019-12-13          1    58
-14 2028-04-15          0    41
-15 2028-08-10          1    50
+ 1 2026-08-29          1    62
+ 2 2019-11-15          0    33
+ 3 2024-03-29          1    59
+ 4 2034-07-10          0    61
+ 5 2021-02-15          1    62
+ 6 2024-05-10          0    51
+ 7 2022-08-08          0    62
+ 8 2021-09-11          0    52
+ 9 2027-07-31          0    48
+10 2020-04-15          1    46
+11 2023-01-28          1    51
+12 2022-03-08          1    56
+13 2019-03-20          1    62
+14 2020-09-15          1    58
+15 2029-01-17          0    41
+16 2029-05-14          1    50
 ```
 ]
 
 ---
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -868,31 +871,32 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 15 x 3
+# A tibble: 16 x 3
    fake_agvhd_date   sex   age
    &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
- 1 2019-02-11          0    33
- 2 2019-07-13          1    46
- 3 2019-12-13          1    58
- 4 2020-05-14          1    62
- 5 2020-12-08          0    52
- 6 2021-06-04          1    56
- 7 2021-11-04          0    62
- 8 2022-04-26          1    51
- 9 2023-06-26          1    59
-10 2023-08-07          0    51
-11 2025-11-25          1    62
-12 2026-10-27          0    48
-13 2028-04-15          0    41
-14 2028-08-10          1    50
-15 2033-10-06          0    61
+ 1 2019-03-20          1    62
+ 2 2019-11-15          0    33
+ 3 2020-04-15          1    46
+ 4 2020-09-15          1    58
+ 5 2021-02-15          1    62
+ 6 2021-09-11          0    52
+ 7 2022-03-08          1    56
+ 8 2022-08-08          0    62
+ 9 2023-01-28          1    51
+10 2024-03-29          1    59
+11 2024-05-10          0    51
+12 2026-08-29          1    62
+13 2027-07-31          0    48
+14 2029-01-17          0    41
+15 2029-05-14          1    50
+16 2034-07-10          0    61
 ```
 ]
 
 ---
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -921,31 +925,32 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 15 x 3
+# A tibble: 16 x 3
    fake_agvhd_date   sex   age
    &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
- 1 2019-02-11          0    33
- 2 2019-07-13          1    46
- 3 2019-12-13          1    58
- 4 2020-05-14          1    62
- 5 2020-12-08          0    52
- 6 2021-06-04          1    56
- 7 2021-11-04          0    62
- 8 2022-04-26          1    51
- 9 2023-06-26          1    59
-10 2023-08-07          0    51
-11 2025-11-25          1    62
-12 2026-10-27          0    48
-13 2028-04-15          0    41
-14 2028-08-10          1    50
-15 2033-10-06          0    61
+ 1 2019-03-20          1    62
+ 2 2019-11-15          0    33
+ 3 2020-04-15          1    46
+ 4 2020-09-15          1    58
+ 5 2021-02-15          1    62
+ 6 2021-09-11          0    52
+ 7 2022-03-08          1    56
+ 8 2022-08-08          0    62
+ 9 2023-01-28          1    51
+10 2024-03-29          1    59
+11 2024-05-10          0    51
+12 2026-08-29          1    62
+13 2027-07-31          0    48
+14 2029-01-17          0    41
+15 2029-05-14          1    50
+16 2034-07-10          0    61
 ```
 ]
 
 ---
 count: false
  
-Example 3: Find Acute GVHD Cases in last 24 Months
+Example 3/4: Find Acute GVHD Cases in last 24 Months
 .panel1-filter3-auto[
 
 ```r
@@ -974,24 +979,25 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 15 x 3
+# A tibble: 16 x 3
    fake_agvhd_date   sex   age
    &lt;date&gt;          &lt;dbl&gt; &lt;dbl&gt;
- 1 2019-02-11          0    33
- 2 2019-07-13          1    46
- 3 2019-12-13          1    58
- 4 2020-05-14          1    62
- 5 2020-12-08          0    52
- 6 2021-06-04          1    56
- 7 2021-11-04          0    62
- 8 2022-04-26          1    51
- 9 2023-06-26          1    59
-10 2023-08-07          0    51
-11 2025-11-25          1    62
-12 2026-10-27          0    48
-13 2028-04-15          0    41
-14 2028-08-10          1    50
-15 2033-10-06          0    61
+ 1 2019-03-20          1    62
+ 2 2019-11-15          0    33
+ 3 2020-04-15          1    46
+ 4 2020-09-15          1    58
+ 5 2021-02-15          1    62
+ 6 2021-09-11          0    52
+ 7 2022-03-08          1    56
+ 8 2022-08-08          0    62
+ 9 2023-01-28          1    51
+10 2024-03-29          1    59
+11 2024-05-10          0    51
+12 2026-08-29          1    62
+13 2027-07-31          0    48
+14 2029-01-17          0    41
+15 2029-05-14          1    50
+16 2034-07-10          0    61
 ```
 ]
 
@@ -1030,7 +1036,7 @@ bmt_dates %&gt;%
 
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1049,7 +1055,7 @@ Example 4: Find BMTs on (Fake) Weekends
 ---
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1093,7 +1099,7 @@ nrow(bmt_dates)
 ---
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1117,16 +1123,16 @@ bmt_dates %&gt;%
 # A tibble: 64 x 3
    fake_bmt_date   sex   age
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt;
- 1 2014-06-25        1    61
- 2 2020-07-20        1    62
- 3 2016-12-23        0    63
- 4 2016-10-08        0    33
- 5 2014-12-29        0    54
- 6 2014-04-04        1    55
- 7 2014-11-05        1    67
+ 1 2015-03-29        1    61
+ 2 2021-04-23        1    62
+ 3 2017-09-26        0    63
+ 4 2017-07-12        0    33
+ 5 2015-10-02        0    54
+ 6 2015-01-06        1    55
+ 7 2015-08-09        1    67
  8 NA                1    51
- 9 2017-08-16        0    44
-10 2021-09-02        1    59
+ 9 2018-05-20        0    44
+10 2022-06-06        1    59
 # … with 54 more rows
 ```
 ]
@@ -1134,7 +1140,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1162,16 +1168,16 @@ bmt_dates %&gt;%
 # A tibble: 64 x 4
    fake_bmt_date   sex   age weekday
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
- 1 2014-06-25        1    61 Wed    
- 2 2020-07-20        1    62 Mon    
- 3 2016-12-23        0    63 Fri    
- 4 2016-10-08        0    33 Sat    
- 5 2014-12-29        0    54 Mon    
- 6 2014-04-04        1    55 Fri    
- 7 2014-11-05        1    67 Wed    
+ 1 2015-03-29        1    61 Sun    
+ 2 2021-04-23        1    62 Fri    
+ 3 2017-09-26        0    63 Tue    
+ 4 2017-07-12        0    33 Wed    
+ 5 2015-10-02        0    54 Fri    
+ 6 2015-01-06        1    55 Tue    
+ 7 2015-08-09        1    67 Sun    
  8 NA                1    51 &lt;NA&gt;   
- 9 2017-08-16        0    44 Wed    
-10 2021-09-02        1    59 Thu    
+ 9 2018-05-20        0    44 Sun    
+10 2022-06-06        1    59 Mon    
 # … with 54 more rows
 ```
 ]
@@ -1179,7 +1185,7 @@ bmt_dates %&gt;%
 ---
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1206,34 +1212,36 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 18 x 4
+# A tibble: 20 x 4
    fake_bmt_date   sex   age weekday
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
- 1 2016-10-08        0    33 Sat    
- 2 2015-03-08        0    62 Sun    
- 3 2016-08-07        0    51 Sun    
- 4 2014-05-11        1    48 Sun    
- 5 2014-08-16        1    48 Sat    
- 6 2014-04-27        1    57 Sun    
- 7 2025-04-19        0    48 Sat    
- 8 2015-08-08        1    58 Sat    
- 9 2014-11-15        0    39 Sat    
-10 2021-05-01        1    56 Sat    
-11 2014-09-13        1    62 Sat    
-12 2015-04-05        1    34 Sun    
-13 2015-07-25        1    54 Sat    
-14 2015-03-08        1    57 Sun    
-15 2017-11-26        0    57 Sun    
-16 2026-07-05        0    41 Sun    
-17 2016-10-23        0    57 Sun    
-18 2016-01-24        0    64 Sun    
+ 1 2015-03-29        1    61 Sun    
+ 2 2015-08-09        1    67 Sun    
+ 3 2018-05-20        0    44 Sun    
+ 4 2018-01-07        1    45 Sun    
+ 5 2016-02-27        1    35 Sat    
+ 6 2028-02-26        0    61 Sat    
+ 7 2021-01-24        1    62 Sun    
+ 8 2015-12-26        0    52 Sat    
+ 9 2015-07-12        0    60 Sun    
+10 2017-02-04        1    36 Sat    
+11 2015-11-15        1    46 Sun    
+12 2022-12-25        1    51 Sun    
+13 2015-10-11        0    36 Sun    
+14 2015-12-19        0    60 Sat    
+15 2018-06-03        1    62 Sun    
+16 2015-09-12        0    55 Sat    
+17 2015-09-19        0    64 Sat    
+18 2015-02-22        0    61 Sun    
+19 2020-08-16        1    58 Sun    
+20 2029-02-03        1    50 Sat    
 ```
 ]
 
 ---
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1261,34 +1269,36 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 18 x 4
+# A tibble: 20 x 4
    fake_bmt_date   sex   age weekday
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
- 1 2014-04-27        1    57 Sun    
- 2 2014-05-11        1    48 Sun    
- 3 2014-08-16        1    48 Sat    
- 4 2014-09-13        1    62 Sat    
- 5 2014-11-15        0    39 Sat    
- 6 2015-03-08        0    62 Sun    
- 7 2015-03-08        1    57 Sun    
- 8 2015-04-05        1    34 Sun    
- 9 2015-07-25        1    54 Sat    
-10 2015-08-08        1    58 Sat    
-11 2016-01-24        0    64 Sun    
-12 2016-08-07        0    51 Sun    
-13 2016-10-08        0    33 Sat    
-14 2016-10-23        0    57 Sun    
-15 2017-11-26        0    57 Sun    
-16 2021-05-01        1    56 Sat    
-17 2025-04-19        0    48 Sat    
-18 2026-07-05        0    41 Sun    
+ 1 2015-02-22        0    61 Sun    
+ 2 2015-03-29        1    61 Sun    
+ 3 2015-07-12        0    60 Sun    
+ 4 2015-08-09        1    67 Sun    
+ 5 2015-09-12        0    55 Sat    
+ 6 2015-09-19        0    64 Sat    
+ 7 2015-10-11        0    36 Sun    
+ 8 2015-11-15        1    46 Sun    
+ 9 2015-12-19        0    60 Sat    
+10 2015-12-26        0    52 Sat    
+11 2016-02-27        1    35 Sat    
+12 2017-02-04        1    36 Sat    
+13 2018-01-07        1    45 Sun    
+14 2018-05-20        0    44 Sun    
+15 2018-06-03        1    62 Sun    
+16 2020-08-16        1    58 Sun    
+17 2021-01-24        1    62 Sun    
+18 2022-12-25        1    51 Sun    
+19 2028-02-26        0    61 Sat    
+20 2029-02-03        1    50 Sat    
 ```
 ]
 
 ---
 count: false
  
-Example 4: Find BMTs on (Fake) Weekends
+Example 4/4: Find BMTs on (Fake) Weekends
 .panel1-filter4-auto[
 
 ```r
@@ -1319,27 +1329,29 @@ bmt_dates %&gt;%
 ```
 
 ```
-# A tibble: 18 x 4
+# A tibble: 20 x 4
    fake_bmt_date   sex   age weekday
    &lt;date&gt;        &lt;dbl&gt; &lt;dbl&gt; &lt;ord&gt;  
- 1 2014-04-27        1    57 Sun    
- 2 2014-05-11        1    48 Sun    
- 3 2014-08-16        1    48 Sat    
- 4 2014-09-13        1    62 Sat    
- 5 2014-11-15        0    39 Sat    
- 6 2015-03-08        0    62 Sun    
- 7 2015-03-08        1    57 Sun    
- 8 2015-04-05        1    34 Sun    
- 9 2015-07-25        1    54 Sat    
-10 2015-08-08        1    58 Sat    
-11 2016-01-24        0    64 Sun    
-12 2016-08-07        0    51 Sun    
-13 2016-10-08        0    33 Sat    
-14 2016-10-23        0    57 Sun    
-15 2017-11-26        0    57 Sun    
-16 2021-05-01        1    56 Sat    
-17 2025-04-19        0    48 Sat    
-18 2026-07-05        0    41 Sun    
+ 1 2015-02-22        0    61 Sun    
+ 2 2015-03-29        1    61 Sun    
+ 3 2015-07-12        0    60 Sun    
+ 4 2015-08-09        1    67 Sun    
+ 5 2015-09-12        0    55 Sat    
+ 6 2015-09-19        0    64 Sat    
+ 7 2015-10-11        0    36 Sun    
+ 8 2015-11-15        1    46 Sun    
+ 9 2015-12-19        0    60 Sat    
+10 2015-12-26        0    52 Sat    
+11 2016-02-27        1    35 Sat    
+12 2017-02-04        1    36 Sat    
+13 2018-01-07        1    45 Sun    
+14 2018-05-20        0    44 Sun    
+15 2018-06-03        1    62 Sun    
+16 2020-08-16        1    58 Sun    
+17 2021-01-24        1    62 Sun    
+18 2022-12-25        1    51 Sun    
+19 2028-02-26        0    61 Sat    
+20 2029-02-03        1    50 Sat    
 ```
 ]
 
@@ -1371,6 +1383,13 @@ bmt_dates %&gt;%
 &lt;/style&gt;
 
 
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

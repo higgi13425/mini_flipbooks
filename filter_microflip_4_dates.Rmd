@@ -54,12 +54,14 @@ Format: <br>
 `dataset %>% 
   filter(between(variable, start, end))` 
 
+Note that _between_ is **nested** within filter.
+
 Start and end dates usually use the {lubridate} package, and the format     
 `ymd("2015-12-31")`
 
-You can **R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
+**R**emember that filte**R** is for selecting **R**ows because it ends with an **R**.
 
-Example 1: filter covid_dates data for cases in March.
+Let's step through some _**filter**_ Examples!
 
 
 ---
@@ -87,7 +89,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 1: Filter Rows Between Dates")`
+    title = "Example 1/4: Filter Rows Between Dates")`
 
 ---
 
@@ -115,7 +117,7 @@ bmt_dates %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo")`
+    title = "Example 2/4: Find Bone Marrow Transplants in 2008-2018 in 40-70 yo")`
 
 ---
 
@@ -141,7 +143,7 @@ bmt_dates %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3: Find Acute GVHD Cases in last 24 Months")`
+    title = "Example 3/4: Find Acute GVHD Cases in last 24 Months")`
 
 ---
 
@@ -168,4 +170,11 @@ bmt_dates %>%
 
 `r chunk_reveal("filter4", 
     break_type = "auto", 
-    title = "Example 4: Find BMTs on (Fake) Weekends")`
+    title = "Example 4/4: Find BMTs on (Fake) Weekends")`
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!

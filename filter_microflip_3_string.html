@@ -4,7 +4,7 @@
     <title>How to Use filter() on Character Variables</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-17" />
+    <meta name="date" content="2020-12-31" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use <em>filter()</em> on Character Variables
 ## Using <em>str_detect</em> to find the rows you want
 ### Peter Higgins
-### 2020-12-17
+### 2020-12-31
 
 ---
 
@@ -42,9 +42,9 @@ The _str_detect()_ function returns either a TRUE or FALSE for each row in the d
 The filter function **acts** on this logical vector to filter out rows that are FALSE for your logical statement.
 It is a common mistake to rely on str_detect alone, but it won't filter your rows. You need **both** filter and str_detect to get this done.
 
-Let's look at the CMV dataset, which looks at bone marrow transplantation for a variety of cancers. 
+We will use the CMV dataset, which looks at bone marrow transplantation for a variety of cancers. 
 
-Example 1: filter cmv data for cases with a diagnosis that includes the string "oma".
+Let's look at some filter examples!
 
 ---
 
@@ -52,7 +52,7 @@ Example 1: filter cmv data for cases with a diagnosis that includes the string "
 
 count: false
  
-Filter Rows with str_detect on Character Variables
+Example 1/5:  Filter Rows with str_detect on Character Variables
 .panel1-filter1-auto[
 
 ```r
@@ -71,7 +71,7 @@ Filter Rows with str_detect on Character Variables
 ---
 count: false
  
-Filter Rows with str_detect on Character Variables
+Example 1/5:  Filter Rows with str_detect on Character Variables
 .panel1-filter1-auto[
 
 ```r
@@ -114,7 +114,7 @@ nrow(cmv)
 ---
 count: false
  
-Filter Rows with str_detect on Character Variables
+Example 1/5:  Filter Rows with str_detect on Character Variables
 .panel1-filter1-auto[
 
 ```r
@@ -155,7 +155,7 @@ cmv %&gt;%
 ---
 count: false
  
-Filter Rows with str_detect on Character Variables
+Example 1/5:  Filter Rows with str_detect on Character Variables
 .panel1-filter1-auto[
 
 ```r
@@ -197,7 +197,7 @@ cmv %&gt;%
 ---
 count: false
  
-Filter Rows with str_detect on Character Variables
+Example 1/5:  Filter Rows with str_detect on Character Variables
 .panel1-filter1-auto[
 
 ```r
@@ -244,7 +244,7 @@ cmv %&gt;%
 ---
 count: false
  
-Filter Rows with str_detect on Character Variables
+Example 1/5:  Filter Rows with str_detect on Character Variables
 .panel1-filter1-auto[
 
 ```r
@@ -323,7 +323,7 @@ cmv %&gt;%
 
 count: false
  
-Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
+Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables
 .panel1-filter2-auto[
 
 ```r
@@ -342,7 +342,7 @@ Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
 ---
 count: false
  
-Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
+Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables
 .panel1-filter2-auto[
 
 ```r
@@ -385,7 +385,7 @@ nrow(cmv)
 ---
 count: false
  
-Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
+Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables
 .panel1-filter2-auto[
 
 ```r
@@ -426,7 +426,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
+Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables
 .panel1-filter2-auto[
 
 ```r
@@ -437,7 +437,8 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %&gt;%
-* filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
+* filter(!str_detect(diagnosis,
+*       pattern =  "Hodgkin"))
 ```
 ]
  
@@ -468,7 +469,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
+Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables
 .panel1-filter2-auto[
 
 ```r
@@ -479,7 +480,8 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %&gt;%
-  filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
+  filter(!str_detect(diagnosis,
+        pattern =  "Hodgkin"))
 
 # see how many rows now
 # check diagnosis
@@ -515,7 +517,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 2: Filter Not-Rows (! Negation) with str_detect on Character Variables
+Example 2/5: Filter Not-Rows (! Negation) with str_detect on Character Variables
 .panel1-filter2-auto[
 
 ```r
@@ -526,7 +528,8 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(age, race, diagnosis) %&gt;%
-  filter(!str_detect(diagnosis, pattern =  "Hodgkin"))
+  filter(!str_detect(diagnosis,
+        pattern =  "Hodgkin"))
 
 # see how many rows now
 # check diagnosis
@@ -594,7 +597,7 @@ cmv %&gt;%
 
 count: false
  
-Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
+Example 3/5: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
 .panel1-filter3-auto[
 
 ```r
@@ -613,7 +616,7 @@ Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any characte
 ---
 count: false
  
-Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
+Example 3/5: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
 .panel1-filter3-auto[
 
 ```r
@@ -656,7 +659,7 @@ nrow(cmv)
 ---
 count: false
  
-Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
+Example 3/5: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
 .panel1-filter3-auto[
 
 ```r
@@ -697,7 +700,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
+Example 3/5: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
 .panel1-filter3-auto[
 
 ```r
@@ -708,7 +711,8 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-* filter(str_detect(diagnosis, pattern = "lympho.+ic"))
+* filter(str_detect(diagnosis,
+*       pattern = "lympho.+ic"))
 ```
 ]
  
@@ -734,7 +738,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
+Example 3/5: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
 .panel1-filter3-auto[
 
 ```r
@@ -745,7 +749,8 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-  filter(str_detect(diagnosis, pattern = "lympho.+ic"))
+  filter(str_detect(diagnosis,
+        pattern = "lympho.+ic"))
 
 # see how many rows now
 # check diagnosis
@@ -776,7 +781,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 3: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
+Example 3/5: Filter Rows with a Little Bit of Regex&lt;br&gt;.+ means any character from 1 to N times
 .panel1-filter3-auto[
 
 ```r
@@ -787,7 +792,8 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-  filter(str_detect(diagnosis, pattern = "lympho.+ic"))
+  filter(str_detect(diagnosis,
+        pattern = "lympho.+ic"))
 
 # see how many rows now
 # check diagnosis
@@ -850,7 +856,7 @@ cmv %&gt;%
 
 count: false
  
-Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any character 
+Example 4/5: Filter Rows with a Little Bit of Regex&lt;br&gt; .* means any character from 0 to N times
 .panel1-filter4-auto[
 
 ```r
@@ -869,7 +875,7 @@ Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any characte
 ---
 count: false
  
-Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any character 
+Example 4/5: Filter Rows with a Little Bit of Regex&lt;br&gt; .* means any character from 0 to N times
 .panel1-filter4-auto[
 
 ```r
@@ -912,7 +918,7 @@ nrow(cmv)
 ---
 count: false
  
-Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any character 
+Example 4/5: Filter Rows with a Little Bit of Regex&lt;br&gt; .* means any character from 0 to N times
 .panel1-filter4-auto[
 
 ```r
@@ -953,7 +959,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any character 
+Example 4/5: Filter Rows with a Little Bit of Regex&lt;br&gt; .* means any character from 0 to N times
 .panel1-filter4-auto[
 
 ```r
@@ -964,7 +970,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-* filter(str_detect(diagnosis, "myelo*"))
+* filter(str_detect(diagnosis, "myelo.*"))
 ```
 ]
  
@@ -995,7 +1001,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any character 
+Example 4/5: Filter Rows with a Little Bit of Regex&lt;br&gt; .* means any character from 0 to N times
 .panel1-filter4-auto[
 
 ```r
@@ -1006,7 +1012,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-  filter(str_detect(diagnosis, "myelo*"))
+  filter(str_detect(diagnosis, "myelo.*"))
 
 # see how many rows now
 # check diagnosis
@@ -1042,7 +1048,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 4: Filter Rows with a Little Bit of Regex&lt;br&gt; * means any character 
+Example 4/5: Filter Rows with a Little Bit of Regex&lt;br&gt; .* means any character from 0 to N times
 .panel1-filter4-auto[
 
 ```r
@@ -1053,7 +1059,7 @@ cmv %&gt;%
 # selected 3 columns
 # see how diagnosis changes w/filter
   select(sex, race, diagnosis) %&gt;%
-  filter(str_detect(diagnosis, "myelo*"))
+  filter(str_detect(diagnosis, "myelo.*"))
 
 # see how many rows now
 # check diagnosis
@@ -1121,7 +1127,7 @@ cmv %&gt;%
 
 count: false
  
-Example 5: Filter Rows with == Variable. More Exact, Less Flexible
+Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible
 .panel1-filter5-auto[
 
 ```r
@@ -1140,7 +1146,7 @@ Example 5: Filter Rows with == Variable. More Exact, Less Flexible
 ---
 count: false
  
-Example 5: Filter Rows with == Variable. More Exact, Less Flexible
+Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible
 .panel1-filter5-auto[
 
 ```r
@@ -1183,7 +1189,7 @@ nrow(cmv)
 ---
 count: false
  
-Example 5: Filter Rows with == Variable. More Exact, Less Flexible
+Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible
 .panel1-filter5-auto[
 
 ```r
@@ -1224,7 +1230,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 5: Filter Rows with == Variable. More Exact, Less Flexible
+Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible
 .panel1-filter5-auto[
 
 ```r
@@ -1259,7 +1265,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 5: Filter Rows with == Variable. More Exact, Less Flexible
+Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible
 .panel1-filter5-auto[
 
 ```r
@@ -1299,7 +1305,7 @@ cmv %&gt;%
 ---
 count: false
  
-Example 5: Filter Rows with == Variable. More Exact, Less Flexible
+Example 5/5: Filter Rows with Variable == 'string'. More Exact, Less Flexible
 .panel1-filter5-auto[
 
 ```r
@@ -1369,13 +1375,20 @@ cmv %&gt;%
 
 ### Where To Learn More about Regex (Regular Expressions)
 
-in R, click: https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html 
+in R, click on the word in italics to go to _[R-manual](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html)_
 
-In general, click here: https://regexone.com/
+For general regex, click on the word in italics to go to _[regexone](https://regexone.com/)_
 
-and/or click here: https://www.sitepoint.com/learn-regex/
+and/or click on the word in italics to go to _[sitepoint](https://www.sitepoint.com/learn-regex/)_
 
-and/or click here: https://github.com/ziishaned/learn-regex
+and/or click on the word in italics to go to _[learn-regex](https://github.com/ziishaned/learn-regex)_
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
