@@ -205,7 +205,7 @@ prostate %>%
 
 ```
 
-`r chunk_reveal("filter5", 
+`r chunk_reveal("filter6", 
     break_type = "auto", 
     title = "Example 6/6: Filter Preoperative PSA for Values of 10 or 13 or 17")`
 
