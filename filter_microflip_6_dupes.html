@@ -4,7 +4,7 @@
     <title>How to Use distinct() and get_dupes() to find distinct rows</title>
     <meta charset="utf-8" />
     <meta name="author" content="Peter Higgins" />
-    <meta name="date" content="2020-12-31" />
+    <meta name="date" content="2021-01-09" />
     <script src="libs/header-attrs-2.6.1/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
@@ -15,7 +15,7 @@ class: center, middle, inverse, title-slide
 # How to Use <em>distinct()</em> and <em>get_dupes()</em> to find distinct rows
 ## Selecting Distinct vs. Duplicated Rows
 ### Peter Higgins
-### 2020-12-31
+### 2021-01-09
 
 ---
 
@@ -24,15 +24,18 @@ class: center, middle, inverse, title-slide
 
 
 
-### How to Use the functions to find duplicate or distinct rows
+### How to Use the distinct() and get_dupes() functions to find duplicate or distinct rows
 
-Imagine that you expect each row to have a unique subject_id, first_name, and last_name, which would make this combination of 3 variables a ** unique_key**.
+You can  use _distinct(variable)_ to find all the distinct values of that variable, and therefore how many are duplicates for that variable.
 
-It is important to have a unique key variable to uniquely identify each obseratin/row. You may need a combination of several variables to make up a unique_key.
+Imagine that you have some duplicate observations in your dataset, due to a problem with data entry, or more likely with a merging of two datasets.
 
-So you (wisely) decide to check this with the _distinct()_ function. If the resulting nrow is &lt; the original nrow, you have some duplicates.
+It is important to have a single row for each observation. But it can be hard to find the duplicates in a large dataset.
 
-The {janitor} function _get_dupes()_ can help find these
+So you (wisely) decide to check this with the _distinct()_ function. If the resulting number of rows (nrow) is less than the original nrow, you have some duplicates.
+
+The {janitor} function _get_dupes()_ can help find these.
+
 
 Let's find some duplicates!
 
@@ -43,11 +46,12 @@ Let's find some duplicates!
 
 count: false
  
-Example 1/3: See if Distinct subject_id
+Example 1/5: Are Some Subjects Being Tested Multiple Times?
 .panel1-filter1-auto[
 
 ```r
 # how many rows when you start
+
 *nrow(covid_dates)
 ```
 ]
@@ -62,13 +66,15 @@ Example 1/3: See if Distinct subject_id
 ---
 count: false
  
-Example 1/3: See if Distinct subject_id
+Example 1/5: Are Some Subjects Being Tested Multiple Times?
 .panel1-filter1-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
+# check if subject_id is a unique identifier
 *covid_dates
 ```
 ]
@@ -103,60 +109,16 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 1/3: See if Distinct subject_id
+Example 1/5: Are Some Subjects Being Tested Multiple Times?
 .panel1-filter1-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
+# check if subject_id is a unique identifier
 covid_dates %&gt;%
-# check if all rows/observations are distinct
-* distinct()
-```
-]
- 
-.panel2-filter1-auto[
-
-```
-[1] 15524
-```
-
-```
-# A tibble: 15,524 x 18
-   subject_id fake_first_name fake_last_name gender pan_day test_id clinic_name
-        &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;          &lt;chr&gt;    &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;      
- 1       1412 jhezane         westerling     female       4 covid   inpatient …
- 2        533 penny           targaryen      female       7 covid   clinical l…
- 3       9134 grunt           rivers         male         7 covid   clinical l…
- 4       8518 melisandre      swyft          female       8 covid   clinical l…
- 5       8967 rolley          karstark       male         8 covid   emergency …
- 6      11048 megga           karstark       female       8 covid   oncology d…
- 7        663 ithoke          targaryen      male         9 covid   clinical l…
- 8       2158 ravella         frey           female       9 covid   emergency …
- 9       3794 styr            tyrell         male         9 covid   clinical l…
-10       4706 wynafryd        seaworth       male         9 covid   clinical l…
-# … with 15,514 more rows, and 11 more variables: result &lt;chr&gt;,
-#   demo_group &lt;chr&gt;, age &lt;dbl&gt;, drive_thru_ind &lt;dbl&gt;, ct_result &lt;dbl&gt;,
-#   orderset &lt;dbl&gt;, payor_group &lt;chr&gt;, patient_class &lt;chr&gt;, col_rec_tat &lt;dbl&gt;,
-#   rec_ver_tat &lt;dbl&gt;, fake_date &lt;date&gt;
-```
-]
-
----
-count: false
- 
-Example 1/3: See if Distinct subject_id
-.panel1-filter1-auto[
-
-```r
-# how many rows when you start
-nrow(covid_dates)
-
-covid_dates %&gt;%
-# check if all rows/observations are distinct
-  distinct() %&gt;%
-# check if subject_id is a unique identifier = key
 * distinct(subject_id)
 ```
 ]
@@ -188,21 +150,20 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 1/3: See if Distinct subject_id
+Example 1/5: Are Some Subjects Being Tested Multiple Times?
 .panel1-filter1-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
+# check if subject_id is a unique identifier
 covid_dates %&gt;%
-# check if all rows/observations are distinct
-  distinct() %&gt;%
-# check if subject_id is a unique identifier = key
   distinct(subject_id)
 
 # see how many rows now
-# subject_id is not a unique_key
+# down to 12,344 - subject_id is not a unique key
 
 # Format:
 *#   distinct(variable)                    &lt;br&gt;  #   distinct(variable)                    &lt;br&gt;
@@ -268,11 +229,12 @@ covid_dates %&gt;%
 
 count: false
  
-Example 2/3: See if Distinct by Full Name
+Example 2/5: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
 # how many rows when you start
+
 *nrow(covid_dates)
 ```
 ]
@@ -287,11 +249,12 @@ Example 2/3: See if Distinct by Full Name
 ---
 count: false
  
-Example 2/3: See if Distinct by Full Name
+Example 2/5: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
 *covid_dates
@@ -328,11 +291,12 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 2/3: See if Distinct by Full Name
+Example 2/5: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
 covid_dates %&gt;%
@@ -368,11 +332,12 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 2/3: See if Distinct by Full Name
+Example 2/5: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
 covid_dates %&gt;%
@@ -410,11 +375,12 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 2/3: See if Distinct by Full Name
+Example 2/5: See if Distinct by Full Name
 .panel1-filter2-auto[
 
 ```r
 # how many rows when you start
+
 nrow(covid_dates)
 
 covid_dates %&gt;%
@@ -423,8 +389,8 @@ covid_dates %&gt;%
 # check if first &amp; last name is a unique identifier = key
   distinct(fake_first_name, fake_last_name)
 
-# see how many rows now
-# fullname is not a unique_key
+# see how many rows now - 8,286
+# lots of full names are repeated
 
 # Format:
 *#   distinct(variable1, variable 2)                    &lt;br&gt;  #   distinct(variable1, variable 2)                    &lt;br&gt;
@@ -491,7 +457,7 @@ covid_dates %&gt;%
 
 count: false
  
-Example 3/3: Which Rows are Duplicates
+Example 3/5: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -510,7 +476,7 @@ Example 3/3: Which Rows are Duplicates
 ---
 count: false
  
-Example 3/3: Which Rows are Duplicates
+Example 3/5: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -551,7 +517,7 @@ nrow(covid_dates)
 ---
 count: false
  
-Example 3/3: Which Rows are Duplicates
+Example 3/5: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -592,7 +558,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 3/3: Which Rows are Duplicates
+Example 3/5: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -603,7 +569,7 @@ covid_dates %&gt;%
 # check if names are distinct
   select(subject_id, fake_first_name,
          fake_last_name) %&gt;%
-# check if first &amp; last name is a unique identifier = key
+# check if first &amp; last name is unique id
 * get_dupes(fake_first_name,
 *           fake_last_name)
 ```
@@ -636,7 +602,7 @@ covid_dates %&gt;%
 ---
 count: false
  
-Example 3/3: Which Rows are Duplicates
+Example 3/5: Which Rows are Duplicates
 .panel1-filter3-auto[
 
 ```r
@@ -647,7 +613,7 @@ covid_dates %&gt;%
 # check if names are distinct
   select(subject_id, fake_first_name,
          fake_last_name) %&gt;%
-# check if first &amp; last name is a unique identifier = key
+# check if first &amp; last name is unique id
   get_dupes(fake_first_name,
             fake_last_name)
 
@@ -711,7 +677,384 @@ covid_dates %&gt;%
 
 
 
+---
 
+
+
+count: false
+ 
+Example 4/5: Are All Rows in BMT distinct?
+.panel1-filter4-auto[
+
+```r
+# how many rows in bmt
+
+*nrow(bmt)
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 83
+```
+]
+
+---
+count: false
+ 
+Example 4/5: Are All Rows in BMT distinct?
+.panel1-filter4-auto[
+
+```r
+# how many rows in bmt
+
+nrow(bmt)
+
+*bmt
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 83
+```
+
+```
+# A tibble: 83 x 26
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 73 more rows, and 19 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;
+```
+]
+
+---
+count: false
+ 
+Example 4/5: Are All Rows in BMT distinct?
+.panel1-filter4-auto[
+
+```r
+# how many rows in bmt
+
+nrow(bmt)
+
+bmt %&gt;%
+* distinct()
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 83
+```
+
+```
+# A tibble: 64 x 26
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 19 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;
+```
+]
+
+---
+count: false
+ 
+Example 4/5: Are All Rows in BMT distinct?
+.panel1-filter4-auto[
+
+```r
+# how many rows in bmt
+
+nrow(bmt)
+
+bmt %&gt;%
+  distinct()
+
+# 64 rows instead of 83 - some duplicates
+
+# Format:
+*#   distinct(dataset)                    &lt;br&gt;  #   distinct(dataset)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter4-auto[
+
+```
+[1] 83
+```
+
+```
+# A tibble: 64 x 26
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 54 more rows, and 19 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter4-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter4-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter4-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+    
+---
+
+
+
+count: false
+ 
+Example 5/5: Which Rows are Duplicates
+.panel1-filter5-auto[
+
+```r
+# how many rows in bmt
+*nrow(bmt)
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 83
+```
+]
+
+---
+count: false
+ 
+Example 5/5: Which Rows are Duplicates
+.panel1-filter5-auto[
+
+```r
+# how many rows in bmt
+nrow(bmt)
+
+*bmt
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 83
+```
+
+```
+# A tibble: 83 x 26
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1     1    61     1     0 acute my…              1             5.16
+ 2     2    62     1     1 non-Hodg…              0            79.0 
+ 3     3    63     0     1 non-Hodg…              0            35.6 
+ 4     4    33     0     1 Hodgkin …              0            33.0 
+ 5     5    54     0     1 acute ly…              0            11.4 
+ 6     6    55     1     1 myelofib…              1             2.43
+ 7     7    67     1     1 acute my…              1             9.59
+ 8     8    51     1     1 acute my…              1            NA   
+ 9     9    44     0     0 multiple…              0            43.4 
+10    10    59     1     1 chronic …              0            92.7 
+# … with 73 more rows, and 19 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;
+```
+]
+
+---
+count: false
+ 
+Example 5/5: Which Rows are Duplicates
+.panel1-filter5-auto[
+
+```r
+# how many rows in bmt
+nrow(bmt)
+
+bmt %&gt;%
+* get_dupes()
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 83
+```
+
+```
+# A tibble: 38 x 27
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1    40    46     0     1 renal ce…             NA             8.48
+ 2    40    46     0     1 renal ce…             NA             8.48
+ 3    41    36     0     0 multiple…              0            11.7 
+ 4    41    36     0     0 multiple…              0            11.7 
+ 5    42    62     0     1 myelodys…              1            13.0 
+ 6    42    62     0     1 myelodys…              1            13.0 
+ 7    43    60     0     1 multiple…              0            14   
+ 8    43    60     0     1 multiple…              0            14   
+ 9    44    36     1     1 aplastic…             NA             1.84
+10    44    36     1     1 aplastic…             NA             1.84
+# … with 28 more rows, and 20 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, dupe_count &lt;int&gt;
+```
+]
+
+---
+count: false
+ 
+Example 5/5: Which Rows are Duplicates
+.panel1-filter5-auto[
+
+```r
+# how many rows in bmt
+nrow(bmt)
+
+bmt %&gt;%
+  get_dupes()
+
+# 438 duplicate rows
+
+# Format:
+*#   get_dupes(dataset)                    &lt;br&gt;  #   get_dupes(dataset)                    &lt;br&gt;
+```
+]
+ 
+.panel2-filter5-auto[
+
+```
+[1] 83
+```
+
+```
+# A tibble: 38 x 27
+      id   age   sex  race diagnosis diagnosis_type time_to_transpl…
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;            &lt;dbl&gt;
+ 1    40    46     0     1 renal ce…             NA             8.48
+ 2    40    46     0     1 renal ce…             NA             8.48
+ 3    41    36     0     0 multiple…              0            11.7 
+ 4    41    36     0     0 multiple…              0            11.7 
+ 5    42    62     0     1 myelodys…              1            13.0 
+ 6    42    62     0     1 myelodys…              1            13.0 
+ 7    43    60     0     1 multiple…              0            14   
+ 8    43    60     0     1 multiple…              0            14   
+ 9    44    36     1     1 aplastic…             NA             1.84
+10    44    36     1     1 aplastic…             NA             1.84
+# … with 28 more rows, and 20 more variables: prior_radiation &lt;dbl&gt;,
+#   prior_chemo &lt;dbl&gt;, prior_transplant &lt;dbl&gt;, recipient_cmv &lt;dbl&gt;,
+#   donor_cmv &lt;dbl&gt;, donor_sex &lt;dbl&gt;, tnc_dose &lt;dbl&gt;, cd34_dose &lt;dbl&gt;,
+#   cd3_dose &lt;dbl&gt;, cd8_dose &lt;dbl&gt;, tbi_dose &lt;dbl&gt;, c1_c2 &lt;dbl&gt;, a_ki_rs &lt;dbl&gt;,
+#   cmv &lt;dbl&gt;, time_to_cmv &lt;dbl&gt;, agvhd &lt;dbl&gt;, time_to_agvhd &lt;dbl&gt;,
+#   cgvhd &lt;dbl&gt;, time_to_cgvhd &lt;dbl&gt;, dupe_count &lt;int&gt;
+```
+]
+
+&lt;style&gt;
+.panel1-filter5-auto {
+  color: black;
+  width: 38.6060606060606%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-filter5-auto {
+  color: black;
+  width: 59.3939393939394%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-filter5-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+    
 ---
 class: inverse, center
 

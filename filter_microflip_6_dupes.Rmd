@@ -27,11 +27,12 @@ library(lubridate)
 library(janitor)
 covid_dates <- medicaldata::covid_testing %>% clean_names() %>% as_tibble() %>% 
   mutate(fake_date = ymd("2020-03-01") + pan_day)
-bmt_dates <- medicaldata::cytomegalovirus %>% clean_names() %>% as_tibble() %>% 
-  mutate(fake_dx_date = ymd("2014-01-01") + days(round(runif(1,1,364))),
-         fake_bmt_date = fake_dx_date + days(round(time_to_transplant*30)),
-         fake_agvhd_date = fake_bmt_date + days(round(time_to_agvhd*30)))
-
+bmt <- medicaldata::cytomegalovirus %>% 
+  clean_names() %>% 
+  as_tibble()
+bmt_extra <- bmt %>% 
+  slice(40:58) 
+bmt <-bind_rows(bmt, bmt_extra) 
 ```
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
@@ -46,15 +47,18 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
-### How to Use the functions to find duplicate or distinct rows
+### How to Use the distinct() and get_dupes() functions to find duplicate or distinct rows
 
-Imagine that you expect each row to have a unique subject_id, first_name, and last_name, which would make this combination of 3 variables a ** unique_key**.
+You can  use _distinct(variable)_ to find all the distinct values of that variable, and therefore how many are duplicates for that variable.
 
-It is important to have a unique key variable to uniquely identify each obseratin/row. You may need a combination of several variables to make up a unique_key.
+Imagine that you have some duplicate observations in your dataset, due to a problem with data entry, or more likely with a merging of two datasets.
 
-So you (wisely) decide to check this with the _distinct()_ function. If the resulting nrow is < the original nrow, you have some duplicates.
+It is important to have a single row for each observation. But it can be hard to find the duplicates in a large dataset.
 
-The {janitor} function _get_dupes()_ can help find these
+So you (wisely) decide to check this with the _distinct()_ function. If the resulting number of rows (nrow) is less than the original nrow, you have some duplicates.
+
+The {janitor} function _get_dupes()_ can help find these.
+
 
 Let's find some duplicates!
 
@@ -63,16 +67,15 @@ Let's find some duplicates!
 
 ```{r filter1, include = FALSE, eval = FALSE}
 # how many rows when you start
+
 nrow(covid_dates) 
 
+# check if subject_id is a unique identifier 
 covid_dates %>% 
-# check if all rows/observations are distinct
-  distinct() %>% 
-# check if subject_id is a unique identifier = key
   distinct(subject_id)
 
 # see how many rows now
-# subject_id is not a unique_key
+# down to 12,344 - subject_id is not a unique key
 
 # Format:
 #   distinct(variable)                    <br>
@@ -80,12 +83,13 @@ covid_dates %>%
 
 `r chunk_reveal("filter1", 
     break_type = "auto", 
-    title = "Example 1/3: See if Distinct subject_id")`
+    title = "Example 1/5: Are Some Subjects Being Tested Multiple Times?")`
 
 ---
 
 ```{r filter2, include = FALSE, eval = FALSE}
 # how many rows when you start
+
 nrow(covid_dates) 
 
 covid_dates %>% 
@@ -94,8 +98,8 @@ covid_dates %>%
 # check if first & last name is a unique identifier = key
   distinct(fake_first_name, fake_last_name)
 
-# see how many rows now
-# fullname is not a unique_key
+# see how many rows now - 8,286
+# lots of full names are repeated
 
 # Format:
 #   distinct(variable1, variable 2)                    <br>
@@ -103,7 +107,7 @@ covid_dates %>%
 
 `r chunk_reveal("filter2", 
     break_type = "auto", 
-    title = "Example 2/3: See if Distinct by Full Name")`
+    title = "Example 2/5: See if Distinct by Full Name")`
 
 
 ---
@@ -116,7 +120,7 @@ covid_dates %>%
 # check if names are distinct
   select(subject_id, fake_first_name, 
          fake_last_name) %>% 
-# check if first & last name is a unique identifier = key
+# check if first & last name is unique id
   get_dupes(fake_first_name, 
             fake_last_name)
 
@@ -128,9 +132,47 @@ covid_dates %>%
 
 `r chunk_reveal("filter3", 
     break_type = "auto", 
-    title = "Example 3/3: Which Rows are Duplicates")`
+    title = "Example 3/5: Which Rows are Duplicates")`
 
+---
 
+```{r filter4, include = FALSE, eval = FALSE}
+# how many rows in bmt
+
+nrow(bmt) 
+
+bmt %>% 
+  distinct()
+
+# 64 rows instead of 83 - some duplicates
+
+# Format:
+#   distinct(dataset)                    <br>
+```
+
+`r chunk_reveal("filter4", 
+    break_type = "auto", 
+    title = "Example 4/5: Are All Rows in BMT distinct?")`
+    
+---
+
+```{r filter5, include = FALSE, eval = FALSE}
+# how many rows in bmt
+nrow(bmt) 
+
+bmt %>% 
+  get_dupes()
+
+# 438 duplicate rows
+
+# Format:
+#   get_dupes(dataset)                    <br>
+```
+
+`r chunk_reveal("filter5", 
+    break_type = "auto", 
+    title = "Example 5/5: Which Rows are Duplicates")`
+    
 ---
 class: inverse, center
 
