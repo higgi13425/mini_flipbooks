@@ -39,6 +39,11 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
 ### How to Use Multiple Filters to Pick Out a Subset of Rows
 
 #### Combining Logical Statements

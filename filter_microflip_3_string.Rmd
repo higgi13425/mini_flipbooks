@@ -39,6 +39,11 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
 ### How to Use Filters to Pick Out String Values
 
 #### Leaning on the {stringr} package
