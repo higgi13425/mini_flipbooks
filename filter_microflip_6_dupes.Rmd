@@ -47,6 +47,11 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
 ### How to Use the distinct() and get_dupes() functions to find duplicate or distinct rows
 
 You can  use _distinct(variable)_ to find all the distinct values of that variable, and therefore how many are duplicates for that variable.

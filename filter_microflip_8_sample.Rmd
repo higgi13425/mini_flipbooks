@@ -42,6 +42,11 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
 ### How to Use the _slice()_ functions to Take Slices of Rows
 
 #### 
