@@ -39,6 +39,11 @@ xaringanthemer::style_duo_accent(
 )
 ```
 
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
 ### A Demonstration Flipbook
 
 #### Each Line of Code Produces the Results on the Right
@@ -50,6 +55,8 @@ xaringanthemer::style_duo_accent(
 - The **group_by** function groups the observations(rows) of data into groups
 
 - the **ggplot** function plots data according to a layered model of graphics called the "grammar of graphics".
+
+- each step in the ggplot adds to or changes the plot. 
 
 
 ---
