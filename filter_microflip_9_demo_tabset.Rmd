@@ -1,0 +1,153 @@
+---
+title: "Demo with Tabsets (Panelsets)"
+subtitle: "Selecting Rows with _slice_sample()"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(lubridate)
+library(janitor)
+covid_dates <- medicaldata::covid_testing %>% clean_names() %>% as_tibble() %>% 
+  mutate(fake_date = ymd("2020-03-01") + pan_day)
+
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+# gives you tabset option
+```
+### How to Use the _slice()_ functions to Take Slices of Rows
+
+#### 
+
+If you have a very large dataset, and want to develop code on a smaller (but random) sample,
+_slice_sample()_ can help.
+
+This is also helpful for sampling for training and testing sets when modeling.
+
+_slice_sample()_ can take n or proportion (prop) arguments
+
+Let's see some **sampling** examples!
+
+
+---
+.panelset[
+.panel[.panel-name[R Code]
+```{r filter1, results='hide'}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+  slice_sample(prop = 0.3)
+
+# see how many rows now
+
+# Format:
+#   slice_sample(prop = 0.nn) 
+```
+]
+
+.panel[.panel-name[Results]
+
+```{r , echo=FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+  slice_sample(prop = 0.3)
+
+# see how many rows now
+
+# Format:
+#   slice_sample(prop = 0.nn)  
+```
+ ]
+] 
+
+---
+
+```{r filter2, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+# make training set
+covid_dates %>% 
+  slice_sample(prop = 0.7) ->
+training_covid_dates
+
+# now make testing set
+covid_dates %>% 
+  anti_join(training_covid_dates)->
+testing_covid_dates
+# see how many rows in each
+training_covid_dates
+testing_covid_dates
+# Format:
+#   slice_sample(prop = 0.nn)  
+#   set1 %>% anti_join(set2)
+```
+
+`r chunk_reveal("filter2", 
+    break_type = "auto", 
+    title = "Example 2/3: Take a Random 70% Sample for Training and a Complementary 30% for Testing.")`
+
+---
+
+```{r filter3, include = FALSE, eval = FALSE}
+# how many rows when you start
+nrow(covid_dates) 
+
+covid_dates %>% 
+  slice_sample(n = 50)
+
+# see how many rows now
+
+# Format:
+#   slice_sample(n = NN)                    <br>
+```
+
+`r chunk_reveal("filter3", 
+    break_type = "auto", 
+    title = "Example 3/3: Take a Random Sample of 50 Rows from covid_dates.")`
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## On to The Coding Exercises!
