@@ -1,6 +1,6 @@
 ---
-title: "A Demonstration Flipbook"
-subtitle: "Selecting and Plotting A Variable Across 2 Groups "  
+title: "Customizing Plot Scales"
+subtitle: "Customizing Your Scales in ggplot2"  
 author: 
   - "Peter Higgins"
 date: '`r Sys.Date()`'
@@ -45,47 +45,51 @@ xaringanExtra::use_share_again()
 
 ### Customizing Plot Scales
 
-#### Each Line of Code Produces the Results on the Right
+#### There are Multiple Functions to Customize the Default Scales of Your ggplot2 plot.
 
-- The pipe **%>%** takes the result of one line of code and 'pipes' it into the next function. <br>It can be read as "and then..."
+- The {ggplot2} package supplies default scales and labels for your plots so that you can get a reasonable result quickly.
 
-- The **select** function selects columns in a dataframe.
+- However, you can customize these scales by adding (+) lines to your plot code that have the format of scales_(x|y|color|shape)_description().
 
-- The **group_by** function groups the observations(rows) of data into groups
-
-- the **ggplot** function plots data according to a layered model of graphics called the "grammar of graphics".
-
-- each step in the ggplot adds to or changes the plot. 
+- Let's see an example
 
 
 ---
 
-```{r demo1, include = FALSE, eval = FALSE}
+```{r scales1, include = FALSE, eval = FALSE}
 
 prostate %>% 
-# select 2 columns
-  select(p_vol, recurrence) %>% 
 # slow plot 
   ggplot() +
   aes(x = factor(recurrence)) +
   aes(y = p_vol) +
+  geom_jitter() +
   aes(color = factor(recurrence)) +
-  aes(fill = factor(recurrence)) +
-  geom_violin(alpha = 0.3) +
-  labs(x = "Recurrence", 
-       y = "Prostate Volume") +
-  theme_linedraw(base_size = 14) +
-  theme(legend.position = c(0.5, 0.8)) +
+  # expand x margins
+  scale_x_discrete(expand = expansion(mult=1.2)) +
+  # set y limits
+  scale_y_continuous(limits= c(0,90)) +
+  # format color legend
   scale_color_discrete(name = "Recurrence", 
-    labels = c("No Recurrence", "Recurrence")) +
-  guides(fill = FALSE)
+    labels = c("No Recurrence", "Recurrence")) 
   
 
 
 ```
 
-`r chunk_reveal("demo1", 
+`r chunk_reveal("scales1", 
     break_type = "auto", 
-    title = "Demonstration 1: Select Variables, then Violin Plot")`
+    title = "Scales 1: x,y, and color")`
 
+
+
+
+
+
+---
+class: inverse, center
+
+# End of This Flipbook
+
+## Let's Learn How to Do This!
 
