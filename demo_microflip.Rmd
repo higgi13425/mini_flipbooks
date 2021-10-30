@@ -61,7 +61,6 @@ xaringanExtra::use_share_again()
 ---
 
 ```{r demo1, include = FALSE, eval = FALSE}
-
 prostate %>% 
 # select 2 columns
   select(p_vol, recurrence) %>% 
@@ -80,12 +79,8 @@ prostate %>%
     labels = c("No Recurrence", "Recurrence")) +
   guides(fill = FALSE)
   
-
-
 ```
 
 `r chunk_reveal("demo1", 
     break_type = "auto", 
     title = "Demonstration 1: Select Variables, then Violin Plot")`
-
-

@@ -1,0 +1,91 @@
+---
+title: "More that You Can Do With Scales"
+subtitle: "Dates, log, labels, breaks, color palettes"  
+author: 
+  - "Peter Higgins"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: 16:9
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.width = 6, message = FALSE, warning = FALSE, comment = "", cache = FALSE, fig.retina = 3)
+library(flipbookr)
+library(xaringan)
+library(xaringanthemer)
+library(tidyverse)
+library(medicaldata)
+library(janitor)
+library(scales)
+mdeaths <- datasets::mdeaths %>% tibble() %>% mutate(month = rep(1:12, 6), year = c(rep(1974,12), rep(1975,12), rep(1976,12), rep(1977,12), rep(1978,12), rep(1979,12))) %>% purrr::set_names(c('deaths', 'month', 'year')) %>% mutate(day = 1) %>% mutate(date = lubridate::dmy(paste(day, month, year, sep = "-")))
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+xaringanthemer::style_duo_accent(
+  primary_color = "#00274C",
+  secondary_color = "#FFCB05",
+  header_font_google = google_font("Lato"),
+  code_font_google   = google_font("Roboto Mono"),
+  base_font_size = "20px",
+  code_font_size = "0.8rem",
+)
+```
+
+```{r xaringanExtra-share-again, echo=FALSE}
+xaringanExtra::use_share_again()
+# adds share bar to flipbooks
+```
+
+### Customizing Plot Scales
+
+- Date scales can be tricky
+- you can use **scale_(x|y)_date()**
+- then you can set date_breaks to an interval
+- and format the dates with date_labels. These have specific codes
+
+---
+
+```{r demo1, include = FALSE, eval = FALSE}
+mdeaths %>% 
+  ggplot(aes(x = date, y = deaths)) +
+  geom_line() +
+  theme_linedraw(base_size = 14) +
+  scale_x_date(date_breaks = "6 months") +
+  scale_x_date(date_labels = '%b\n%Y')
+```
+
+`r chunk_reveal("demo1", 
+    break_type = "auto", 
+    title = "Demonstration 1: Select Variables, then Violin Plot")`
+
+---
+
+### Date Formatting Codes
+
+
+```{r, echo=FALSE}
+table <- tibble::tribble(
+  ~"Format Example", ~"Unit", ~"Code", 
+   "Mon",  "abbreviated day text", "%a", 
+   "Monday", "full day text", "%A",
+   "09", "digit day of month", "%d",
+   "3 (0-6)", "digit day of week (Sunday = 0)" , "%w",
+  "24 (0-53)", "digit week of year (0-53) - Sunday start", "%U",
+  "44 (0-53)", "digit week of year (0-53) - Monday start", "%W",
+  "Oct", "Abbreviated Month", "%b",
+  "October", "Full Month", "%B",
+  "10", "Digit Month", "%m",
+  "12", "2-Digit Year", "%y",
+  "2012", "4-Digit Year", "%Y"
+)
+knitr::kable(table)
+```
+
